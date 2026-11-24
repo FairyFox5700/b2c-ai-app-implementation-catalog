@@ -9,6 +9,12 @@ A curated catalog of **107 business-to-consumer AI application ideas**, each map
 
 Use this catalog for solution discovery, prototypes, Forward Deployed Engineer portfolio projects, workshops, and architecture comparisons.
 
+## Comprehensive architecture overviews
+
+The repository now includes implementation-oriented architecture guides for every catalog entry. Each guide covers the user journey, system flow, components, agent design, data, integrations, security, reliability, evaluation, and an MVP build path.
+
+**[Browse all 107 architecture overviews](docs/architectures/README.md)**
+
 ## Important notes
 
 - Links marked **Exact** implement the same scenario.
