@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A67_0["Upload portal"]
+    class A67_0 frontend
+    A67_1["Parser/chunker"]
+    class A67_1 tool
+    A67_2["Vector index"]
+    class A67_2 data
+    A67_3["Study agent (RAG + planner)"]
+    class A67_3 agent
+    A67_4["Cards/summaries/plan"]
+    class A67_4 tool
+    A67_5["Progress tracker"]
+    class A67_5 backend
+    A67_0 --> A67_1
+    A67_1 --> A67_2
+    A67_2 --> A67_3
+    A67_3 --> A67_4
+    A67_4 --> A67_5
+    CONTROL67["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL67 control
+    CONTROL67 -. governs request .-> A67_1

@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A30_0["Context (location/time/weather)"]
+    class A30_0 frontend
+    A30_1["Concierge agent"]
+    class A30_1 agent
+    A30_2["Places/events retrieval"]
+    class A30_2 tool
+    A30_3["Context ranker"]
+    class A30_3 agent
+    A30_4["Suggestions"]
+    class A30_4 tool
+    A30_5["Save/share/book"]
+    class A30_5 backend
+    A30_0 --> A30_1
+    A30_1 --> A30_2
+    A30_2 --> A30_3
+    A30_3 --> A30_4
+    A30_4 --> A30_5
+    CONTROL30["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL30 control
+    CONTROL30 -. governs request .-> A30_1

@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A85_0["Customer channel"]
+    class A85_0 frontend
+    A85_1["Identity/product lookup"]
+    class A85_1 tool
+    A85_2["Support agent"]
+    class A85_2 agent
+    A85_3["KB retrieval + diagnostic tools"]
+    class A85_3 tool
+    A85_4["Policy engine"]
+    class A85_4 agent
+    A85_5["Ticket system/human handoff"]
+    class A85_5 backend
+    A85_0 --> A85_1
+    A85_1 --> A85_2
+    A85_2 --> A85_3
+    A85_3 --> A85_4
+    A85_4 --> A85_5
+    CONTROL85["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL85 control
+    CONTROL85 -. governs request .-> A85_1

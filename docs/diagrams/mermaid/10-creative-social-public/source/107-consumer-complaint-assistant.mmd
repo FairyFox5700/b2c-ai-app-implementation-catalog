@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A107_0["Chat UI"]
+    class A107_0 frontend
+    A107_1["case builder"]
+    class A107_1 frontend
+    A107_2["evidence extractor"]
+    class A107_2 tool
+    A107_3["rights retrieval (statutes/regulator guidance)"]
+    class A107_3 frontend
+    A107_4["letter drafter"]
+    class A107_4 tool
+    A107_5["channel router/tracker"]
+    class A107_5 agent
+    A107_0 --> A107_1
+    A107_1 --> A107_2
+    A107_2 --> A107_3
+    A107_3 --> A107_4
+    A107_4 --> A107_5
+    CONTROL107["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL107 control
+    CONTROL107 -. governs request .-> A107_1

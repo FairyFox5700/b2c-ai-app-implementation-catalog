@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A46_0["Contract upload"]
+    class A46_0 frontend
+    A46_1["parser"]
+    class A46_1 tool
+    A46_2["clause classifier"]
+    class A46_2 tool
+    A46_3["risk-flag rules + LLM explainer"]
+    class A46_3 tool
+    A46_4["cited summary"]
+    class A46_4 tool
+    A46_5["optional lawyer referral"]
+    class A46_5 backend
+    A46_0 --> A46_1
+    A46_1 --> A46_2
+    A46_2 --> A46_3
+    A46_3 --> A46_4
+    A46_4 --> A46_5
+    CONTROL46["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL46 control
+    CONTROL46 -. governs request .-> A46_1

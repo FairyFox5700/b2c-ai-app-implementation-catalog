@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A68_0["Student UI"]
+    class A68_0 frontend
+    A68_1["Safety filter"]
+    class A68_1 tool
+    A68_2["Tutor agent (hint ladder)"]
+    class A68_2 agent
+    A68_3["Solver/verifier tools"]
+    class A68_3 agent
+    A68_4["Step checker"]
+    class A68_4 tool
+    A68_5["Guardian/teacher report"]
+    class A68_5 backend
+    A68_0 --> A68_1
+    A68_1 --> A68_2
+    A68_2 --> A68_3
+    A68_3 --> A68_4
+    A68_4 --> A68_5
+    CONTROL68["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL68 control
+    CONTROL68 -. governs request .-> A68_1

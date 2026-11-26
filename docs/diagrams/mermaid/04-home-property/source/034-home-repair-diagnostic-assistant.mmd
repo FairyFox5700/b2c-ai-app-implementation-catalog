@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A34_0["Symptoms/photos"]
+    class A34_0 frontend
+    A34_1["Triage agent"]
+    class A34_1 agent
+    A34_2["Diagnostic knowledge retrieval"]
+    class A34_2 tool
+    A34_3["Risk classifier"]
+    class A34_3 tool
+    A34_4["Repair guide or pro referral"]
+    class A34_4 frontend
+    A34_5["Parts/tool list"]
+    class A34_5 backend
+    A34_0 --> A34_1
+    A34_1 --> A34_2
+    A34_2 --> A34_3
+    A34_3 --> A34_4
+    A34_4 --> A34_5
+    CONTROL34["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL34 control
+    CONTROL34 -. governs request .-> A34_1

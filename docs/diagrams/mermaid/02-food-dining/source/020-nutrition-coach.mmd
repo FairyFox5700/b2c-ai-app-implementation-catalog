@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A20_0["Log UI (text/photo)"]
+    class A20_0 frontend
+    A20_1["Food parser"]
+    class A20_1 tool
+    A20_2["Nutrient DB lookup"]
+    class A20_2 tool
+    A20_3["Trend analyzer"]
+    class A20_3 tool
+    A20_4["Coaching agent"]
+    class A20_4 agent
+    A20_5["Safety filter"]
+    class A20_5 tool
+    A20_6["Weekly report"]
+    class A20_6 backend
+    A20_0 --> A20_1
+    A20_1 --> A20_2
+    A20_2 --> A20_3
+    A20_3 --> A20_4
+    A20_4 --> A20_5
+    A20_5 --> A20_6
+    CONTROL20["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL20 control
+    CONTROL20 -. governs request .-> A20_1

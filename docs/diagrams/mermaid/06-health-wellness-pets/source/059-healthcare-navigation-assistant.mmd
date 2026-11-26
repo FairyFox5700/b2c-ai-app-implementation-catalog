@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A59_0["Chat/voice"]
+    class A59_0 frontend
+    A59_1["Navigation agent"]
+    class A59_1 agent
+    A59_2["Triage-safe router"]
+    class A59_2 agent
+    A59_3["Provider directory + Insurance rules"]
+    class A59_3 external
+    A59_4["Document checklist"]
+    class A59_4 tool
+    A59_5["Handoff"]
+    class A59_5 backend
+    A59_0 --> A59_1
+    A59_1 --> A59_2
+    A59_2 --> A59_3
+    A59_3 --> A59_4
+    A59_4 --> A59_5
+    CONTROL59["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL59 control
+    CONTROL59 -. governs request .-> A59_1

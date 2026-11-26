@@ -1,5 +1,7 @@
 # Health, wellness and pets architecture overviews
 
+> **Reading guide:** See [how to interpret the system-context, runtime, security/data and application-flow views](README.md#how-to-read-the-architecture-views). Every diagram is a pre-rendered SVG; its editable Mermaid source is linked underneath.
+
 <!-- azure-icon-views:auto -->
 ## Azure architecture views
 
@@ -31,38 +33,9 @@ Shows identity, managed authorization, policy and approval gates, grounded retri
 
 This Azure-oriented deployment separates deterministic business operations from probabilistic model reasoning. The application owns authorization, validation, workflow state and approval; the model proposes actions only through allowlisted tools.
 
-```mermaid
-flowchart LR
-    classDef edge fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef compute fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef ai fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef integration fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+![Category deployment architecture](../diagrams/mermaid/06-health-wellness-pets/000-category-deployment.svg)
 
-    USER["Web, mobile, voice or partner channel"] --> EDGE["Azure Front Door + WAF"]
-    EDGE --> API["API Management"]
-    API --> APP["App Service / Container Apps"]
-    APP --> ORCH["Microsoft Agent Framework orchestrator"]
-    ORCH --> MODEL["Microsoft Foundry model endpoint"]
-    ORCH --> TOOLS["Controlled tool gateway"]
-    TOOLS --> DOMAIN["Health, wellness and pets tools and partner APIs"]
-    ORCH --> SEARCH["Azure AI Search / retrieval"]
-    ORCH --> STATE["Cosmos DB / SQL workflow state"]
-    ORCH --> BUS["Service Bus / durable background work"]
-
-    ID["Entra ID + managed identity"] -. authentication .-> API
-    VAULT["Key Vault + configuration"] -. secrets .-> APP
-    SAFE["Content safety, policy + human approval"] -. enforcement .-> ORCH
-    OBS["Application Insights, traces + evals"] -. telemetry .-> APP
-
-    class USER,EDGE,API edge
-    class APP,ORCH compute
-    class MODEL ai
-    class SEARCH,STATE data
-    class TOOLS,DOMAIN,BUS integration
-    class ID,VAULT,SAFE,OBS control
-```
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/000-category-deployment.mmd)_
 
 **Responsibility split**
 
@@ -83,40 +56,9 @@ These are proposed reference architectures, not descriptions of existing reposit
 **Reference architecture:** `Mobile app -> API gateway -> Coach agent -> Planner/Safety rules -> Profile + Activity store <- Wearable connectors`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A51_0["Mobile app"]
-    class A51_0 frontend
-    A51_1["API gateway"]
-    class A51_1 external
-    A51_2["Coach agent"]
-    class A51_2 agent
-    A51_3["Planner/Safety rules"]
-    class A51_3 agent
-    A51_4["Profile + Activity store"]
-    class A51_4 data
-    A51_5["Wearable connectors"]
-    class A51_5 external
-    A51_0 --> A51_1
-    A51_1 --> A51_2
-    A51_2 --> A51_3
-    A51_3 --> A51_4
-    A51_4 --> A51_5
-    ID51["Entra ID + managed identity"]
-    SAFE51["Policy, validation + approval gates"]
-    OBS51["Tracing, metrics + evaluation"]
-    class ID51,SAFE51,OBS51 control
-    ID51 -. authentication .-> A51_1
-    SAFE51 -. enforcement .-> A51_1
-    OBS51 -. telemetry .-> A51_1
-```
+![Fitness coach request flow](../diagrams/mermaid/06-health-wellness-pets/051-fitness-coach.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/051-fitness-coach.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -152,40 +94,9 @@ flowchart LR
 **Reference architecture:** `Web/mobile UI -> Planner API -> Constraint solver + LLM drafter -> Exercise DB -> Calendar sync -> Feedback loop`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A52_0["Web/mobile UI"]
-    class A52_0 frontend
-    A52_1["Planner API"]
-    class A52_1 external
-    A52_2["Constraint solver + LLM drafter"]
-    class A52_2 agent
-    A52_3["Exercise DB"]
-    class A52_3 tool
-    A52_4["Calendar sync"]
-    class A52_4 external
-    A52_5["Feedback loop"]
-    class A52_5 backend
-    A52_0 --> A52_1
-    A52_1 --> A52_2
-    A52_2 --> A52_3
-    A52_3 --> A52_4
-    A52_4 --> A52_5
-    ID52["Entra ID + managed identity"]
-    SAFE52["Policy, validation + approval gates"]
-    OBS52["Tracing, metrics + evaluation"]
-    class ID52,SAFE52,OBS52 control
-    ID52 -. authentication .-> A52_1
-    SAFE52 -. enforcement .-> A52_1
-    OBS52 -. telemetry .-> A52_1
-```
+![Workout-planning assistant request flow](../diagrams/mermaid/06-health-wellness-pets/052-workout-planning-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/052-workout-planning-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -221,40 +132,9 @@ flowchart LR
 **Reference architecture:** `Chat UI -> Coach orchestrator -> Goal/Check-in services -> Guardrail classifier -> Memory store -> Integrations`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A53_0["Chat UI"]
-    class A53_0 frontend
-    A53_1["Coach orchestrator"]
-    class A53_1 agent
-    A53_2["Goal/Check-in services"]
-    class A53_2 tool
-    A53_3["Guardrail classifier"]
-    class A53_3 tool
-    A53_4["Memory store"]
-    class A53_4 data
-    A53_5["Integrations"]
-    class A53_5 backend
-    A53_0 --> A53_1
-    A53_1 --> A53_2
-    A53_2 --> A53_3
-    A53_3 --> A53_4
-    A53_4 --> A53_5
-    ID53["Entra ID + managed identity"]
-    SAFE53["Policy, validation + approval gates"]
-    OBS53["Tracing, metrics + evaluation"]
-    class ID53,SAFE53,OBS53 control
-    ID53 -. authentication .-> A53_1
-    SAFE53 -. enforcement .-> A53_1
-    OBS53 -. telemetry .-> A53_1
-```
+![Wellness coach request flow](../diagrams/mermaid/06-health-wellness-pets/053-wellness-coach.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/053-wellness-coach.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -290,40 +170,9 @@ flowchart LR
 **Reference architecture:** `App -> Sleep coach agent -> Diary + Wearable ingest -> Pattern analyzer -> CBT-I style content -> Notifications`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A54_0["App"]
-    class A54_0 frontend
-    A54_1["Sleep coach agent"]
-    class A54_1 agent
-    A54_2["Diary + Wearable ingest"]
-    class A54_2 tool
-    A54_3["Pattern analyzer"]
-    class A54_3 tool
-    A54_4["CBT-I style content"]
-    class A54_4 tool
-    A54_5["Notifications"]
-    class A54_5 backend
-    A54_0 --> A54_1
-    A54_1 --> A54_2
-    A54_2 --> A54_3
-    A54_3 --> A54_4
-    A54_4 --> A54_5
-    ID54["Entra ID + managed identity"]
-    SAFE54["Policy, validation + approval gates"]
-    OBS54["Tracing, metrics + evaluation"]
-    class ID54,SAFE54,OBS54 control
-    ID54 -. authentication .-> A54_1
-    SAFE54 -. enforcement .-> A54_1
-    OBS54 -. telemetry .-> A54_1
-```
+![Sleep coach request flow](../diagrams/mermaid/06-health-wellness-pets/054-sleep-coach.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/054-sleep-coach.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -359,40 +208,9 @@ flowchart LR
 **Reference architecture:** `Mobile app -> Habit agent -> Habit engine (cues, streaks) -> Scheduler -> Push/SMS -> Insights store`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A55_0["Mobile app"]
-    class A55_0 frontend
-    A55_1["Habit agent"]
-    class A55_1 agent
-    A55_2["Habit engine (cues, streaks)"]
-    class A55_2 agent
-    A55_3["Scheduler"]
-    class A55_3 tool
-    A55_4["Push/SMS"]
-    class A55_4 tool
-    A55_5["Insights store"]
-    class A55_5 data
-    A55_0 --> A55_1
-    A55_1 --> A55_2
-    A55_2 --> A55_3
-    A55_3 --> A55_4
-    A55_4 --> A55_5
-    ID55["Entra ID + managed identity"]
-    SAFE55["Policy, validation + approval gates"]
-    OBS55["Tracing, metrics + evaluation"]
-    class ID55,SAFE55,OBS55 control
-    ID55 -. authentication .-> A55_1
-    SAFE55 -. enforcement .-> A55_1
-    OBS55 -. telemetry .-> A55_1
-```
+![Habit-building assistant request flow](../diagrams/mermaid/06-health-wellness-pets/055-habit-building-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/055-habit-building-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -428,40 +246,9 @@ flowchart LR
 **Reference architecture:** `App -> Advisor agent -> Ingredient KB + Rules -> Product catalog -> Photo processing (optional) -> Profile store`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A56_0["App"]
-    class A56_0 frontend
-    A56_1["Advisor agent"]
-    class A56_1 agent
-    A56_2["Ingredient KB + Rules"]
-    class A56_2 tool
-    A56_3["Product catalog"]
-    class A56_3 tool
-    A56_4["Photo processing (optional)"]
-    class A56_4 tool
-    A56_5["Profile store"]
-    class A56_5 data
-    A56_0 --> A56_1
-    A56_1 --> A56_2
-    A56_2 --> A56_3
-    A56_3 --> A56_4
-    A56_4 --> A56_5
-    ID56["Entra ID + managed identity"]
-    SAFE56["Policy, validation + approval gates"]
-    OBS56["Tracing, metrics + evaluation"]
-    class ID56,SAFE56,OBS56 control
-    ID56 -. authentication .-> A56_1
-    SAFE56 -. enforcement .-> A56_1
-    OBS56 -. telemetry .-> A56_1
-```
+![Skincare advisor request flow](../diagrams/mermaid/06-health-wellness-pets/056-skincare-advisor.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/056-skincare-advisor.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -497,40 +284,9 @@ flowchart LR
 **Reference architecture:** `Chat UI -> Recommender agent -> Catalog search + Reviews index -> Ingredient filter -> Affiliate/checkout links -> Feedback`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A57_0["Chat UI"]
-    class A57_0 frontend
-    A57_1["Recommender agent"]
-    class A57_1 agent
-    A57_2["Catalog search + Reviews index"]
-    class A57_2 data
-    A57_3["Ingredient filter"]
-    class A57_3 tool
-    A57_4["Affiliate/checkout links"]
-    class A57_4 tool
-    A57_5["Feedback"]
-    class A57_5 backend
-    A57_0 --> A57_1
-    A57_1 --> A57_2
-    A57_2 --> A57_3
-    A57_3 --> A57_4
-    A57_4 --> A57_5
-    ID57["Entra ID + managed identity"]
-    SAFE57["Policy, validation + approval gates"]
-    OBS57["Tracing, metrics + evaluation"]
-    class ID57,SAFE57,OBS57 control
-    ID57 -. authentication .-> A57_1
-    SAFE57 -. enforcement .-> A57_1
-    OBS57 -. telemetry .-> A57_1
-```
+![Beauty-product assistant request flow](../diagrams/mermaid/06-health-wellness-pets/057-beauty-product-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/057-beauty-product-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -566,43 +322,9 @@ flowchart LR
 **Reference architecture:** `App/SMS -> Reminder API -> Regimen store -> Scheduler -> Notification service -> Adherence log -> Caregiver alerts`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A58_0["App/SMS"]
-    class A58_0 frontend
-    A58_1["Reminder API"]
-    class A58_1 external
-    A58_2["Regimen store"]
-    class A58_2 data
-    A58_3["Scheduler"]
-    class A58_3 tool
-    A58_4["Notification service"]
-    class A58_4 tool
-    A58_5["Adherence log"]
-    class A58_5 tool
-    A58_6["Caregiver alerts"]
-    class A58_6 backend
-    A58_0 --> A58_1
-    A58_1 --> A58_2
-    A58_2 --> A58_3
-    A58_3 --> A58_4
-    A58_4 --> A58_5
-    A58_5 --> A58_6
-    ID58["Entra ID + managed identity"]
-    SAFE58["Policy, validation + approval gates"]
-    OBS58["Tracing, metrics + evaluation"]
-    class ID58,SAFE58,OBS58 control
-    ID58 -. authentication .-> A58_1
-    SAFE58 -. enforcement .-> A58_1
-    OBS58 -. telemetry .-> A58_1
-```
+![Medication reminder request flow](../diagrams/mermaid/06-health-wellness-pets/058-medication-reminder.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/058-medication-reminder.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -638,40 +360,9 @@ flowchart LR
 **Reference architecture:** `Chat/voice -> Navigation agent -> Triage-safe router -> Provider directory + Insurance rules -> Document checklist -> Handoff`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A59_0["Chat/voice"]
-    class A59_0 frontend
-    A59_1["Navigation agent"]
-    class A59_1 agent
-    A59_2["Triage-safe router"]
-    class A59_2 agent
-    A59_3["Provider directory + Insurance rules"]
-    class A59_3 external
-    A59_4["Document checklist"]
-    class A59_4 tool
-    A59_5["Handoff"]
-    class A59_5 backend
-    A59_0 --> A59_1
-    A59_1 --> A59_2
-    A59_2 --> A59_3
-    A59_3 --> A59_4
-    A59_4 --> A59_5
-    ID59["Entra ID + managed identity"]
-    SAFE59["Policy, validation + approval gates"]
-    OBS59["Tracing, metrics + evaluation"]
-    class ID59,SAFE59,OBS59 control
-    ID59 -. authentication .-> A59_1
-    SAFE59 -. enforcement .-> A59_1
-    OBS59 -. telemetry .-> A59_1
-```
+![Healthcare navigation assistant request flow](../diagrams/mermaid/06-health-wellness-pets/059-healthcare-navigation-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/059-healthcare-navigation-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -707,40 +398,9 @@ flowchart LR
 **Reference architecture:** `Chat/voice -> Booking agent -> Availability service -> EHR/scheduling APIs -> Confirmation + Reminders -> Audit log`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A60_0["Chat/voice"]
-    class A60_0 frontend
-    A60_1["Booking agent"]
-    class A60_1 agent
-    A60_2["Availability service"]
-    class A60_2 tool
-    A60_3["EHR/scheduling APIs"]
-    class A60_3 external
-    A60_4["Confirmation + Reminders"]
-    class A60_4 tool
-    A60_5["Audit log"]
-    class A60_5 backend
-    A60_0 --> A60_1
-    A60_1 --> A60_2
-    A60_2 --> A60_3
-    A60_3 --> A60_4
-    A60_4 --> A60_5
-    ID60["Entra ID + managed identity"]
-    SAFE60["Policy, validation + approval gates"]
-    OBS60["Tracing, metrics + evaluation"]
-    class ID60,SAFE60,OBS60 control
-    ID60 -. authentication .-> A60_1
-    SAFE60 -. enforcement .-> A60_1
-    OBS60 -. telemetry .-> A60_1
-```
+![Appointment-booking assistant request flow](../diagrams/mermaid/06-health-wellness-pets/060-appointment-booking-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/060-appointment-booking-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -776,40 +436,9 @@ flowchart LR
 **Reference architecture:** `Patient UI -> Red-flag screener -> Intake agent -> Structured summary -> Clinician review queue -> EHR/FHIR`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A61_0["Patient UI"]
-    class A61_0 frontend
-    A61_1["Red-flag screener"]
-    class A61_1 tool
-    A61_2["Intake agent"]
-    class A61_2 agent
-    A61_3["Structured summary"]
-    class A61_3 tool
-    A61_4["Clinician review queue"]
-    class A61_4 tool
-    A61_5["EHR/FHIR"]
-    class A61_5 backend
-    A61_0 --> A61_1
-    A61_1 --> A61_2
-    A61_2 --> A61_3
-    A61_3 --> A61_4
-    A61_4 --> A61_5
-    ID61["Entra ID + managed identity"]
-    SAFE61["Policy, validation + approval gates"]
-    OBS61["Tracing, metrics + evaluation"]
-    class ID61,SAFE61,OBS61 control
-    ID61 -. authentication .-> A61_1
-    SAFE61 -. enforcement .-> A61_1
-    OBS61 -. telemetry .-> A61_1
-```
+![Symptom-intake assistant request flow](../diagrams/mermaid/06-health-wellness-pets/061-symptom-intake-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/061-symptom-intake-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -845,40 +474,9 @@ flowchart LR
 **Reference architecture:** `App -> Local encrypted journal -> Reflection agent -> Crisis classifier -> Insight service -> Optional clinician export`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A62_0["App"]
-    class A62_0 frontend
-    A62_1["Local encrypted journal"]
-    class A62_1 tool
-    A62_2["Reflection agent"]
-    class A62_2 agent
-    A62_3["Crisis classifier"]
-    class A62_3 tool
-    A62_4["Insight service"]
-    class A62_4 tool
-    A62_5["Optional clinician export"]
-    class A62_5 backend
-    A62_0 --> A62_1
-    A62_1 --> A62_2
-    A62_2 --> A62_3
-    A62_3 --> A62_4
-    A62_4 --> A62_5
-    ID62["Entra ID + managed identity"]
-    SAFE62["Policy, validation + approval gates"]
-    OBS62["Tracing, metrics + evaluation"]
-    class ID62,SAFE62,OBS62 control
-    ID62 -. authentication .-> A62_1
-    SAFE62 -. enforcement .-> A62_1
-    OBS62 -. telemetry .-> A62_1
-```
+![Mental-wellness journaling assistant request flow](../diagrams/mermaid/06-health-wellness-pets/062-mental-wellness-journaling-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/062-mental-wellness-journaling-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -914,40 +512,9 @@ flowchart LR
 **Reference architecture:** `App -> Pet-care agent -> Pet profile + Care calendar -> Knowledge base -> Urgency rules -> Vet handoff`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A63_0["App"]
-    class A63_0 frontend
-    A63_1["Pet-care agent"]
-    class A63_1 agent
-    A63_2["Pet profile + Care calendar"]
-    class A63_2 data
-    A63_3["Knowledge base"]
-    class A63_3 tool
-    A63_4["Urgency rules"]
-    class A63_4 tool
-    A63_5["Vet handoff"]
-    class A63_5 backend
-    A63_0 --> A63_1
-    A63_1 --> A63_2
-    A63_2 --> A63_3
-    A63_3 --> A63_4
-    A63_4 --> A63_5
-    ID63["Entra ID + managed identity"]
-    SAFE63["Policy, validation + approval gates"]
-    OBS63["Tracing, metrics + evaluation"]
-    class ID63,SAFE63,OBS63 control
-    ID63 -. authentication .-> A63_1
-    SAFE63 -. enforcement .-> A63_1
-    OBS63 -. telemetry .-> A63_1
-```
+![Pet-care assistant request flow](../diagrams/mermaid/06-health-wellness-pets/063-pet-care-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/063-pet-care-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -983,40 +550,9 @@ flowchart LR
 **Reference architecture:** `Chat/app -> Vet booking agent -> Urgency screener -> Clinic availability APIs -> Booking service -> Reminders + Pet records`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A64_0["Chat/app"]
-    class A64_0 frontend
-    A64_1["Vet booking agent"]
-    class A64_1 agent
-    A64_2["Urgency screener"]
-    class A64_2 tool
-    A64_3["Clinic availability APIs"]
-    class A64_3 external
-    A64_4["Booking service"]
-    class A64_4 tool
-    A64_5["Reminders + Pet records"]
-    class A64_5 backend
-    A64_0 --> A64_1
-    A64_1 --> A64_2
-    A64_2 --> A64_3
-    A64_3 --> A64_4
-    A64_4 --> A64_5
-    ID64["Entra ID + managed identity"]
-    SAFE64["Policy, validation + approval gates"]
-    OBS64["Tracing, metrics + evaluation"]
-    class ID64,SAFE64,OBS64 control
-    ID64 -. authentication .-> A64_1
-    SAFE64 -. enforcement .-> A64_1
-    OBS64 -. telemetry .-> A64_1
-```
+![Veterinary appointment assistant request flow](../diagrams/mermaid/06-health-wellness-pets/064-veterinary-appointment-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/064-veterinary-appointment-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -1052,43 +588,9 @@ flowchart LR
 **Reference architecture:** `Chat UI -> Recommendation agent -> Pet profile -> Product catalog/search -> Safety filters -> Retailer links -> Feedback loop`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A65_0["Chat UI"]
-    class A65_0 frontend
-    A65_1["Recommendation agent"]
-    class A65_1 agent
-    A65_2["Pet profile"]
-    class A65_2 data
-    A65_3["Product catalog/search"]
-    class A65_3 tool
-    A65_4["Safety filters"]
-    class A65_4 tool
-    A65_5["Retailer links"]
-    class A65_5 external
-    A65_6["Feedback loop"]
-    class A65_6 backend
-    A65_0 --> A65_1
-    A65_1 --> A65_2
-    A65_2 --> A65_3
-    A65_3 --> A65_4
-    A65_4 --> A65_5
-    A65_5 --> A65_6
-    ID65["Entra ID + managed identity"]
-    SAFE65["Policy, validation + approval gates"]
-    OBS65["Tracing, metrics + evaluation"]
-    class ID65,SAFE65,OBS65 control
-    ID65 -. authentication .-> A65_1
-    SAFE65 -. enforcement .-> A65_1
-    OBS65 -. telemetry .-> A65_1
-```
+![Pet-product recommendation assistant request flow](../diagrams/mermaid/06-health-wellness-pets/065-pet-product-recommendation-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/source/065-pet-product-recommendation-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**

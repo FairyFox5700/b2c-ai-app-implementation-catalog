@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A69_0["Exam profile"]
+    class A69_0 frontend
+    A69_1["Diagnostic engine"]
+    class A69_1 agent
+    A69_2["Coach agent"]
+    class A69_2 agent
+    A69_3["Question bank + generator"]
+    class A69_3 tool
+    A69_4["Timed mock runner"]
+    class A69_4 tool
+    A69_5["Readiness model"]
+    class A69_5 tool
+    A69_6["Plan updater"]
+    class A69_6 backend
+    A69_0 --> A69_1
+    A69_1 --> A69_2
+    A69_2 --> A69_3
+    A69_3 --> A69_4
+    A69_4 --> A69_5
+    A69_5 --> A69_6
+    CONTROL69["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL69 control
+    CONTROL69 -. governs request .-> A69_1

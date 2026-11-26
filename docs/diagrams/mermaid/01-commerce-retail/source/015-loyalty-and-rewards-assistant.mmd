@@ -1,0 +1,41 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A15_0["Member query/event"]
+    class A15_0 frontend
+    A15_1["identity"]
+    class A15_1 tool
+    A15_2["loyalty agent"]
+    class A15_2 agent
+    A15_3["points ledger"]
+    class A15_3 data
+    A15_4["tier engine"]
+    class A15_4 agent
+    A15_5["rewards catalog"]
+    class A15_5 tool
+    A15_6["offers"]
+    class A15_6 tool
+    A15_7["explanation or redemption"]
+    class A15_7 tool
+    A15_8["ledger update"]
+    class A15_8 data
+    A15_0 --> A15_1
+    A15_1 --> A15_2
+    A15_2 --> A15_3
+    A15_2 --> A15_4
+    A15_2 --> A15_5
+    A15_2 --> A15_6
+    A15_3 --> A15_7
+    A15_4 --> A15_7
+    A15_5 --> A15_7
+    A15_6 --> A15_7
+    A15_7 --> A15_8
+    CONTROL15["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL15 control
+    CONTROL15 -. governs request .-> A15_1

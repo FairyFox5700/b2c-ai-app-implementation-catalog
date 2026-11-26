@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A103_0["Mobile app"]
+    class A103_0 frontend
+    A103_1["safety-session service"]
+    class A103_1 tool
+    A103_2["risk and route tools"]
+    class A103_2 tool
+    A103_3["check-in monitor"]
+    class A103_3 tool
+    A103_4["escalation engine"]
+    class A103_4 agent
+    A103_5["contacts and emergency handoff"]
+    class A103_5 backend
+    A103_0 --> A103_1
+    A103_1 --> A103_2
+    A103_2 --> A103_3
+    A103_3 --> A103_4
+    A103_4 --> A103_5
+    CONTROL103["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL103 control
+    CONTROL103 -. governs request .-> A103_1

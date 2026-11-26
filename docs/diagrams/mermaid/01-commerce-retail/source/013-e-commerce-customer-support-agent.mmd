@@ -1,0 +1,41 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A13_0["Channel"]
+    class A13_0 frontend
+    A13_1["router/intent classifier"]
+    class A13_1 agent
+    A13_2["support agent"]
+    class A13_2 agent
+    A13_3["knowledge RAG"]
+    class A13_3 tool
+    A13_4["order tools"]
+    class A13_4 tool
+    A13_5["account tools"]
+    class A13_5 tool
+    A13_6["specialist sub-agents"]
+    class A13_6 agent
+    A13_7["response or human handoff"]
+    class A13_7 tool
+    A13_8["QA loop"]
+    class A13_8 backend
+    A13_0 --> A13_1
+    A13_1 --> A13_2
+    A13_2 --> A13_3
+    A13_2 --> A13_4
+    A13_2 --> A13_5
+    A13_2 --> A13_6
+    A13_3 --> A13_7
+    A13_4 --> A13_7
+    A13_5 --> A13_7
+    A13_6 --> A13_7
+    A13_7 --> A13_8
+    CONTROL13["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL13 control
+    CONTROL13 -. governs request .-> A13_1

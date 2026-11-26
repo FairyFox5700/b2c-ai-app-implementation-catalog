@@ -1,0 +1,11 @@
+{
+  "name": "b2c-ai-app-implementation-catalog",
+  "private": true,
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "12.2.0"
+  },
+  "scripts": {
+    "diagrams:render": "python scripts/render_mermaid_diagrams.py",
+    "diagrams:check": "python scripts/render_mermaid_diagrams.py --check"
+  }
+}

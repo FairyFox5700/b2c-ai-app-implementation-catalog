@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A18_0["Onboarding UI"]
+    class A18_0 frontend
+    A18_1["Planner agent"]
+    class A18_1 agent
+    A18_2["Constraint solver"]
+    class A18_2 agent
+    A18_3["Recipe retrieval"]
+    class A18_3 tool
+    A18_4["Nutrition calculator"]
+    class A18_4 tool
+    A18_5["Plan calendar"]
+    class A18_5 external
+    A18_6["Grocery list export"]
+    class A18_6 backend
+    A18_0 --> A18_1
+    A18_1 --> A18_2
+    A18_2 --> A18_3
+    A18_3 --> A18_4
+    A18_4 --> A18_5
+    A18_5 --> A18_6
+    CONTROL18["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL18 control
+    CONTROL18 -. governs request .-> A18_1

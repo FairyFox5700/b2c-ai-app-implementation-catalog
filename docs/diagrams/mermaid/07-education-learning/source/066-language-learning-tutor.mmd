@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A66_0["Learner app (text/voice)"]
+    class A66_0 frontend
+    A66_1["Session API"]
+    class A66_1 external
+    A66_2["Tutor agent"]
+    class A66_2 agent
+    A66_3["LLM + CEFR curriculum"]
+    class A66_3 tool
+    A66_4["Feedback + SRS scheduler"]
+    class A66_4 tool
+    A66_5["Progress DB"]
+    class A66_5 backend
+    A66_0 --> A66_1
+    A66_1 --> A66_2
+    A66_2 --> A66_3
+    A66_3 --> A66_4
+    A66_4 --> A66_5
+    CONTROL66["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL66 control
+    CONTROL66 -. governs request .-> A66_1

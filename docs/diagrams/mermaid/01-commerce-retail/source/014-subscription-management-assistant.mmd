@@ -1,0 +1,41 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A14_0["User request"]
+    class A14_0 frontend
+    A14_1["authentication"]
+    class A14_1 tool
+    A14_2["subscription agent"]
+    class A14_2 agent
+    A14_3["subscription API"]
+    class A14_3 external
+    A14_4["billing/dunning"]
+    class A14_4 tool
+    A14_5["catalog swaps"]
+    class A14_5 tool
+    A14_6["retention offers"]
+    class A14_6 tool
+    A14_7["confirmation"]
+    class A14_7 tool
+    A14_8["scheduled-event updates"]
+    class A14_8 backend
+    A14_0 --> A14_1
+    A14_1 --> A14_2
+    A14_2 --> A14_3
+    A14_2 --> A14_4
+    A14_2 --> A14_5
+    A14_2 --> A14_6
+    A14_3 --> A14_7
+    A14_4 --> A14_7
+    A14_5 --> A14_7
+    A14_6 --> A14_7
+    A14_7 --> A14_8
+    CONTROL14["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL14 control
+    CONTROL14 -. governs request .-> A14_1

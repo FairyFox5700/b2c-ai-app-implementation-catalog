@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A37_0["Move brief"]
+    class A37_0 frontend
+    A37_1["Planner agent"]
+    class A37_1 agent
+    A37_2["Mover quotes/inventory tools"]
+    class A37_2 tool
+    A37_3["Task timeline"]
+    class A37_3 tool
+    A37_4["Address-change workflows"]
+    class A37_4 agent
+    A37_5["Destination setup guide"]
+    class A37_5 frontend
+    A37_0 --> A37_1
+    A37_1 --> A37_2
+    A37_2 --> A37_3
+    A37_3 --> A37_4
+    A37_4 --> A37_5
+    CONTROL37["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL37 control
+    CONTROL37 -. governs request .-> A37_1

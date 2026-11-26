@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A70_0["Reader UI"]
+    class A70_0 frontend
+    A70_1["Text processor"]
+    class A70_1 tool
+    A70_2["Reading agent"]
+    class A70_2 agent
+    A70_3["Readability + glossary tools"]
+    class A70_3 tool
+    A70_4["TTS/translation"]
+    class A70_4 tool
+    A70_5["Comprehension checks"]
+    class A70_5 tool
+    A70_6["Progress log"]
+    class A70_6 backend
+    A70_0 --> A70_1
+    A70_1 --> A70_2
+    A70_2 --> A70_3
+    A70_3 --> A70_4
+    A70_4 --> A70_5
+    A70_5 --> A70_6
+    CONTROL70["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL70 control
+    CONTROL70 -. governs request .-> A70_1

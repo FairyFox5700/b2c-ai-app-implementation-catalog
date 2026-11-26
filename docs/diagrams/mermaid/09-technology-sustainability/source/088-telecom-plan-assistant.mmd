@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A88_0["Usage input"]
+    class A88_0 frontend
+    A88_1["Customer profile"]
+    class A88_1 data
+    A88_2["Plan agent"]
+    class A88_2 agent
+    A88_3["Offer/coverage APIs"]
+    class A88_3 external
+    A88_4["Cost simulator"]
+    class A88_4 tool
+    A88_5["Ranked comparison"]
+    class A88_5 tool
+    A88_6["Switch checklist"]
+    class A88_6 backend
+    A88_0 --> A88_1
+    A88_1 --> A88_2
+    A88_2 --> A88_3
+    A88_3 --> A88_4
+    A88_4 --> A88_5
+    A88_5 --> A88_6
+    CONTROL88["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL88 control
+    CONTROL88 -. governs request .-> A88_1

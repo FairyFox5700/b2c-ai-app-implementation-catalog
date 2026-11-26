@@ -1,0 +1,40 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A1_0["Chat UI"]
+    class A1_0 frontend
+    A1_1["API gateway"]
+    class A1_1 external
+    A1_2["orchestrator agent"]
+    class A1_2 agent
+    A1_3["catalog search"]
+    class A1_3 tool
+    A1_4["profile memory"]
+    class A1_4 data
+    A1_5["price/stock tools"]
+    class A1_5 tool
+    A1_6["ranker"]
+    class A1_6 agent
+    A1_7["product cards"]
+    class A1_7 tool
+    A1_8["cart handoff"]
+    class A1_8 backend
+    A1_0 --> A1_1
+    A1_1 --> A1_2
+    A1_2 --> A1_3
+    A1_2 --> A1_4
+    A1_2 --> A1_5
+    A1_3 --> A1_6
+    A1_4 --> A1_6
+    A1_5 --> A1_6
+    A1_6 --> A1_7
+    A1_7 --> A1_8
+    CONTROL1["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL1 control
+    CONTROL1 -. governs request .-> A1_1

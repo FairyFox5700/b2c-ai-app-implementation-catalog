@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A86_0["Model scan"]
+    class A86_0 frontend
+    A86_1["Device catalog"]
+    class A86_1 tool
+    A86_2["Setup agent"]
+    class A86_2 agent
+    A86_3["Step-by-step guide + environment check"]
+    class A86_3 frontend
+    A86_4["Verification tests"]
+    class A86_4 tool
+    A86_5["Completion record"]
+    class A86_5 backend
+    A86_0 --> A86_1
+    A86_1 --> A86_2
+    A86_2 --> A86_3
+    A86_3 --> A86_4
+    A86_4 --> A86_5
+    CONTROL86["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL86 control
+    CONTROL86 -. governs request .-> A86_1

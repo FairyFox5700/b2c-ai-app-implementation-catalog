@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A83_0["Care-circle app"]
+    class A83_0 frontend
+    A83_1["consent and role service"]
+    class A83_1 tool
+    A83_2["task and medication store"]
+    class A83_2 data
+    A83_3["coordination agent"]
+    class A83_3 agent
+    A83_4["reminders and summaries"]
+    class A83_4 tool
+    A83_5["escalation contacts"]
+    class A83_5 backend
+    A83_0 --> A83_1
+    A83_1 --> A83_2
+    A83_2 --> A83_3
+    A83_3 --> A83_4
+    A83_4 --> A83_5
+    CONTROL83["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL83 control
+    CONTROL83 -. governs request .-> A83_1

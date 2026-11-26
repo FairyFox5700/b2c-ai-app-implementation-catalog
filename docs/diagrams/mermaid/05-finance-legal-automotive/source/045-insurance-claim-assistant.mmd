@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A45_0["Incident intake"]
+    class A45_0 frontend
+    A45_1["claim workflow engine"]
+    class A45_1 agent
+    A45_2["evidence manager"]
+    class A45_2 tool
+    A45_3["drafting agent"]
+    class A45_3 agent
+    A45_4["user approval"]
+    class A45_4 frontend
+    A45_5["insurer submission/tracker"]
+    class A45_5 backend
+    A45_0 --> A45_1
+    A45_1 --> A45_2
+    A45_2 --> A45_3
+    A45_3 --> A45_4
+    A45_4 --> A45_5
+    CONTROL45["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL45 control
+    CONTROL45 -. governs request .-> A45_1

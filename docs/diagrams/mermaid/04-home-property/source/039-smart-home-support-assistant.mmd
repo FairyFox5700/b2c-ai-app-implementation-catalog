@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A39_0["Chat UI"]
+    class A39_0 frontend
+    A39_1["Support agent"]
+    class A39_1 agent
+    A39_2["Device inventory/status tools"]
+    class A39_2 tool
+    A39_3["Diagnostic knowledge base"]
+    class A39_3 tool
+    A39_4["Fix executor"]
+    class A39_4 tool
+    A39_5["Automation builder"]
+    class A39_5 frontend
+    A39_0 --> A39_1
+    A39_1 --> A39_2
+    A39_2 --> A39_3
+    A39_3 --> A39_4
+    A39_4 --> A39_5
+    CONTROL39["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL39 control
+    CONTROL39 -. governs request .-> A39_1

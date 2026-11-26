@@ -1,5 +1,8 @@
 **/bin/
 **/obj/
+**/__pycache__/
+*.pyc
+node_modules/
 *.user
 *.suo
 .vs/

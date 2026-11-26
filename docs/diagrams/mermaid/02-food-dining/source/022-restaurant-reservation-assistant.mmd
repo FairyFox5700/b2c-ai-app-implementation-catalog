@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A22_0["Chat UI"]
+    class A22_0 frontend
+    A22_1["Reservation agent"]
+    class A22_1 agent
+    A22_2["Availability connectors"]
+    class A22_2 external
+    A22_3["Booking executor"]
+    class A22_3 tool
+    A22_4["Confirmation store"]
+    class A22_4 data
+    A22_5["Calendar/reminders"]
+    class A22_5 external
+    A22_0 --> A22_1
+    A22_1 --> A22_2
+    A22_2 --> A22_3
+    A22_3 --> A22_4
+    A22_4 --> A22_5
+    CONTROL22["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL22 control
+    CONTROL22 -. governs request .-> A22_1

@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A4_0["Query/browse UI"]
+    class A4_0 frontend
+    A4_1["intent and facet agent"]
+    class A4_1 agent
+    A4_2["hybrid retrieval (keyword + vector + graph)"]
+    class A4_2 data
+    A4_3["diversified reranker"]
+    class A4_3 agent
+    A4_4["explained results"]
+    class A4_4 tool
+    A4_5["refinement loop"]
+    class A4_5 backend
+    A4_0 --> A4_1
+    A4_1 --> A4_2
+    A4_2 --> A4_3
+    A4_3 --> A4_4
+    A4_4 --> A4_5
+    CONTROL4["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL4 control
+    CONTROL4 -. governs request .-> A4_1
