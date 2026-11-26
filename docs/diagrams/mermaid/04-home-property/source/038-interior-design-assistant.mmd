@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A38_0["Room photos/dims"]
+    class A38_0 frontend
+    A38_1["Vision analyzer"]
+    class A38_1 tool
+    A38_2["Design agent"]
+    class A38_2 agent
+    A38_3["Layout checker"]
+    class A38_3 tool
+    A38_4["Product catalog search"]
+    class A38_4 tool
+    A38_5["Render/mood board"]
+    class A38_5 tool
+    A38_6["Shopping list"]
+    class A38_6 backend
+    A38_0 --> A38_1
+    A38_1 --> A38_2
+    A38_2 --> A38_3
+    A38_3 --> A38_4
+    A38_4 --> A38_5
+    A38_5 --> A38_6
+    CONTROL38["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL38 control
+    CONTROL38 -. governs request .-> A38_1

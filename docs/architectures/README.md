@@ -8,7 +8,48 @@ Each volume includes multiple diagram levels:
 - a **category deployment diagram** showing Azure edge, API, compute, model, tools, data, messaging, identity, security and observability boundaries;
 - a distinct **application request-flow diagram** showing the app's channels, orchestration, tools, integrations, data path, policy gates and telemetry.
 
-Every app now also documents its eight-step **main execution logic** and links to a [runnable C# workflow sample](../../samples/agent-workflow-csharp/README.md) implementing policy checks, approval gates, idempotent tool execution and audit events.
+All Mermaid diagrams are committed as **pre-rendered SVG files** so large GitHub pages display immediately instead of remaining on “Loading.” The editable `.mmd` source is linked directly below every SVG. Rendering is pinned to Mermaid CLI 12.2.0. Run `npm ci` once, then `npm run diagrams:render` after changing a source file or `npm run diagrams:check` to freshly render every source and verify that all 117 committed SVGs are current.
+
+Every app also documents its eight-step **main execution logic** and links to a [runnable C# workflow sample](../../samples/agent-workflow-csharp/README.md) implementing policy checks, approval gates, idempotent tool execution and audit events.
+
+## How to read the architecture views
+
+### View 1: system context — who participates
+
+Use this view to establish the system boundary. The **customer** supplies intent and confirms consequential actions; the **human approver** handles exceptions or regulated decisions; the **B2C AI application** owns the experience and workflow; **Microsoft Foundry** supplies model inference; and **domain systems** remain the source of truth for prices, bookings, accounts, records and other business facts.
+
+This view answers: *Who trusts whom? Which systems are external? Where does responsibility begin and end?*
+
+### View 2: runtime and transaction flow — what happens to one request
+
+1. The channel sends a request through Azure Front Door/WAF and API Management.
+2. Application code authenticates the user, validates the schema, attaches a correlation ID and loads only the authorized context.
+3. The orchestrator asks the model for a structured proposal using a bounded list of tool schemas.
+4. Deterministic policy code checks the proposed tool, arguments, permissions, limits and risk classification.
+5. Read operations query retrieval indexes or business APIs. Consequential writes pause for explicit approval.
+6. The tool gateway executes with idempotency, timeout and retry controls; durable work moves to Service Bus rather than blocking the request.
+7. Transactional state is committed by application services—not by the model—and a grounded response is returned.
+8. Redacted traces, metrics and evaluation signals are emitted throughout the flow.
+
+This view answers: *Where can a request fail? Which steps are synchronous? Where are retries, approvals and state transitions owned?*
+
+### View 3: security, data and operations — how production is controlled
+
+The control plane spans the full request path: Entra ID and managed identity establish identity; Key Vault protects secrets; private endpoints restrict network access; content-safety and business-policy checks constrain model output; Application Insights records redacted telemetry; and evaluation pipelines detect regressions. Retrieval indexes are deliberately separated from transactional stores so generated context never becomes an accidental system of record.
+
+This view answers: *Where is sensitive data stored? How is access enforced? What is logged, evaluated and recoverable?*
+
+### Application request-flow color key
+
+- **Teal — channel/edge:** user-facing entry points and ingress.
+- **Green — agent/orchestration:** planning, routing and response composition.
+- **Amber — controlled tools:** deterministic operations and external API adapters.
+- **Violet — data:** retrieval indexes, profiles and workflow state.
+- **Blue — application backend:** durable handoffs and business services.
+- **Gray — external dependency:** systems outside the application boundary.
+- **Red — control plane:** identity, policy, approvals, telemetry and evaluation.
+
+A line in a diagram means a permitted interaction—not unrestricted network access. Production implementations should expose narrow typed contracts, authorize every call, validate every result and keep high-impact writes behind an explicit approval boundary.
 
 Every application overview covers:
 

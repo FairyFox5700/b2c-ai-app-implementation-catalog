@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A98_0["Chat UI"]
+    class A98_0 frontend
+    A98_1["household profile"]
+    class A98_1 data
+    A98_2["catalogue and availability index"]
+    class A98_2 data
+    A98_3["recommender agent"]
+    class A98_3 agent
+    A98_4["group-consensus tool"]
+    class A98_4 tool
+    A98_5["watchlist/alerts"]
+    class A98_5 backend
+    A98_0 --> A98_1
+    A98_1 --> A98_2
+    A98_2 --> A98_3
+    A98_3 --> A98_4
+    A98_4 --> A98_5
+    CONTROL98["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL98 control
+    CONTROL98 -. governs request .-> A98_1

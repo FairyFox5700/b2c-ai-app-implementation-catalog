@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A32_0["Chat UI"]
+    class A32_0 frontend
+    A32_1["Event search"]
+    class A32_1 tool
+    A32_2["Ticket marketplace APIs"]
+    class A32_2 external
+    A32_3["Price/seat ranker"]
+    class A32_3 agent
+    A32_4["Alert service"]
+    class A32_4 tool
+    A32_5["Verified seller handoff"]
+    class A32_5 backend
+    A32_0 --> A32_1
+    A32_1 --> A32_2
+    A32_2 --> A32_3
+    A32_3 --> A32_4
+    A32_4 --> A32_5
+    CONTROL32["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL32 control
+    CONTROL32 -. governs request .-> A32_1

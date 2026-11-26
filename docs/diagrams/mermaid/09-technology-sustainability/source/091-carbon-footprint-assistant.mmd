@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A91_0["Activity data"]
+    class A91_0 frontend
+    A91_1["Normalizer"]
+    class A91_1 tool
+    A91_2["Footprint agent"]
+    class A91_2 agent
+    A91_3["Emission-factor engine"]
+    class A91_3 agent
+    A91_4["Scenario simulator"]
+    class A91_4 tool
+    A91_5["Report + uncertainty ranges"]
+    class A91_5 tool
+    A91_6["History store"]
+    class A91_6 data
+    A91_0 --> A91_1
+    A91_1 --> A91_2
+    A91_2 --> A91_3
+    A91_3 --> A91_4
+    A91_4 --> A91_5
+    A91_5 --> A91_6
+    CONTROL91["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL91 control
+    CONTROL91 -. governs request .-> A91_1

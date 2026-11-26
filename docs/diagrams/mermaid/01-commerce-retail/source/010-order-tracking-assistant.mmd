@@ -1,0 +1,37 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A10_0["Channel (web/SMS/WhatsApp)"]
+    class A10_0 frontend
+    A10_1["identity check"]
+    class A10_1 tool
+    A10_2["tracking agent"]
+    class A10_2 agent
+    A10_3["order API"]
+    class A10_3 external
+    A10_4["carrier tracking aggregator"]
+    class A10_4 tool
+    A10_5["event store"]
+    class A10_5 data
+    A10_6["status explanation"]
+    class A10_6 tool
+    A10_7["proactive notifier"]
+    class A10_7 backend
+    A10_0 --> A10_1
+    A10_1 --> A10_2
+    A10_2 --> A10_3
+    A10_2 --> A10_4
+    A10_2 --> A10_5
+    A10_3 --> A10_6
+    A10_4 --> A10_6
+    A10_5 --> A10_6
+    A10_6 --> A10_7
+    CONTROL10["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL10 control
+    CONTROL10 -. governs request .-> A10_1

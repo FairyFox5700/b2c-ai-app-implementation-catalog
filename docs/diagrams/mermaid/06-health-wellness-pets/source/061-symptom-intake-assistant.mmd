@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A61_0["Patient UI"]
+    class A61_0 frontend
+    A61_1["Red-flag screener"]
+    class A61_1 tool
+    A61_2["Intake agent"]
+    class A61_2 agent
+    A61_3["Structured summary"]
+    class A61_3 tool
+    A61_4["Clinician review queue"]
+    class A61_4 tool
+    A61_5["EHR/FHIR"]
+    class A61_5 backend
+    A61_0 --> A61_1
+    A61_1 --> A61_2
+    A61_2 --> A61_3
+    A61_3 --> A61_4
+    A61_4 --> A61_5
+    CONTROL61["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL61 control
+    CONTROL61 -. governs request .-> A61_1

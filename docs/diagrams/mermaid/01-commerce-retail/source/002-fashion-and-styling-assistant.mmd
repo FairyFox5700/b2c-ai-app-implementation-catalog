@@ -1,0 +1,37 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A2_0["Chat/photo UI"]
+    class A2_0 frontend
+    A2_1["style agent"]
+    class A2_1 agent
+    A2_2["attribute extractor"]
+    class A2_2 tool
+    A2_3["outfit composer"]
+    class A2_3 tool
+    A2_4["catalog + inventory search"]
+    class A2_4 tool
+    A2_5["compatibility scorer"]
+    class A2_5 tool
+    A2_6["outfit cards"]
+    class A2_6 tool
+    A2_7["cart"]
+    class A2_7 backend
+    A2_0 --> A2_1
+    A2_1 --> A2_2
+    A2_1 --> A2_3
+    A2_1 --> A2_4
+    A2_2 --> A2_5
+    A2_3 --> A2_5
+    A2_4 --> A2_5
+    A2_5 --> A2_6
+    A2_6 --> A2_7
+    CONTROL2["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL2 control
+    CONTROL2 -. governs request .-> A2_1

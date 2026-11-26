@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A71_0["Content input"]
+    class A71_0 frontend
+    A71_1["Standards mapper"]
+    class A71_1 frontend
+    A71_2["Quiz agent"]
+    class A71_2 frontend
+    A71_3["Item generator"]
+    class A71_3 tool
+    A71_4["Validator/reviewer"]
+    class A71_4 agent
+    A71_5["Quiz builder"]
+    class A71_5 frontend
+    A71_6["Delivery + analytics"]
+    class A71_6 backend
+    A71_0 --> A71_1
+    A71_1 --> A71_2
+    A71_2 --> A71_3
+    A71_3 --> A71_4
+    A71_4 --> A71_5
+    A71_5 --> A71_6
+    CONTROL71["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL71 control
+    CONTROL71 -. governs request .-> A71_1

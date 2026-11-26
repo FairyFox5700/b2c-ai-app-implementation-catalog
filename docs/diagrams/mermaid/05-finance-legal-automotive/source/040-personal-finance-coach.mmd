@@ -1,0 +1,37 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A40_0["Web/mobile chat"]
+    class A40_0 frontend
+    A40_1["API gateway"]
+    class A40_1 external
+    A40_2["orchestrator agent"]
+    class A40_2 agent
+    A40_3["finance calc engine"]
+    class A40_3 agent
+    A40_4["data aggregator"]
+    class A40_4 tool
+    A40_5["knowledge base"]
+    class A40_5 tool
+    A40_6["encrypted store"]
+    class A40_6 data
+    A40_7["audit log"]
+    class A40_7 backend
+    A40_0 --> A40_1
+    A40_1 --> A40_2
+    A40_2 --> A40_3
+    A40_2 --> A40_4
+    A40_2 --> A40_5
+    A40_3 --> A40_6
+    A40_4 --> A40_6
+    A40_5 --> A40_6
+    A40_6 --> A40_7
+    CONTROL40["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL40 control
+    CONTROL40 -. governs request .-> A40_1

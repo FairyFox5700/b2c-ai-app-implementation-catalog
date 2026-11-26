@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A6_0["Gift brief form/chat"]
+    class A6_0 frontend
+    A6_1["recipient profile builder"]
+    class A6_1 frontend
+    A6_2["idea generator"]
+    class A6_2 tool
+    A6_3["catalog matcher + delivery-date filter"]
+    class A6_3 tool
+    A6_4["curated shortlist"]
+    class A6_4 tool
+    A6_5["gift checkout options"]
+    class A6_5 backend
+    A6_0 --> A6_1
+    A6_1 --> A6_2
+    A6_2 --> A6_3
+    A6_3 --> A6_4
+    A6_4 --> A6_5
+    CONTROL6["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL6 control
+    CONTROL6 -. governs request .-> A6_1

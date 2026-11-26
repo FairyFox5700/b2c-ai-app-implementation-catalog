@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A82_0["Mobile app/voice"]
+    class A82_0 frontend
+    A82_1["event API"]
+    class A82_1 external
+    A82_2["baby event store"]
+    class A82_2 data
+    A82_3["pattern analyzer"]
+    class A82_3 tool
+    A82_4["summaries and alerts"]
+    class A82_4 tool
+    A82_5["caregiver sharing and export"]
+    class A82_5 backend
+    A82_0 --> A82_1
+    A82_1 --> A82_2
+    A82_2 --> A82_3
+    A82_3 --> A82_4
+    A82_4 --> A82_5
+    CONTROL82["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL82 control
+    CONTROL82 -. governs request .-> A82_1

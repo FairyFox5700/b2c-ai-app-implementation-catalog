@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A89_0["Bills/smart-meter data"]
+    class A89_0 frontend
+    A89_1["Usage model"]
+    class A89_1 tool
+    A89_2["Energy agent"]
+    class A89_2 agent
+    A89_3["Tariff API"]
+    class A89_3 external
+    A89_4["Cost + risk simulator"]
+    class A89_4 tool
+    A89_5["Ranked plans"]
+    class A89_5 tool
+    A89_6["Switch guide"]
+    class A89_6 frontend
+    A89_0 --> A89_1
+    A89_1 --> A89_2
+    A89_2 --> A89_3
+    A89_3 --> A89_4
+    A89_4 --> A89_5
+    A89_5 --> A89_6
+    CONTROL89["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL89 control
+    CONTROL89 -. governs request .-> A89_1

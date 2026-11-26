@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A31_0["Brief"]
+    class A31_0 frontend
+    A31_1["Planner agent"]
+    class A31_1 agent
+    A31_2["Venue/vendor search"]
+    class A31_2 external
+    A31_3["Budget/task engine"]
+    class A31_3 agent
+    A31_4["Guest/RSVP service"]
+    class A31_4 tool
+    A31_5["Timeline dashboard"]
+    class A31_5 tool
+    A31_6["Vendor messaging"]
+    class A31_6 external
+    A31_0 --> A31_1
+    A31_1 --> A31_2
+    A31_2 --> A31_3
+    A31_3 --> A31_4
+    A31_4 --> A31_5
+    A31_5 --> A31_6
+    CONTROL31["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL31 control
+    CONTROL31 -. governs request .-> A31_1

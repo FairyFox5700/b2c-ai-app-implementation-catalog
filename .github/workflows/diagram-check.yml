@@ -1,0 +1,45 @@
+name: Architecture diagram validation
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "README.md"
+      - "docs/architectures/**"
+      - "docs/diagrams/mermaid/**"
+      - "scripts/render_mermaid_diagrams.py"
+      - "scripts/puppeteer-config.json"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/diagram-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "README.md"
+      - "docs/architectures/**"
+      - "docs/diagrams/mermaid/**"
+      - "scripts/render_mermaid_diagrams.py"
+      - "scripts/puppeteer-config.json"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/diagram-check.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install pinned Mermaid CLI
+        run: npm ci
+      - name: Render and verify all architecture diagrams
+        run: python scripts/render_mermaid_diagrams.py --check

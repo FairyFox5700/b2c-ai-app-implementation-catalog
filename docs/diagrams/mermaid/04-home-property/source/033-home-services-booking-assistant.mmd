@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A33_0["Chat/photos"]
+    class A33_0 frontend
+    A33_1["Job intake agent"]
+    class A33_1 agent
+    A33_2["Provider search"]
+    class A33_2 external
+    A33_3["Quote/availability connectors"]
+    class A33_3 external
+    A33_4["Comparison"]
+    class A33_4 tool
+    A33_5["Approval"]
+    class A33_5 frontend
+    A33_6["Booking/follow-up"]
+    class A33_6 backend
+    A33_0 --> A33_1
+    A33_1 --> A33_2
+    A33_2 --> A33_3
+    A33_3 --> A33_4
+    A33_4 --> A33_5
+    A33_5 --> A33_6
+    CONTROL33["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL33 control
+    CONTROL33 -. governs request .-> A33_1

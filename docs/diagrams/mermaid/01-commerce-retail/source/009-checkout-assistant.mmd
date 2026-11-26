@@ -1,0 +1,38 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A9_0["Checkout UI"]
+    class A9_0 frontend
+    A9_1["checkout orchestrator"]
+    class A9_1 agent
+    A9_2["address validation"]
+    class A9_2 tool
+    A9_3["shipping options"]
+    class A9_3 tool
+    A9_4["tax/fees"]
+    class A9_4 tool
+    A9_5["payment provider hosted fields"]
+    class A9_5 external
+    A9_6["assistant explanations"]
+    class A9_6 tool
+    A9_7["order confirmation"]
+    class A9_7 backend
+    A9_0 --> A9_1
+    A9_1 --> A9_2
+    A9_1 --> A9_3
+    A9_1 --> A9_4
+    A9_1 --> A9_5
+    A9_2 --> A9_6
+    A9_3 --> A9_6
+    A9_4 --> A9_6
+    A9_5 --> A9_6
+    A9_6 --> A9_7
+    CONTROL9["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL9 control
+    CONTROL9 -. governs request .-> A9_1

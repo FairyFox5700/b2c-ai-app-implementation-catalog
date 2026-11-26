@@ -1,5 +1,7 @@
 # Education and Learning Assistants (Apps 66-71)
 
+> **Reading guide:** See [how to interpret the system-context, runtime, security/data and application-flow views](README.md#how-to-read-the-architecture-views). Every diagram is a pre-rendered SVG; its editable Mermaid source is linked underneath.
+
 <!-- azure-icon-views:auto -->
 ## Azure architecture views
 
@@ -31,38 +33,9 @@ Shows identity, managed authorization, policy and approval gates, grounded retri
 
 This Azure-oriented deployment separates deterministic business operations from probabilistic model reasoning. The application owns authorization, validation, workflow state and approval; the model proposes actions only through allowlisted tools.
 
-```mermaid
-flowchart LR
-    classDef edge fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef compute fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef ai fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef integration fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+![Category deployment architecture](../diagrams/mermaid/07-education-learning/000-category-deployment.svg)
 
-    USER["Web, mobile, voice or partner channel"] --> EDGE["Azure Front Door + WAF"]
-    EDGE --> API["API Management"]
-    API --> APP["App Service / Container Apps"]
-    APP --> ORCH["Microsoft Agent Framework orchestrator"]
-    ORCH --> MODEL["Microsoft Foundry model endpoint"]
-    ORCH --> TOOLS["Controlled tool gateway"]
-    TOOLS --> DOMAIN["Education and learning tools and partner APIs"]
-    ORCH --> SEARCH["Azure AI Search / retrieval"]
-    ORCH --> STATE["Cosmos DB / SQL workflow state"]
-    ORCH --> BUS["Service Bus / durable background work"]
-
-    ID["Entra ID + managed identity"] -. authentication .-> API
-    VAULT["Key Vault + configuration"] -. secrets .-> APP
-    SAFE["Content safety, policy + human approval"] -. enforcement .-> ORCH
-    OBS["Application Insights, traces + evals"] -. telemetry .-> APP
-
-    class USER,EDGE,API edge
-    class APP,ORCH compute
-    class MODEL ai
-    class SEARCH,STATE data
-    class TOOLS,DOMAIN,BUS integration
-    class ID,VAULT,SAFE,OBS control
-```
+_[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source/000-category-deployment.mmd)_
 
 **Responsibility split**
 
@@ -81,40 +54,9 @@ flowchart LR
 **Reference architecture:** `Learner app (text/voice) -> Session API -> Tutor agent -> LLM + CEFR curriculum -> Feedback + SRS scheduler -> Progress DB`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A66_0["Learner app (text/voice)"]
-    class A66_0 frontend
-    A66_1["Session API"]
-    class A66_1 external
-    A66_2["Tutor agent"]
-    class A66_2 agent
-    A66_3["LLM + CEFR curriculum"]
-    class A66_3 tool
-    A66_4["Feedback + SRS scheduler"]
-    class A66_4 tool
-    A66_5["Progress DB"]
-    class A66_5 backend
-    A66_0 --> A66_1
-    A66_1 --> A66_2
-    A66_2 --> A66_3
-    A66_3 --> A66_4
-    A66_4 --> A66_5
-    ID66["Entra ID + managed identity"]
-    SAFE66["Policy, validation + approval gates"]
-    OBS66["Tracing, metrics + evaluation"]
-    class ID66,SAFE66,OBS66 control
-    ID66 -. authentication .-> A66_1
-    SAFE66 -. enforcement .-> A66_1
-    OBS66 -. telemetry .-> A66_1
-```
+![Language-learning tutor request flow](../diagrams/mermaid/07-education-learning/066-language-learning-tutor.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source/066-language-learning-tutor.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -150,40 +92,9 @@ flowchart LR
 **Reference architecture:** `Upload portal -> Parser/chunker -> Vector index -> Study agent (RAG + planner) -> Cards/summaries/plan -> Progress tracker`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A67_0["Upload portal"]
-    class A67_0 frontend
-    A67_1["Parser/chunker"]
-    class A67_1 tool
-    A67_2["Vector index"]
-    class A67_2 data
-    A67_3["Study agent (RAG + planner)"]
-    class A67_3 agent
-    A67_4["Cards/summaries/plan"]
-    class A67_4 tool
-    A67_5["Progress tracker"]
-    class A67_5 backend
-    A67_0 --> A67_1
-    A67_1 --> A67_2
-    A67_2 --> A67_3
-    A67_3 --> A67_4
-    A67_4 --> A67_5
-    ID67["Entra ID + managed identity"]
-    SAFE67["Policy, validation + approval gates"]
-    OBS67["Tracing, metrics + evaluation"]
-    class ID67,SAFE67,OBS67 control
-    ID67 -. authentication .-> A67_1
-    SAFE67 -. enforcement .-> A67_1
-    OBS67 -. telemetry .-> A67_1
-```
+![Study assistant request flow](../diagrams/mermaid/07-education-learning/067-study-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source/067-study-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -219,40 +130,9 @@ flowchart LR
 **Reference architecture:** `Student UI -> Safety filter -> Tutor agent (hint ladder) -> Solver/verifier tools -> Step checker -> Guardian/teacher report`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A68_0["Student UI"]
-    class A68_0 frontend
-    A68_1["Safety filter"]
-    class A68_1 tool
-    A68_2["Tutor agent (hint ladder)"]
-    class A68_2 agent
-    A68_3["Solver/verifier tools"]
-    class A68_3 agent
-    A68_4["Step checker"]
-    class A68_4 tool
-    A68_5["Guardian/teacher report"]
-    class A68_5 backend
-    A68_0 --> A68_1
-    A68_1 --> A68_2
-    A68_2 --> A68_3
-    A68_3 --> A68_4
-    A68_4 --> A68_5
-    ID68["Entra ID + managed identity"]
-    SAFE68["Policy, validation + approval gates"]
-    OBS68["Tracing, metrics + evaluation"]
-    class ID68,SAFE68,OBS68 control
-    ID68 -. authentication .-> A68_1
-    SAFE68 -. enforcement .-> A68_1
-    OBS68 -. telemetry .-> A68_1
-```
+![Homework tutor request flow](../diagrams/mermaid/07-education-learning/068-homework-tutor.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source/068-homework-tutor.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -288,43 +168,9 @@ flowchart LR
 **Reference architecture:** `Exam profile -> Diagnostic engine -> Coach agent -> Question bank + generator -> Timed mock runner -> Readiness model -> Plan updater`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A69_0["Exam profile"]
-    class A69_0 frontend
-    A69_1["Diagnostic engine"]
-    class A69_1 agent
-    A69_2["Coach agent"]
-    class A69_2 agent
-    A69_3["Question bank + generator"]
-    class A69_3 tool
-    A69_4["Timed mock runner"]
-    class A69_4 tool
-    A69_5["Readiness model"]
-    class A69_5 tool
-    A69_6["Plan updater"]
-    class A69_6 backend
-    A69_0 --> A69_1
-    A69_1 --> A69_2
-    A69_2 --> A69_3
-    A69_3 --> A69_4
-    A69_4 --> A69_5
-    A69_5 --> A69_6
-    ID69["Entra ID + managed identity"]
-    SAFE69["Policy, validation + approval gates"]
-    OBS69["Tracing, metrics + evaluation"]
-    class ID69,SAFE69,OBS69 control
-    ID69 -. authentication .-> A69_1
-    SAFE69 -. enforcement .-> A69_1
-    OBS69 -. telemetry .-> A69_1
-```
+![Exam-preparation coach request flow](../diagrams/mermaid/07-education-learning/069-exam-preparation-coach.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source/069-exam-preparation-coach.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -360,43 +206,9 @@ flowchart LR
 **Reference architecture:** `Reader UI -> Text processor -> Reading agent -> Readability + glossary tools -> TTS/translation -> Comprehension checks -> Progress log`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A70_0["Reader UI"]
-    class A70_0 frontend
-    A70_1["Text processor"]
-    class A70_1 tool
-    A70_2["Reading agent"]
-    class A70_2 agent
-    A70_3["Readability + glossary tools"]
-    class A70_3 tool
-    A70_4["TTS/translation"]
-    class A70_4 tool
-    A70_5["Comprehension checks"]
-    class A70_5 tool
-    A70_6["Progress log"]
-    class A70_6 backend
-    A70_0 --> A70_1
-    A70_1 --> A70_2
-    A70_2 --> A70_3
-    A70_3 --> A70_4
-    A70_4 --> A70_5
-    A70_5 --> A70_6
-    ID70["Entra ID + managed identity"]
-    SAFE70["Policy, validation + approval gates"]
-    OBS70["Tracing, metrics + evaluation"]
-    class ID70,SAFE70,OBS70 control
-    ID70 -. authentication .-> A70_1
-    SAFE70 -. enforcement .-> A70_1
-    OBS70 -. telemetry .-> A70_1
-```
+![Reading assistant request flow](../diagrams/mermaid/07-education-learning/070-reading-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source/070-reading-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -432,43 +244,9 @@ flowchart LR
 **Reference architecture:** `Content input -> Standards mapper -> Quiz agent -> Item generator -> Validator/reviewer -> Quiz builder -> Delivery + analytics`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A71_0["Content input"]
-    class A71_0 frontend
-    A71_1["Standards mapper"]
-    class A71_1 frontend
-    A71_2["Quiz agent"]
-    class A71_2 frontend
-    A71_3["Item generator"]
-    class A71_3 tool
-    A71_4["Validator/reviewer"]
-    class A71_4 agent
-    A71_5["Quiz builder"]
-    class A71_5 frontend
-    A71_6["Delivery + analytics"]
-    class A71_6 backend
-    A71_0 --> A71_1
-    A71_1 --> A71_2
-    A71_2 --> A71_3
-    A71_3 --> A71_4
-    A71_4 --> A71_5
-    A71_5 --> A71_6
-    ID71["Entra ID + managed identity"]
-    SAFE71["Policy, validation + approval gates"]
-    OBS71["Tracing, metrics + evaluation"]
-    class ID71,SAFE71,OBS71 control
-    ID71 -. authentication .-> A71_1
-    SAFE71 -. enforcement .-> A71_1
-    OBS71 -. telemetry .-> A71_1
-```
+![Educational quiz generator request flow](../diagrams/mermaid/07-education-learning/071-educational-quiz-generator.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source/071-educational-quiz-generator.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**

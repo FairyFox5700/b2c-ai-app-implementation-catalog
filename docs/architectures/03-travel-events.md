@@ -1,5 +1,7 @@
 # Travel and Events
 
+> **Reading guide:** See [how to interpret the system-context, runtime, security/data and application-flow views](README.md#how-to-read-the-architecture-views). Every diagram is a pre-rendered SVG; its editable Mermaid source is linked underneath.
+
 <!-- azure-icon-views:auto -->
 ## Azure architecture views
 
@@ -31,38 +33,9 @@ Shows identity, managed authorization, policy and approval gates, grounded retri
 
 This Azure-oriented deployment separates deterministic business operations from probabilistic model reasoning. The application owns authorization, validation, workflow state and approval; the model proposes actions only through allowlisted tools.
 
-```mermaid
-flowchart LR
-    classDef edge fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef compute fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef ai fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef integration fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+![Category deployment architecture](../diagrams/mermaid/03-travel-events/000-category-deployment.svg)
 
-    USER["Web, mobile, voice or partner channel"] --> EDGE["Azure Front Door + WAF"]
-    EDGE --> API["API Management"]
-    API --> APP["App Service / Container Apps"]
-    APP --> ORCH["Microsoft Agent Framework orchestrator"]
-    ORCH --> MODEL["Microsoft Foundry model endpoint"]
-    ORCH --> TOOLS["Controlled tool gateway"]
-    TOOLS --> DOMAIN["Travel and events tools and partner APIs"]
-    ORCH --> SEARCH["Azure AI Search / retrieval"]
-    ORCH --> STATE["Cosmos DB / SQL workflow state"]
-    ORCH --> BUS["Service Bus / durable background work"]
-
-    ID["Entra ID + managed identity"] -. authentication .-> API
-    VAULT["Key Vault + configuration"] -. secrets .-> APP
-    SAFE["Content safety, policy + human approval"] -. enforcement .-> ORCH
-    OBS["Application Insights, traces + evals"] -. telemetry .-> APP
-
-    class USER,EDGE,API edge
-    class APP,ORCH compute
-    class MODEL ai
-    class SEARCH,STATE data
-    class TOOLS,DOMAIN,BUS integration
-    class ID,VAULT,SAFE,OBS control
-```
+_[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/000-category-deployment.mmd)_
 
 **Responsibility split**
 
@@ -83,40 +56,9 @@ Turns vague travel ideas into a workable trip plan covering destination, dates, 
 `Chat UI -> Trip planner agent -> Destination/price/weather tools -> Constraint scorer -> Plan builder -> Shareable trip workspace`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A24_0["Chat UI"]
-    class A24_0 frontend
-    A24_1["Trip planner agent"]
-    class A24_1 agent
-    A24_2["Destination/price/weather tools"]
-    class A24_2 tool
-    A24_3["Constraint scorer"]
-    class A24_3 tool
-    A24_4["Plan builder"]
-    class A24_4 frontend
-    A24_5["Shareable trip workspace"]
-    class A24_5 backend
-    A24_0 --> A24_1
-    A24_1 --> A24_2
-    A24_2 --> A24_3
-    A24_3 --> A24_4
-    A24_4 --> A24_5
-    ID24["Entra ID + managed identity"]
-    SAFE24["Policy, validation + approval gates"]
-    OBS24["Tracing, metrics + evaluation"]
-    class ID24,SAFE24,OBS24 control
-    ID24 -. authentication .-> A24_1
-    SAFE24 -. enforcement .-> A24_1
-    OBS24 -. telemetry .-> A24_1
-```
+![Travel-planning assistant request flow](../diagrams/mermaid/03-travel-events/024-travel-planning-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/024-travel-planning-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -160,40 +102,9 @@ Finds and compares flights using natural-language preferences. The user states r
 `Chat UI -> Query normalizer -> Flight search APIs -> Itinerary ranker -> Fare-rule explainer -> Price alert service`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A25_0["Chat UI"]
-    class A25_0 frontend
-    A25_1["Query normalizer"]
-    class A25_1 tool
-    A25_2["Flight search APIs"]
-    class A25_2 external
-    A25_3["Itinerary ranker"]
-    class A25_3 agent
-    A25_4["Fare-rule explainer"]
-    class A25_4 tool
-    A25_5["Price alert service"]
-    class A25_5 backend
-    A25_0 --> A25_1
-    A25_1 --> A25_2
-    A25_2 --> A25_3
-    A25_3 --> A25_4
-    A25_4 --> A25_5
-    ID25["Entra ID + managed identity"]
-    SAFE25["Policy, validation + approval gates"]
-    OBS25["Tracing, metrics + evaluation"]
-    class ID25,SAFE25,OBS25 control
-    ID25 -. authentication .-> A25_1
-    SAFE25 -. enforcement .-> A25_1
-    OBS25 -. telemetry .-> A25_1
-```
+![Flight-search assistant request flow](../diagrams/mermaid/03-travel-events/025-flight-search-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/025-flight-search-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -237,43 +148,9 @@ Recommends hotels and stays that match traveler needs such as location, budget, 
 `Chat UI -> Requirement extractor -> Hotel inventory APIs -> Review/location analyzer -> Ranker -> Comparison view -> Booking handoff`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A26_0["Chat UI"]
-    class A26_0 frontend
-    A26_1["Requirement extractor"]
-    class A26_1 frontend
-    A26_2["Hotel inventory APIs"]
-    class A26_2 external
-    A26_3["Review/location analyzer"]
-    class A26_3 tool
-    A26_4["Ranker"]
-    class A26_4 agent
-    A26_5["Comparison view"]
-    class A26_5 tool
-    A26_6["Booking handoff"]
-    class A26_6 backend
-    A26_0 --> A26_1
-    A26_1 --> A26_2
-    A26_2 --> A26_3
-    A26_3 --> A26_4
-    A26_4 --> A26_5
-    A26_5 --> A26_6
-    ID26["Entra ID + managed identity"]
-    SAFE26["Policy, validation + approval gates"]
-    OBS26["Tracing, metrics + evaluation"]
-    class ID26,SAFE26,OBS26 control
-    ID26 -. authentication .-> A26_1
-    SAFE26 -. enforcement .-> A26_1
-    OBS26 -. telemetry .-> A26_1
-```
+![Hotel recommendation assistant request flow](../diagrams/mermaid/03-travel-events/026-hotel-recommendation-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/026-hotel-recommendation-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -317,40 +194,9 @@ Executes bookings for flights, hotels, and extras from an approved plan. The use
 `Approved plan -> Booking orchestrator -> Provider booking APIs -> Payment service -> Confirmation vault -> Itinerary sync/notifications`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A27_0["Approved plan"]
-    class A27_0 frontend
-    A27_1["Booking orchestrator"]
-    class A27_1 agent
-    A27_2["Provider booking APIs"]
-    class A27_2 external
-    A27_3["Payment service"]
-    class A27_3 external
-    A27_4["Confirmation vault"]
-    class A27_4 tool
-    A27_5["Itinerary sync/notifications"]
-    class A27_5 backend
-    A27_0 --> A27_1
-    A27_1 --> A27_2
-    A27_2 --> A27_3
-    A27_3 --> A27_4
-    A27_4 --> A27_5
-    ID27["Entra ID + managed identity"]
-    SAFE27["Policy, validation + approval gates"]
-    OBS27["Tracing, metrics + evaluation"]
-    class ID27,SAFE27,OBS27 control
-    ID27 -. authentication .-> A27_1
-    SAFE27 -. enforcement .-> A27_1
-    OBS27 -. telemetry .-> A27_1
-```
+![Trip-booking assistant request flow](../diagrams/mermaid/03-travel-events/027-trip-booking-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/027-trip-booking-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -394,40 +240,9 @@ Produces day-by-day itineraries balancing interests, pace, logistics, and openin
 `Preferences -> Candidate POI retrieval -> Route/time optimizer -> Itinerary composer -> Editable map/calendar view -> Export`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A28_0["Preferences"]
-    class A28_0 frontend
-    A28_1["Candidate POI retrieval"]
-    class A28_1 tool
-    A28_2["Route/time optimizer"]
-    class A28_2 tool
-    A28_3["Itinerary composer"]
-    class A28_3 tool
-    A28_4["Editable map/calendar view"]
-    class A28_4 external
-    A28_5["Export"]
-    class A28_5 backend
-    A28_0 --> A28_1
-    A28_1 --> A28_2
-    A28_2 --> A28_3
-    A28_3 --> A28_4
-    A28_4 --> A28_5
-    ID28["Entra ID + managed identity"]
-    SAFE28["Policy, validation + approval gates"]
-    OBS28["Tracing, metrics + evaluation"]
-    class ID28,SAFE28,OBS28 control
-    ID28 -. authentication .-> A28_1
-    SAFE28 -. enforcement .-> A28_1
-    OBS28 -. telemetry .-> A28_1
-```
+![Itinerary generator request flow](../diagrams/mermaid/03-travel-events/028-itinerary-generator.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/028-itinerary-generator.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -471,43 +286,9 @@ Monitors trips for delays, cancellations, and other disruptions and helps recove
 `Itinerary store -> Flight/status monitors -> Disruption detector -> Recovery agent -> Rebooking options -> Approval -> Notifications/claims`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A29_0["Itinerary store"]
-    class A29_0 frontend
-    A29_1["Flight/status monitors"]
-    class A29_1 tool
-    A29_2["Disruption detector"]
-    class A29_2 tool
-    A29_3["Recovery agent"]
-    class A29_3 agent
-    A29_4["Rebooking options"]
-    class A29_4 tool
-    A29_5["Approval"]
-    class A29_5 frontend
-    A29_6["Notifications/claims"]
-    class A29_6 backend
-    A29_0 --> A29_1
-    A29_1 --> A29_2
-    A29_2 --> A29_3
-    A29_3 --> A29_4
-    A29_4 --> A29_5
-    A29_5 --> A29_6
-    ID29["Entra ID + managed identity"]
-    SAFE29["Policy, validation + approval gates"]
-    OBS29["Tracing, metrics + evaluation"]
-    class ID29,SAFE29,OBS29 control
-    ID29 -. authentication .-> A29_1
-    SAFE29 -. enforcement .-> A29_1
-    OBS29 -. telemetry .-> A29_1
-```
+![Travel-disruption assistant request flow](../diagrams/mermaid/03-travel-events/029-travel-disruption-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/029-travel-disruption-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -551,40 +332,9 @@ Suggests things to do nearby right now or later, matched to mood, group, weather
 `Context (location/time/weather) -> Concierge agent -> Places/events retrieval -> Context ranker -> Suggestions -> Save/share/book`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A30_0["Context (location/time/weather)"]
-    class A30_0 frontend
-    A30_1["Concierge agent"]
-    class A30_1 agent
-    A30_2["Places/events retrieval"]
-    class A30_2 tool
-    A30_3["Context ranker"]
-    class A30_3 agent
-    A30_4["Suggestions"]
-    class A30_4 tool
-    A30_5["Save/share/book"]
-    class A30_5 backend
-    A30_0 --> A30_1
-    A30_1 --> A30_2
-    A30_2 --> A30_3
-    A30_3 --> A30_4
-    A30_4 --> A30_5
-    ID30["Entra ID + managed identity"]
-    SAFE30["Policy, validation + approval gates"]
-    OBS30["Tracing, metrics + evaluation"]
-    class ID30,SAFE30,OBS30 control
-    ID30 -. authentication .-> A30_1
-    SAFE30 -. enforcement .-> A30_1
-    OBS30 -. telemetry .-> A30_1
-```
+![Local activity concierge request flow](../diagrams/mermaid/03-travel-events/030-local-activity-concierge.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/030-local-activity-concierge.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -628,43 +378,9 @@ Guides organizers through planning parties, meetings, and gatherings. The user s
 `Brief -> Planner agent -> Venue/vendor search -> Budget/task engine -> Guest/RSVP service -> Timeline dashboard -> Vendor messaging`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A31_0["Brief"]
-    class A31_0 frontend
-    A31_1["Planner agent"]
-    class A31_1 agent
-    A31_2["Venue/vendor search"]
-    class A31_2 external
-    A31_3["Budget/task engine"]
-    class A31_3 agent
-    A31_4["Guest/RSVP service"]
-    class A31_4 tool
-    A31_5["Timeline dashboard"]
-    class A31_5 tool
-    A31_6["Vendor messaging"]
-    class A31_6 external
-    A31_0 --> A31_1
-    A31_1 --> A31_2
-    A31_2 --> A31_3
-    A31_3 --> A31_4
-    A31_4 --> A31_5
-    A31_5 --> A31_6
-    ID31["Entra ID + managed identity"]
-    SAFE31["Policy, validation + approval gates"]
-    OBS31["Tracing, metrics + evaluation"]
-    class ID31,SAFE31,OBS31 control
-    ID31 -. authentication .-> A31_1
-    SAFE31 -. enforcement .-> A31_1
-    OBS31 -. telemetry .-> A31_1
-```
+![Event-planning assistant request flow](../diagrams/mermaid/03-travel-events/031-event-planning-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/031-event-planning-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -708,40 +424,9 @@ Helps users find tickets to concerts, sports, and shows at fair prices. The user
 `Chat UI -> Event search -> Ticket marketplace APIs -> Price/seat ranker -> Alert service -> Verified seller handoff`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A32_0["Chat UI"]
-    class A32_0 frontend
-    A32_1["Event search"]
-    class A32_1 tool
-    A32_2["Ticket marketplace APIs"]
-    class A32_2 external
-    A32_3["Price/seat ranker"]
-    class A32_3 agent
-    A32_4["Alert service"]
-    class A32_4 tool
-    A32_5["Verified seller handoff"]
-    class A32_5 backend
-    A32_0 --> A32_1
-    A32_1 --> A32_2
-    A32_2 --> A32_3
-    A32_3 --> A32_4
-    A32_4 --> A32_5
-    ID32["Entra ID + managed identity"]
-    SAFE32["Policy, validation + approval gates"]
-    OBS32["Tracing, metrics + evaluation"]
-    class ID32,SAFE32,OBS32 control
-    ID32 -. authentication .-> A32_1
-    SAFE32 -. enforcement .-> A32_1
-    OBS32 -. telemetry .-> A32_1
-```
+![Ticket-discovery assistant request flow](../diagrams/mermaid/03-travel-events/032-ticket-discovery-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/032-ticket-discovery-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**

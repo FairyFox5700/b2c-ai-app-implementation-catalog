@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A52_0["Web/mobile UI"]
+    class A52_0 frontend
+    A52_1["Planner API"]
+    class A52_1 external
+    A52_2["Constraint solver + LLM drafter"]
+    class A52_2 agent
+    A52_3["Exercise DB"]
+    class A52_3 tool
+    A52_4["Calendar sync"]
+    class A52_4 external
+    A52_5["Feedback loop"]
+    class A52_5 backend
+    A52_0 --> A52_1
+    A52_1 --> A52_2
+    A52_2 --> A52_3
+    A52_3 --> A52_4
+    A52_4 --> A52_5
+    CONTROL52["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL52 control
+    CONTROL52 -. governs request .-> A52_1

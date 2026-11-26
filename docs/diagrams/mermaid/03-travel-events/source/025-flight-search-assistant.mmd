@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A25_0["Chat UI"]
+    class A25_0 frontend
+    A25_1["Query normalizer"]
+    class A25_1 tool
+    A25_2["Flight search APIs"]
+    class A25_2 external
+    A25_3["Itinerary ranker"]
+    class A25_3 agent
+    A25_4["Fare-rule explainer"]
+    class A25_4 tool
+    A25_5["Price alert service"]
+    class A25_5 backend
+    A25_0 --> A25_1
+    A25_1 --> A25_2
+    A25_2 --> A25_3
+    A25_3 --> A25_4
+    A25_4 --> A25_5
+    CONTROL25["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL25 control
+    CONTROL25 -. governs request .-> A25_1

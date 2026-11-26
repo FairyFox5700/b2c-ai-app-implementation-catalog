@@ -1,5 +1,7 @@
 # Career, productivity and family architecture overviews
 
+> **Reading guide:** See [how to interpret the system-context, runtime, security/data and application-flow views](README.md#how-to-read-the-architecture-views). Every diagram is a pre-rendered SVG; its editable Mermaid source is linked underneath.
+
 <!-- azure-icon-views:auto -->
 ## Azure architecture views
 
@@ -31,38 +33,9 @@ Shows identity, managed authorization, policy and approval gates, grounded retri
 
 This Azure-oriented deployment separates deterministic business operations from probabilistic model reasoning. The application owns authorization, validation, workflow state and approval; the model proposes actions only through allowlisted tools.
 
-```mermaid
-flowchart LR
-    classDef edge fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef compute fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef ai fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef integration fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+![Category deployment architecture](../diagrams/mermaid/08-career-productivity-family/000-category-deployment.svg)
 
-    USER["Web, mobile, voice or partner channel"] --> EDGE["Azure Front Door + WAF"]
-    EDGE --> API["API Management"]
-    API --> APP["App Service / Container Apps"]
-    APP --> ORCH["Microsoft Agent Framework orchestrator"]
-    ORCH --> MODEL["Microsoft Foundry model endpoint"]
-    ORCH --> TOOLS["Controlled tool gateway"]
-    TOOLS --> DOMAIN["Career, productivity and family tools and partner APIs"]
-    ORCH --> SEARCH["Azure AI Search / retrieval"]
-    ORCH --> STATE["Cosmos DB / SQL workflow state"]
-    ORCH --> BUS["Service Bus / durable background work"]
-
-    ID["Entra ID + managed identity"] -. authentication .-> API
-    VAULT["Key Vault + configuration"] -. secrets .-> APP
-    SAFE["Content safety, policy + human approval"] -. enforcement .-> ORCH
-    OBS["Application Insights, traces + evals"] -. telemetry .-> APP
-
-    class USER,EDGE,API edge
-    class APP,ORCH compute
-    class MODEL ai
-    class SEARCH,STATE data
-    class TOOLS,DOMAIN,BUS integration
-    class ID,VAULT,SAFE,OBS control
-```
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/000-category-deployment.mmd)_
 
 **Responsibility split**
 
@@ -81,40 +54,9 @@ flowchart LR
 **Reference architecture:** `Web/mobile chat -> API gateway -> planner agent -> skills-taxonomy + labor-market tools -> profile store -> plan and reminder service`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A72_0["Web/mobile chat"]
-    class A72_0 frontend
-    A72_1["API gateway"]
-    class A72_1 external
-    A72_2["planner agent"]
-    class A72_2 agent
-    A72_3["skills-taxonomy + labor-market tools"]
-    class A72_3 tool
-    A72_4["profile store"]
-    class A72_4 data
-    A72_5["plan and reminder service"]
-    class A72_5 backend
-    A72_0 --> A72_1
-    A72_1 --> A72_2
-    A72_2 --> A72_3
-    A72_3 --> A72_4
-    A72_4 --> A72_5
-    ID72["Entra ID + managed identity"]
-    SAFE72["Policy, validation + approval gates"]
-    OBS72["Tracing, metrics + evaluation"]
-    class ID72,SAFE72,OBS72 control
-    ID72 -. authentication .-> A72_1
-    SAFE72 -. enforcement .-> A72_1
-    OBS72 -. telemetry .-> A72_1
-```
+![Career-planning assistant request flow](../diagrams/mermaid/08-career-productivity-family/072-career-planning-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/072-career-planning-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -150,43 +92,9 @@ flowchart LR
 **Reference architecture:** `Upload/editor UI -> parser -> structured profile -> tailoring agent -> truthfulness checker -> template renderer -> PDF/DOCX export`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A73_0["Upload/editor UI"]
-    class A73_0 frontend
-    A73_1["parser"]
-    class A73_1 tool
-    A73_2["structured profile"]
-    class A73_2 data
-    A73_3["tailoring agent"]
-    class A73_3 agent
-    A73_4["truthfulness checker"]
-    class A73_4 tool
-    A73_5["template renderer"]
-    class A73_5 tool
-    A73_6["PDF/DOCX export"]
-    class A73_6 backend
-    A73_0 --> A73_1
-    A73_1 --> A73_2
-    A73_2 --> A73_3
-    A73_3 --> A73_4
-    A73_4 --> A73_5
-    A73_5 --> A73_6
-    ID73["Entra ID + managed identity"]
-    SAFE73["Policy, validation + approval gates"]
-    OBS73["Tracing, metrics + evaluation"]
-    class ID73,SAFE73,OBS73 control
-    ID73 -. authentication .-> A73_1
-    SAFE73 -. enforcement .-> A73_1
-    OBS73 -. telemetry .-> A73_1
-```
+![CV and résumé assistant request flow](../diagrams/mermaid/08-career-productivity-family/073-cv-and-resume-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/073-cv-and-resume-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -222,43 +130,9 @@ flowchart LR
 **Reference architecture:** `Voice/text client -> session orchestrator -> interviewer agent -> speech-to-text -> evaluator agent -> feedback store -> progress dashboard`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A74_0["Voice/text client"]
-    class A74_0 frontend
-    A74_1["session orchestrator"]
-    class A74_1 agent
-    A74_2["interviewer agent"]
-    class A74_2 agent
-    A74_3["speech-to-text"]
-    class A74_3 tool
-    A74_4["evaluator agent"]
-    class A74_4 agent
-    A74_5["feedback store"]
-    class A74_5 data
-    A74_6["progress dashboard"]
-    class A74_6 backend
-    A74_0 --> A74_1
-    A74_1 --> A74_2
-    A74_2 --> A74_3
-    A74_3 --> A74_4
-    A74_4 --> A74_5
-    A74_5 --> A74_6
-    ID74["Entra ID + managed identity"]
-    SAFE74["Policy, validation + approval gates"]
-    OBS74["Tracing, metrics + evaluation"]
-    class ID74,SAFE74,OBS74 control
-    ID74 -. authentication .-> A74_1
-    SAFE74 -. enforcement .-> A74_1
-    OBS74 -. telemetry .-> A74_1
-```
+![Interview-practice coach request flow](../diagrams/mermaid/08-career-productivity-family/074-interview-practice-coach.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/074-interview-practice-coach.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -294,40 +168,9 @@ flowchart LR
 **Reference architecture:** `Preferences UI -> scheduler -> source connectors -> dedupe and ranking agent -> application tracker -> notifier and draft generator`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A75_0["Preferences UI"]
-    class A75_0 frontend
-    A75_1["scheduler"]
-    class A75_1 tool
-    A75_2["source connectors"]
-    class A75_2 external
-    A75_3["dedupe and ranking agent"]
-    class A75_3 agent
-    A75_4["application tracker"]
-    class A75_4 frontend
-    A75_5["notifier and draft generator"]
-    class A75_5 backend
-    A75_0 --> A75_1
-    A75_1 --> A75_2
-    A75_2 --> A75_3
-    A75_3 --> A75_4
-    A75_4 --> A75_5
-    ID75["Entra ID + managed identity"]
-    SAFE75["Policy, validation + approval gates"]
-    OBS75["Tracing, metrics + evaluation"]
-    class ID75,SAFE75,OBS75 control
-    ID75 -. authentication .-> A75_1
-    SAFE75 -. enforcement .-> A75_1
-    OBS75 -. telemetry .-> A75_1
-```
+![Job-search assistant request flow](../diagrams/mermaid/08-career-productivity-family/075-job-search-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/075-job-search-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -363,40 +206,9 @@ flowchart LR
 **Reference architecture:** `Chat/voice capture -> inbox normalizer -> priority agent -> task store -> calendar and notification connectors -> weekly review generator`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A76_0["Chat/voice capture"]
-    class A76_0 frontend
-    A76_1["inbox normalizer"]
-    class A76_1 tool
-    A76_2["priority agent"]
-    class A76_2 agent
-    A76_3["task store"]
-    class A76_3 data
-    A76_4["calendar and notification connectors"]
-    class A76_4 external
-    A76_5["weekly review generator"]
-    class A76_5 backend
-    A76_0 --> A76_1
-    A76_1 --> A76_2
-    A76_2 --> A76_3
-    A76_3 --> A76_4
-    A76_4 --> A76_5
-    ID76["Entra ID + managed identity"]
-    SAFE76["Policy, validation + approval gates"]
-    OBS76["Tracing, metrics + evaluation"]
-    class ID76,SAFE76,OBS76 control
-    ID76 -. authentication .-> A76_1
-    SAFE76 -. enforcement .-> A76_1
-    OBS76 -. telemetry .-> A76_1
-```
+![Personal productivity assistant request flow](../diagrams/mermaid/08-career-productivity-family/076-personal-productivity-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/076-personal-productivity-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -432,43 +244,9 @@ flowchart LR
 **Reference architecture:** `Calendar + task connectors -> context aggregator -> scheduling agent -> constraint solver -> proposed day plan -> notifier -> replan loop`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A77_0["Calendar + task connectors"]
-    class A77_0 frontend
-    A77_1["context aggregator"]
-    class A77_1 tool
-    A77_2["scheduling agent"]
-    class A77_2 agent
-    A77_3["constraint solver"]
-    class A77_3 agent
-    A77_4["proposed day plan"]
-    class A77_4 tool
-    A77_5["notifier"]
-    class A77_5 tool
-    A77_6["replan loop"]
-    class A77_6 backend
-    A77_0 --> A77_1
-    A77_1 --> A77_2
-    A77_2 --> A77_3
-    A77_3 --> A77_4
-    A77_4 --> A77_5
-    A77_5 --> A77_6
-    ID77["Entra ID + managed identity"]
-    SAFE77["Policy, validation + approval gates"]
-    OBS77["Tracing, metrics + evaluation"]
-    class ID77,SAFE77,OBS77 control
-    ID77 -. authentication .-> A77_1
-    SAFE77 -. enforcement .-> A77_1
-    OBS77 -. telemetry .-> A77_1
-```
+![Daily-planning assistant request flow](../diagrams/mermaid/08-career-productivity-family/077-daily-planning-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/077-daily-planning-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -504,43 +282,9 @@ flowchart LR
 **Reference architecture:** `Mail client plugin -> thread reader -> context retriever -> drafting agent -> tone and safety checker -> user review -> send`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A78_0["Mail client plugin"]
-    class A78_0 frontend
-    A78_1["thread reader"]
-    class A78_1 tool
-    A78_2["context retriever"]
-    class A78_2 tool
-    A78_3["drafting agent"]
-    class A78_3 agent
-    A78_4["tone and safety checker"]
-    class A78_4 tool
-    A78_5["user review"]
-    class A78_5 frontend
-    A78_6["send"]
-    class A78_6 backend
-    A78_0 --> A78_1
-    A78_1 --> A78_2
-    A78_2 --> A78_3
-    A78_3 --> A78_4
-    A78_4 --> A78_5
-    A78_5 --> A78_6
-    ID78["Entra ID + managed identity"]
-    SAFE78["Policy, validation + approval gates"]
-    OBS78["Tracing, metrics + evaluation"]
-    class ID78,SAFE78,OBS78 control
-    ID78 -. authentication .-> A78_1
-    SAFE78 -. enforcement .-> A78_1
-    OBS78 -. telemetry .-> A78_1
-```
+![Email-writing assistant request flow](../diagrams/mermaid/08-career-productivity-family/078-email-writing-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/078-email-writing-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -576,40 +320,9 @@ flowchart LR
 **Reference architecture:** `Source connectors -> ingestion pipeline -> chunker and embeddings -> vector and keyword index + knowledge graph -> retrieval agent -> cited answer UI`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A79_0["Source connectors"]
-    class A79_0 frontend
-    A79_1["ingestion pipeline"]
-    class A79_1 tool
-    A79_2["chunker and embeddings"]
-    class A79_2 tool
-    A79_3["vector and keyword index + knowledge graph"]
-    class A79_3 data
-    A79_4["retrieval agent"]
-    class A79_4 agent
-    A79_5["cited answer UI"]
-    class A79_5 frontend
-    A79_0 --> A79_1
-    A79_1 --> A79_2
-    A79_2 --> A79_3
-    A79_3 --> A79_4
-    A79_4 --> A79_5
-    ID79["Entra ID + managed identity"]
-    SAFE79["Policy, validation + approval gates"]
-    OBS79["Tracing, metrics + evaluation"]
-    class ID79,SAFE79,OBS79 control
-    ID79 -. authentication .-> A79_1
-    SAFE79 -. enforcement .-> A79_1
-    OBS79 -. telemetry .-> A79_1
-```
+![Personal knowledge assistant request flow](../diagrams/mermaid/08-career-productivity-family/079-personal-knowledge-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/079-personal-knowledge-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -645,40 +358,9 @@ flowchart LR
 **Reference architecture:** `Member calendars + school feeds -> ingest -> conflict detector -> coordination agent -> household calendar -> role-based notifications`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A80_0["Member calendars + school feeds"]
-    class A80_0 frontend
-    A80_1["ingest"]
-    class A80_1 tool
-    A80_2["conflict detector"]
-    class A80_2 tool
-    A80_3["coordination agent"]
-    class A80_3 agent
-    A80_4["household calendar"]
-    class A80_4 external
-    A80_5["role-based notifications"]
-    class A80_5 backend
-    A80_0 --> A80_1
-    A80_1 --> A80_2
-    A80_2 --> A80_3
-    A80_3 --> A80_4
-    A80_4 --> A80_5
-    ID80["Entra ID + managed identity"]
-    SAFE80["Policy, validation + approval gates"]
-    OBS80["Tracing, metrics + evaluation"]
-    class ID80,SAFE80,OBS80 control
-    ID80 -. authentication .-> A80_1
-    SAFE80 -. enforcement .-> A80_1
-    OBS80 -. telemetry .-> A80_1
-```
+![Family schedule assistant request flow](../diagrams/mermaid/08-career-productivity-family/080-family-schedule-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/080-family-schedule-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -714,40 +396,9 @@ flowchart LR
 **Reference architecture:** `Parent chat -> safety triage -> retrieval over vetted sources -> guidance agent -> age-aware response with citations -> routine and reminder service`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A81_0["Parent chat"]
-    class A81_0 frontend
-    A81_1["safety triage"]
-    class A81_1 tool
-    A81_2["retrieval over vetted sources"]
-    class A81_2 tool
-    A81_3["guidance agent"]
-    class A81_3 frontend
-    A81_4["age-aware response with citations"]
-    class A81_4 tool
-    A81_5["routine and reminder service"]
-    class A81_5 backend
-    A81_0 --> A81_1
-    A81_1 --> A81_2
-    A81_2 --> A81_3
-    A81_3 --> A81_4
-    A81_4 --> A81_5
-    ID81["Entra ID + managed identity"]
-    SAFE81["Policy, validation + approval gates"]
-    OBS81["Tracing, metrics + evaluation"]
-    class ID81,SAFE81,OBS81 control
-    ID81 -. authentication .-> A81_1
-    SAFE81 -. enforcement .-> A81_1
-    OBS81 -. telemetry .-> A81_1
-```
+![Parenting assistant request flow](../diagrams/mermaid/08-career-productivity-family/081-parenting-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/081-parenting-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -783,40 +434,9 @@ flowchart LR
 **Reference architecture:** `Mobile app/voice -> event API -> baby event store -> pattern analyzer -> summaries and alerts -> caregiver sharing and export`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A82_0["Mobile app/voice"]
-    class A82_0 frontend
-    A82_1["event API"]
-    class A82_1 external
-    A82_2["baby event store"]
-    class A82_2 data
-    A82_3["pattern analyzer"]
-    class A82_3 tool
-    A82_4["summaries and alerts"]
-    class A82_4 tool
-    A82_5["caregiver sharing and export"]
-    class A82_5 backend
-    A82_0 --> A82_1
-    A82_1 --> A82_2
-    A82_2 --> A82_3
-    A82_3 --> A82_4
-    A82_4 --> A82_5
-    ID82["Entra ID + managed identity"]
-    SAFE82["Policy, validation + approval gates"]
-    OBS82["Tracing, metrics + evaluation"]
-    class ID82,SAFE82,OBS82 control
-    ID82 -. authentication .-> A82_1
-    SAFE82 -. enforcement .-> A82_1
-    OBS82 -. telemetry .-> A82_1
-```
+![Baby-care tracker request flow](../diagrams/mermaid/08-career-productivity-family/082-baby-care-tracker.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/082-baby-care-tracker.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -852,40 +472,9 @@ flowchart LR
 **Reference architecture:** `Care-circle app -> consent and role service -> task and medication store -> coordination agent -> reminders and summaries -> escalation contacts`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A83_0["Care-circle app"]
-    class A83_0 frontend
-    A83_1["consent and role service"]
-    class A83_1 tool
-    A83_2["task and medication store"]
-    class A83_2 data
-    A83_3["coordination agent"]
-    class A83_3 agent
-    A83_4["reminders and summaries"]
-    class A83_4 tool
-    A83_5["escalation contacts"]
-    class A83_5 backend
-    A83_0 --> A83_1
-    A83_1 --> A83_2
-    A83_2 --> A83_3
-    A83_3 --> A83_4
-    A83_4 --> A83_5
-    ID83["Entra ID + managed identity"]
-    SAFE83["Policy, validation + approval gates"]
-    OBS83["Tracing, metrics + evaluation"]
-    class ID83,SAFE83,OBS83 control
-    ID83 -. authentication .-> A83_1
-    SAFE83 -. enforcement .-> A83_1
-    OBS83 -. telemetry .-> A83_1
-```
+![Elder-care coordination assistant request flow](../diagrams/mermaid/08-career-productivity-family/083-elder-care-coordination-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/083-elder-care-coordination-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**
@@ -921,37 +510,9 @@ flowchart LR
 **Reference architecture:** `Multimodal input (voice/camera/switch) -> preference-aware orchestrator -> vision, speech and maps tools -> adaptive output (audio/large text/haptic) -> user confirmation`
 
 <!-- architecture-diagram:auto -->
-```mermaid
-flowchart LR
-    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
-    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
-    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
-    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
-    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
-    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
-    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
-    A84_0["Multimodal input (voice/camera/switch)"]
-    class A84_0 frontend
-    A84_1["preference-aware orchestrator"]
-    class A84_1 agent
-    A84_2["vision, speech and maps tools"]
-    class A84_2 external
-    A84_3["adaptive output (audio/large text/haptic)"]
-    class A84_3 tool
-    A84_4["user confirmation"]
-    class A84_4 frontend
-    A84_0 --> A84_1
-    A84_1 --> A84_2
-    A84_2 --> A84_3
-    A84_3 --> A84_4
-    ID84["Entra ID + managed identity"]
-    SAFE84["Policy, validation + approval gates"]
-    OBS84["Tracing, metrics + evaluation"]
-    class ID84,SAFE84,OBS84 control
-    ID84 -. authentication .-> A84_1
-    SAFE84 -. enforcement .-> A84_1
-    OBS84 -. telemetry .-> A84_1
-```
+![Accessible-living assistant request flow](../diagrams/mermaid/08-career-productivity-family/084-accessible-living-assistant.svg)
+
+_[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-family/source/084-accessible-living-assistant.mmd)_
 
 <!-- main-logic:auto -->
 **Main execution logic**

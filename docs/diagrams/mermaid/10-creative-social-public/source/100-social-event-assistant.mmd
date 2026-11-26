@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A100_0["Chat UI"]
+    class A100_0 frontend
+    A100_1["event planner agent"]
+    class A100_1 agent
+    A100_2["scheduling/venue tools"]
+    class A100_2 tool
+    A100_3["invitation and RSVP service"]
+    class A100_3 tool
+    A100_4["reminders"]
+    class A100_4 tool
+    A100_5["post-event feedback"]
+    class A100_5 backend
+    A100_0 --> A100_1
+    A100_1 --> A100_2
+    A100_2 --> A100_3
+    A100_3 --> A100_4
+    A100_4 --> A100_5
+    CONTROL100["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL100 control
+    CONTROL100 -. governs request .-> A100_1

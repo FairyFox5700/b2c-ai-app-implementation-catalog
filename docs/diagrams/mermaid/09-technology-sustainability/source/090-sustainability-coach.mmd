@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A90_0["Goal profile"]
+    class A90_0 frontend
+    A90_1["Habit planner"]
+    class A90_1 agent
+    A90_2["Coach agent"]
+    class A90_2 agent
+    A90_3["Impact library + local data"]
+    class A90_3 tool
+    A90_4["Action recommender"]
+    class A90_4 tool
+    A90_5["Progress tracker"]
+    class A90_5 tool
+    A90_6["Check-ins"]
+    class A90_6 backend
+    A90_0 --> A90_1
+    A90_1 --> A90_2
+    A90_2 --> A90_3
+    A90_3 --> A90_4
+    A90_4 --> A90_5
+    A90_5 --> A90_6
+    CONTROL90["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL90 control
+    CONTROL90 -. governs request .-> A90_1

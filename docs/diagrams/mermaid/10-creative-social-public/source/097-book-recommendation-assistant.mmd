@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A97_0["Chat UI"]
+    class A97_0 frontend
+    A97_1["reader-profile store"]
+    class A97_1 data
+    A97_2["hybrid retrieval (metadata + reviews)"]
+    class A97_2 tool
+    A97_3["recommender agent"]
+    class A97_3 agent
+    A97_4["availability checker"]
+    class A97_4 tool
+    A97_5["reading list"]
+    class A97_5 backend
+    A97_0 --> A97_1
+    A97_1 --> A97_2
+    A97_2 --> A97_3
+    A97_3 --> A97_4
+    A97_4 --> A97_5
+    CONTROL97["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL97 control
+    CONTROL97 -. governs request .-> A97_1

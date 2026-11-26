@@ -1,0 +1,29 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A57_0["Chat UI"]
+    class A57_0 frontend
+    A57_1["Recommender agent"]
+    class A57_1 agent
+    A57_2["Catalog search + Reviews index"]
+    class A57_2 data
+    A57_3["Ingredient filter"]
+    class A57_3 tool
+    A57_4["Affiliate/checkout links"]
+    class A57_4 tool
+    A57_5["Feedback"]
+    class A57_5 backend
+    A57_0 --> A57_1
+    A57_1 --> A57_2
+    A57_2 --> A57_3
+    A57_3 --> A57_4
+    A57_4 --> A57_5
+    CONTROL57["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL57 control
+    CONTROL57 -. governs request .-> A57_1

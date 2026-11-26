@@ -1,0 +1,32 @@
+%%{init: {"themeVariables": {"fontSize": "17px"}, "flowchart": {"nodeSpacing": 50, "rankSpacing": 65, "curve": "basis"}}}%%
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A16_0["Customer events"]
+    class A16_0 frontend
+    A16_1["feature store"]
+    class A16_1 data
+    A16_2["eligibility and propensity models"]
+    class A16_2 tool
+    A16_3["offer optimizer (budget/margin rules)"]
+    class A16_3 tool
+    A16_4["message generator"]
+    class A16_4 tool
+    A16_5["channel delivery"]
+    class A16_5 tool
+    A16_6["holdout measurement"]
+    class A16_6 backend
+    A16_0 --> A16_1
+    A16_1 --> A16_2
+    A16_2 --> A16_3
+    A16_3 --> A16_4
+    A16_4 --> A16_5
+    A16_5 --> A16_6
+    CONTROL16["Control plane<br/>Identity • policy • approvals • telemetry"]
+    class CONTROL16 control
+    CONTROL16 -. governs request .-> A16_1
