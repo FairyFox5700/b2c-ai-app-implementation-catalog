@@ -11,9 +11,11 @@ Use this catalog for solution discovery, prototypes, Forward Deployed Engineer p
 
 ## Comprehensive architecture overviews
 
-The repository now includes implementation-oriented architecture guides for every catalog entry. Each guide covers the user journey, rendered Mermaid architecture diagrams, system flow, components, agent design, data, integrations, security, reliability, evaluation, and an MVP build path.
+The repository now includes implementation-oriented architecture guides for every catalog entry. Each guide covers the user journey, Azure icon views, rendered Mermaid request flows, main execution logic, components, agent design, data, integrations, security, reliability, evaluation, and an MVP build path.
 
 **[Browse all 107 architecture overviews](docs/architectures/README.md)**
+
+**[Run the reusable C# agent-workflow sample](samples/agent-workflow-csharp/README.md)**
 
 ## Important notes
 

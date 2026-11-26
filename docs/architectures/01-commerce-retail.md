@@ -1,5 +1,31 @@
 # Commerce and retail architecture overviews
 
+<!-- azure-icon-views:auto -->
+## Azure architecture views
+
+These are **logical reference views**, not a claim that every app needs every service. Select services from the non-functional requirements, traffic, data classification and team constraints.
+
+### 1. System context
+
+Shows the customer, human approver, B2C AI system, identity provider, Microsoft Foundry and domain systems.
+
+![01-commerce-retail system context](../diagrams/azure/01-commerce-retail.png)
+
+### 2. Runtime and transaction flow
+
+Shows synchronous ingress, structured model reasoning, controlled tool calls, durable workflow state and asynchronous retry/compensation.
+
+![01-commerce-retail runtime flow](../diagrams/azure/01-commerce-retail-runtime.png)
+
+### 3. Security, data and operations
+
+Shows identity, managed authorization, policy and approval gates, grounded retrieval, workflow state, private access, secrets and redacted telemetry.
+
+![01-commerce-retail security data and operations](../diagrams/azure/01-commerce-retail-security-data.png)
+
+**Notation:** solid arrows are primary runtime/data flows. Dashed arrows represent identity, policy, secrets or private-network controls. Dotted arrows represent telemetry. The diagrams deliberately split concerns to avoid an unreadable “everything” diagram.
+
+
 <!-- category-architecture:auto -->
 ## Category deployment architecture
 
@@ -103,6 +129,21 @@ flowchart LR
     OBS1 -. telemetry .-> A1_1
 ```
 
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Chat UI -> API gateway -> orchestrator agent -> [catalog search | profile memory | price/stock tools] -> ranker -> product cards -> cart handoff`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
+
 **Core components**
 - Web/mobile chat front end.
 - Orchestrator on Azure Container Apps or Functions, calling Azure OpenAI.
@@ -179,6 +220,21 @@ flowchart LR
     OBS2 -. telemetry .-> A2_1
 ```
 
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Chat/photo UI -> style agent -> [attribute extractor | outfit composer | catalog + inventory search] -> compatibility scorer -> outfit cards -> cart`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
+
 **Core components**
 - Multimodal LLM (Azure OpenAI vision) for photo and attribute reading.
 - Fashion taxonomy service (category, color, fit, season, formality).
@@ -245,6 +301,21 @@ flowchart LR
     SAFE3 -. enforcement .-> A3_1
     OBS3 -. telemetry .-> A3_1
 ```
+
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Photo capture -> image pipeline (segment, tag, embed) -> wardrobe store -> outfit agent -> daily plan / gap analysis -> optional shop links`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
 
 **Core components**
 - Mobile app with camera and offline queue.
@@ -313,6 +384,21 @@ flowchart LR
     OBS4 -. telemetry .-> A4_1
 ```
 
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Query/browse UI -> intent and facet agent -> hybrid retrieval (keyword + vector + graph) -> diversified reranker -> explained results -> refinement loop`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
+
 **Core components**
 - Query understanding service (LLM with schema output).
 - Azure AI Search hybrid index with semantic ranking.
@@ -380,6 +466,21 @@ flowchart LR
     OBS5 -. telemetry .-> A5_1
 ```
 
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Selected SKUs -> spec normalizer -> criteria weighting -> evidence retriever (specs, reviews) -> comparison generator -> table + verdict + citations`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
+
 **Core components**
 - Spec normalization service mapping units and attribute names across brands.
 - Review mining pipeline (aspect-based sentiment).
@@ -446,6 +547,21 @@ flowchart LR
     SAFE6 -. enforcement .-> A6_1
     OBS6 -. telemetry .-> A6_1
 ```
+
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Gift brief form/chat -> recipient profile builder -> idea generator -> catalog matcher + delivery-date filter -> curated shortlist -> gift checkout options`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
 
 **Core components**
 - Guided intake UI.
@@ -516,6 +632,21 @@ flowchart LR
     SAFE7 -. enforcement .-> A7_1
     OBS7 -. telemetry .-> A7_1
 ```
+
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Image upload -> preprocessing/detection -> embedding model -> vector index -> exact-match verifier + similar-item ranker -> results -> text refinement`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
 
 **Core components**
 - Mobile and web capture SDK.
@@ -596,6 +727,21 @@ flowchart LR
     OBS8 -. telemetry .-> A8_1
 ```
 
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Cart events -> cart-state service -> assistant agent -> [compatibility rules | pricing/promo engine | inventory | recommendations] -> inline suggestions -> user-approved cart change`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
+
 **Core components**
 - Cart service exposing events and mutation API.
 - Compatibility and rules engine.
@@ -672,6 +818,21 @@ flowchart LR
     OBS9 -. telemetry .-> A9_1
 ```
 
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Checkout UI -> checkout orchestrator -> [address validation | shipping options | tax/fees | payment provider hosted fields] -> assistant explanations -> order confirmation`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
+
 **Core components**
 - Checkout service (system of record).
 - Assistant panel with function calling.
@@ -746,6 +907,21 @@ flowchart LR
     SAFE10 -. enforcement .-> A10_1
     OBS10 -. telemetry .-> A10_1
 ```
+
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Channel (web/SMS/WhatsApp) -> identity check -> tracking agent -> [order API | carrier tracking aggregator | event store] -> status explanation -> proactive notifier`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
 
 **Core components**
 - Omnichannel gateway (Azure Communication Services).
@@ -822,6 +998,21 @@ flowchart LR
     OBS11 -. telemetry .-> A11_1
 ```
 
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Carrier events -> exception detector -> case manager -> resolution agent -> [carrier actions | reship/refund engine | customer messaging] -> outcome tracking`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
+
 **Core components**
 - Event stream processor (Event Hubs and Functions).
 - Exception rules and ML delay predictor.
@@ -896,6 +1087,21 @@ flowchart LR
     SAFE12 -. enforcement .-> A12_1
     OBS12 -. telemetry .-> A12_1
 ```
+
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Return request -> eligibility engine -> returns agent -> [label/carrier | exchange suggester | refund service] -> warehouse receipt -> refund status updates`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
 
 **Core components**
 - Return policy engine with versioned rules.
@@ -976,6 +1182,21 @@ flowchart LR
     OBS13 -. telemetry .-> A13_1
 ```
 
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Channel -> router/intent classifier -> support agent -> [knowledge RAG | order tools | account tools | specialist sub-agents] -> response or human handoff -> QA loop`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
+
 **Core components**
 - Omnichannel inbox (Dynamics 365 Contact Center, Zendesk or similar).
 - Intent router.
@@ -1054,6 +1275,21 @@ flowchart LR
     SAFE14 -. enforcement .-> A14_1
     OBS14 -. telemetry .-> A14_1
 ```
+
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `User request -> authentication -> subscription agent -> [subscription API | billing/dunning | catalog swaps | retention offers] -> confirmation -> scheduled-event updates`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
 
 **Core components**
 - Subscription billing engine (Recharge, Stripe Billing or Zuora).
@@ -1134,6 +1370,21 @@ flowchart LR
     OBS15 -. telemetry .-> A15_1
 ```
 
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Member query/event -> identity -> loyalty agent -> [points ledger | tier engine | rewards catalog | offers] -> explanation or redemption -> ledger update`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
+
 **Core components**
 - Loyalty platform or ledger service (immutable transactions).
 - Tier and rules engine.
@@ -1203,6 +1454,21 @@ flowchart LR
     SAFE16 -. enforcement .-> A16_1
     OBS16 -. telemetry .-> A16_1
 ```
+
+<!-- main-logic:auto -->
+**Main execution logic**
+
+1. **Authenticate and validate:** the edge/API layer verifies identity, tenant, request schema, quotas and correlation ID before agent execution.
+2. **Load trusted context:** the application loads the minimum required profile, conversation checkpoint, domain state and authorization scope; sensitive fields stay outside prompts unless necessary.
+3. **Plan with bounded authority:** the Foundry/Agent Framework adapter receives only allowlisted tool schemas and returns a structured proposal. The app-specific path is `Customer events -> feature store -> eligibility and propensity models -> offer optimizer (budget/margin rules) -> message generator -> channel delivery -> holdout measurement`.
+4. **Ground every decision:** current facts such as price, availability, policy, entitlement or status come from retrieval and typed tools—not model memory.
+5. **Apply deterministic policy:** code validates tool name, arguments, user authority, limits, risk class and output schema. Invalid proposals are rejected and audited.
+6. **Approve consequential actions:** writes, purchases, bookings, messages, account changes and other high-impact operations pause for explicit human approval.
+7. **Execute safely:** the controlled gateway invokes the narrow business operation with an idempotency key, timeout, bounded retry and compensation or dead-letter behavior.
+8. **Commit and learn:** persist the result, return a source-grounded response, emit redacted traces and feed curated outcomes into regression evaluations.
+
+**Runnable code pattern:** [C# policy, approval, idempotency and audit sample](../../samples/agent-workflow-csharp/README.md).
+
 
 **Core components**
 - Customer data platform and feature store (Azure Synapse or Fabric, Azure ML).

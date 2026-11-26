@@ -2,10 +2,13 @@
 
 This directory contains proposed, implementation-oriented reference architectures for all **107 B2C AI applications** in the catalog. They are design guides—not claims about the linked example repositories.
 
-Each volume includes two rendered Mermaid diagram levels:
+Each volume includes multiple diagram levels:
 
+- three **Azure icon views** generated with the [Azure Diagrams skill](https://github.com/cmb211087/azure-diagrams-skill): C4-style system context, runtime/transaction flow, and security/data/operations;
 - a **category deployment diagram** showing Azure edge, API, compute, model, tools, data, messaging, identity, security and observability boundaries;
 - a distinct **application request-flow diagram** showing the app's channels, orchestration, tools, integrations, data path, policy gates and telemetry.
+
+Every app now also documents its eight-step **main execution logic** and links to a [runnable C# workflow sample](../../samples/agent-workflow-csharp/README.md) implementing policy checks, approval gates, idempotent tool execution and audit events.
 
 Every application overview covers:
 
