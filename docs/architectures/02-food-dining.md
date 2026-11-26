@@ -1,5 +1,53 @@
 # Food and Dining
 
+<!-- category-architecture:auto -->
+## Category deployment architecture
+
+This Azure-oriented deployment separates deterministic business operations from probabilistic model reasoning. The application owns authorization, validation, workflow state and approval; the model proposes actions only through allowlisted tools.
+
+```mermaid
+flowchart LR
+    classDef edge fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef compute fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef ai fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef integration fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+
+    USER["Web, mobile, voice or partner channel"] --> EDGE["Azure Front Door + WAF"]
+    EDGE --> API["API Management"]
+    API --> APP["App Service / Container Apps"]
+    APP --> ORCH["Microsoft Agent Framework orchestrator"]
+    ORCH --> MODEL["Microsoft Foundry model endpoint"]
+    ORCH --> TOOLS["Controlled tool gateway"]
+    TOOLS --> DOMAIN["Food and dining tools and partner APIs"]
+    ORCH --> SEARCH["Azure AI Search / retrieval"]
+    ORCH --> STATE["Cosmos DB / SQL workflow state"]
+    ORCH --> BUS["Service Bus / durable background work"]
+
+    ID["Entra ID + managed identity"] -. authentication .-> API
+    VAULT["Key Vault + configuration"] -. secrets .-> APP
+    SAFE["Content safety, policy + human approval"] -. enforcement .-> ORCH
+    OBS["Application Insights, traces + evals"] -. telemetry .-> APP
+
+    class USER,EDGE,API edge
+    class APP,ORCH compute
+    class MODEL ai
+    class SEARCH,STATE data
+    class TOOLS,DOMAIN,BUS integration
+    class ID,VAULT,SAFE,OBS control
+```
+
+**Responsibility split**
+
+- **Edge and API layer:** authentication, quotas, request validation and tenant routing.
+- **Application/orchestration layer:** deterministic workflow, retries, approvals, state and tool authorization.
+- **Model layer:** language understanding, planning and explanation; it never becomes the system of record.
+- **Tool layer:** narrow typed operations with idempotency, schema validation and audit events.
+- **Data layer:** retrieval indexes are separate from transactional state and sensitive records.
+- **Control plane:** identity, secrets, policy, privacy, observability and evaluations apply across every request.
+
+
 ## 17. Grocery-shopping assistant
 
 ### Purpose and user journey
@@ -7,6 +55,45 @@ Helps households build a weekly grocery list, compare stores, and check out with
 
 ### Reference architecture
 `Chat UI -> Orchestrator agent -> Catalog/price tools -> Basket optimizer -> Retailer cart API -> Approval gate -> Order tracker`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A17_0["Chat UI"]
+    class A17_0 frontend
+    A17_1["Orchestrator agent"]
+    class A17_1 agent
+    A17_2["Catalog/price tools"]
+    class A17_2 tool
+    A17_3["Basket optimizer"]
+    class A17_3 tool
+    A17_4["Retailer cart API"]
+    class A17_4 external
+    A17_5["Approval gate"]
+    class A17_5 frontend
+    A17_6["Order tracker"]
+    class A17_6 backend
+    A17_0 --> A17_1
+    A17_1 --> A17_2
+    A17_2 --> A17_3
+    A17_3 --> A17_4
+    A17_4 --> A17_5
+    A17_5 --> A17_6
+    ID17["Entra ID + managed identity"]
+    SAFE17["Policy, validation + approval gates"]
+    OBS17["Tracing, metrics + evaluation"]
+    class ID17,SAFE17,OBS17 control
+    ID17 -. authentication .-> A17_1
+    SAFE17 -. enforcement .-> A17_1
+    OBS17 -. telemetry .-> A17_1
+```
 
 ### Core components
 Conversation service, pantry inventory store, product-matching engine, price and promotion index, substitution ranker, basket optimizer, retailer connectors, approval screen, and a preference profile covering brands, budget, diet, and delivery windows.
@@ -34,6 +121,45 @@ Creates weekly meal plans fitted to goals, time, budget, and tastes, then adapts
 ### Reference architecture
 `Onboarding UI -> Planner agent -> Constraint solver -> Recipe retrieval -> Nutrition calculator -> Plan calendar -> Grocery list export`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A18_0["Onboarding UI"]
+    class A18_0 frontend
+    A18_1["Planner agent"]
+    class A18_1 agent
+    A18_2["Constraint solver"]
+    class A18_2 agent
+    A18_3["Recipe retrieval"]
+    class A18_3 tool
+    A18_4["Nutrition calculator"]
+    class A18_4 tool
+    A18_5["Plan calendar"]
+    class A18_5 external
+    A18_6["Grocery list export"]
+    class A18_6 backend
+    A18_0 --> A18_1
+    A18_1 --> A18_2
+    A18_2 --> A18_3
+    A18_3 --> A18_4
+    A18_4 --> A18_5
+    A18_5 --> A18_6
+    ID18["Entra ID + managed identity"]
+    SAFE18["Policy, validation + approval gates"]
+    OBS18["Tracing, metrics + evaluation"]
+    class ID18,SAFE18,OBS18 control
+    ID18 -. authentication .-> A18_1
+    SAFE18 -. enforcement .-> A18_1
+    OBS18 -. telemetry .-> A18_1
+```
+
 ### Core components
 Profile service, constraint engine for calories, diet, allergens, and prep time, recipe retrieval index, nutrition calculator, plan calendar, leftovers scheduler, feedback store, and reminder service for prep and thawing.
 
@@ -59,6 +185,42 @@ Finds, adapts, and guides cooking of recipes. The user describes ingredients, cu
 
 ### Reference architecture
 `Text/voice UI -> Intent router -> Recipe search (hybrid) -> Adaptation engine -> Cooking-mode session -> Timer/voice output`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A19_0["Text/voice UI"]
+    class A19_0 frontend
+    A19_1["Intent router"]
+    class A19_1 agent
+    A19_2["Recipe search (hybrid)"]
+    class A19_2 tool
+    A19_3["Adaptation engine"]
+    class A19_3 agent
+    A19_4["Cooking-mode session"]
+    class A19_4 tool
+    A19_5["Timer/voice output"]
+    class A19_5 backend
+    A19_0 --> A19_1
+    A19_1 --> A19_2
+    A19_2 --> A19_3
+    A19_3 --> A19_4
+    A19_4 --> A19_5
+    ID19["Entra ID + managed identity"]
+    SAFE19["Policy, validation + approval gates"]
+    OBS19["Tracing, metrics + evaluation"]
+    class ID19,SAFE19,OBS19 control
+    ID19 -. authentication .-> A19_1
+    SAFE19 -. enforcement .-> A19_1
+    OBS19 -. telemetry .-> A19_1
+```
 
 ### Core components
 Hybrid keyword and vector recipe index, ingredient parser, unit converter, substitution knowledge base, scaling engine, cooking-mode state machine, timer manager, and a pantry-aware ranker.
@@ -86,6 +248,45 @@ Helps users understand and improve eating habits through logging, insights, and 
 ### Reference architecture
 `Log UI (text/photo) -> Food parser -> Nutrient DB lookup -> Trend analyzer -> Coaching agent -> Safety filter -> Weekly report`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A20_0["Log UI (text/photo)"]
+    class A20_0 frontend
+    A20_1["Food parser"]
+    class A20_1 tool
+    A20_2["Nutrient DB lookup"]
+    class A20_2 tool
+    A20_3["Trend analyzer"]
+    class A20_3 tool
+    A20_4["Coaching agent"]
+    class A20_4 agent
+    A20_5["Safety filter"]
+    class A20_5 tool
+    A20_6["Weekly report"]
+    class A20_6 backend
+    A20_0 --> A20_1
+    A20_1 --> A20_2
+    A20_2 --> A20_3
+    A20_3 --> A20_4
+    A20_4 --> A20_5
+    A20_5 --> A20_6
+    ID20["Entra ID + managed identity"]
+    SAFE20["Policy, validation + approval gates"]
+    OBS20["Tracing, metrics + evaluation"]
+    class ID20,SAFE20,OBS20 control
+    ID20 -. authentication .-> A20_1
+    SAFE20 -. enforcement .-> A20_1
+    OBS20 -. telemetry .-> A20_1
+```
+
 ### Core components
 Meal logging pipeline with photo recognition, food database matcher, portion estimator, goal engine, trend and insight analyzer, coaching agent, safety and referral filter, and notification scheduler.
 
@@ -111,6 +312,42 @@ Recommends restaurants that fit a group's tastes, budget, location, and occasion
 
 ### Reference architecture
 `Chat UI -> Preference parser -> Places search APIs -> Review/fit ranker -> Explanation generator -> Map/booking handoff`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A21_0["Chat UI"]
+    class A21_0 frontend
+    A21_1["Preference parser"]
+    class A21_1 tool
+    A21_2["Places search APIs"]
+    class A21_2 external
+    A21_3["Review/fit ranker"]
+    class A21_3 agent
+    A21_4["Explanation generator"]
+    class A21_4 tool
+    A21_5["Map/booking handoff"]
+    class A21_5 backend
+    A21_0 --> A21_1
+    A21_1 --> A21_2
+    A21_2 --> A21_3
+    A21_3 --> A21_4
+    A21_4 --> A21_5
+    ID21["Entra ID + managed identity"]
+    SAFE21["Policy, validation + approval gates"]
+    OBS21["Tracing, metrics + evaluation"]
+    class ID21,SAFE21,OBS21 control
+    ID21 -. authentication .-> A21_1
+    SAFE21 -. enforcement .-> A21_1
+    OBS21 -. telemetry .-> A21_1
+```
 
 ### Core components
 Preference and constraint parser, geospatial search, review summarizer, hybrid ranker, group-preference merger, opening-hours validator, explanation generator, and a feedback loop recording choices.
@@ -138,6 +375,42 @@ Books, modifies, and cancels restaurant tables on the user's behalf. The user gi
 ### Reference architecture
 `Chat UI -> Reservation agent -> Availability connectors -> Booking executor -> Confirmation store -> Calendar/reminders`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A22_0["Chat UI"]
+    class A22_0 frontend
+    A22_1["Reservation agent"]
+    class A22_1 agent
+    A22_2["Availability connectors"]
+    class A22_2 external
+    A22_3["Booking executor"]
+    class A22_3 tool
+    A22_4["Confirmation store"]
+    class A22_4 data
+    A22_5["Calendar/reminders"]
+    class A22_5 external
+    A22_0 --> A22_1
+    A22_1 --> A22_2
+    A22_2 --> A22_3
+    A22_3 --> A22_4
+    A22_4 --> A22_5
+    ID22["Entra ID + managed identity"]
+    SAFE22["Policy, validation + approval gates"]
+    OBS22["Tracing, metrics + evaluation"]
+    class ID22,SAFE22,OBS22 control
+    ID22 -. authentication .-> A22_1
+    SAFE22 -. enforcement .-> A22_1
+    OBS22 -. telemetry .-> A22_1
+```
+
 ### Core components
 Request parser, availability search across platforms, slot ranker, booking executor with idempotency, policy reader for deposits and cancellations, confirmation store, calendar sync, and reminder service.
 
@@ -163,6 +436,48 @@ Orders delivery or pickup meals from natural-language requests. The user asks fo
 
 ### Reference architecture
 `Chat UI -> Ordering agent -> Menu search -> Cart builder -> Price/ETA check -> Approval -> Payment/order API -> Tracker`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A23_0["Chat UI"]
+    class A23_0 frontend
+    A23_1["Ordering agent"]
+    class A23_1 agent
+    A23_2["Menu search"]
+    class A23_2 tool
+    A23_3["Cart builder"]
+    class A23_3 frontend
+    A23_4["Price/ETA check"]
+    class A23_4 tool
+    A23_5["Approval"]
+    class A23_5 frontend
+    A23_6["Payment/order API"]
+    class A23_6 external
+    A23_7["Tracker"]
+    class A23_7 backend
+    A23_0 --> A23_1
+    A23_1 --> A23_2
+    A23_2 --> A23_3
+    A23_3 --> A23_4
+    A23_4 --> A23_5
+    A23_5 --> A23_6
+    A23_6 --> A23_7
+    ID23["Entra ID + managed identity"]
+    SAFE23["Policy, validation + approval gates"]
+    OBS23["Tracing, metrics + evaluation"]
+    class ID23,SAFE23,OBS23 control
+    ID23 -. authentication .-> A23_1
+    SAFE23 -. enforcement .-> A23_1
+    OBS23 -. telemetry .-> A23_1
+```
 
 ### Core components
 Menu index, item-to-modifier mapper, cart builder, fee and ETA estimator, approval step, payment handoff, order tracker, reorder history, and a dietary and allergen filter.

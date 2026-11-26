@@ -1,5 +1,53 @@
 # Home and Living
 
+<!-- category-architecture:auto -->
+## Category deployment architecture
+
+This Azure-oriented deployment separates deterministic business operations from probabilistic model reasoning. The application owns authorization, validation, workflow state and approval; the model proposes actions only through allowlisted tools.
+
+```mermaid
+flowchart LR
+    classDef edge fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef compute fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef ai fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef integration fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+
+    USER["Web, mobile, voice or partner channel"] --> EDGE["Azure Front Door + WAF"]
+    EDGE --> API["API Management"]
+    API --> APP["App Service / Container Apps"]
+    APP --> ORCH["Microsoft Agent Framework orchestrator"]
+    ORCH --> MODEL["Microsoft Foundry model endpoint"]
+    ORCH --> TOOLS["Controlled tool gateway"]
+    TOOLS --> DOMAIN["Home and property tools and partner APIs"]
+    ORCH --> SEARCH["Azure AI Search / retrieval"]
+    ORCH --> STATE["Cosmos DB / SQL workflow state"]
+    ORCH --> BUS["Service Bus / durable background work"]
+
+    ID["Entra ID + managed identity"] -. authentication .-> API
+    VAULT["Key Vault + configuration"] -. secrets .-> APP
+    SAFE["Content safety, policy + human approval"] -. enforcement .-> ORCH
+    OBS["Application Insights, traces + evals"] -. telemetry .-> APP
+
+    class USER,EDGE,API edge
+    class APP,ORCH compute
+    class MODEL ai
+    class SEARCH,STATE data
+    class TOOLS,DOMAIN,BUS integration
+    class ID,VAULT,SAFE,OBS control
+```
+
+**Responsibility split**
+
+- **Edge and API layer:** authentication, quotas, request validation and tenant routing.
+- **Application/orchestration layer:** deterministic workflow, retries, approvals, state and tool authorization.
+- **Model layer:** language understanding, planning and explanation; it never becomes the system of record.
+- **Tool layer:** narrow typed operations with idempotency, schema validation and audit events.
+- **Data layer:** retrieval indexes are separate from transactional state and sensitive records.
+- **Control plane:** identity, secrets, policy, privacy, observability and evaluations apply across every request.
+
+
 ## 33. Home-services booking assistant
 
 ### Purpose and user journey
@@ -7,6 +55,45 @@ Finds, vets, and books home-service providers such as plumbers, cleaners, and el
 
 ### Reference architecture
 `Chat/photos -> Job intake agent -> Provider search -> Quote/availability connectors -> Comparison -> Approval -> Booking/follow-up`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A33_0["Chat/photos"]
+    class A33_0 frontend
+    A33_1["Job intake agent"]
+    class A33_1 agent
+    A33_2["Provider search"]
+    class A33_2 external
+    A33_3["Quote/availability connectors"]
+    class A33_3 external
+    A33_4["Comparison"]
+    class A33_4 tool
+    A33_5["Approval"]
+    class A33_5 frontend
+    A33_6["Booking/follow-up"]
+    class A33_6 backend
+    A33_0 --> A33_1
+    A33_1 --> A33_2
+    A33_2 --> A33_3
+    A33_3 --> A33_4
+    A33_4 --> A33_5
+    A33_5 --> A33_6
+    ID33["Entra ID + managed identity"]
+    SAFE33["Policy, validation + approval gates"]
+    OBS33["Tracing, metrics + evaluation"]
+    class ID33,SAFE33,OBS33 control
+    ID33 -. authentication .-> A33_1
+    SAFE33 -. enforcement .-> A33_1
+    OBS33 -. telemetry .-> A33_1
+```
 
 ### Core components
 Job intake with photos, service taxonomy, provider directory with license and review checks, quote requester, scheduling engine, comparison view, booking and payment handoff, and post-job review collector.
@@ -34,6 +121,42 @@ Helps homeowners diagnose problems and decide between DIY and a professional. Th
 ### Reference architecture
 `Symptoms/photos -> Triage agent -> Diagnostic knowledge retrieval -> Risk classifier -> Repair guide or pro referral -> Parts/tool list`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A34_0["Symptoms/photos"]
+    class A34_0 frontend
+    A34_1["Triage agent"]
+    class A34_1 agent
+    A34_2["Diagnostic knowledge retrieval"]
+    class A34_2 tool
+    A34_3["Risk classifier"]
+    class A34_3 tool
+    A34_4["Repair guide or pro referral"]
+    class A34_4 frontend
+    A34_5["Parts/tool list"]
+    class A34_5 backend
+    A34_0 --> A34_1
+    A34_1 --> A34_2
+    A34_2 --> A34_3
+    A34_3 --> A34_4
+    A34_4 --> A34_5
+    ID34["Entra ID + managed identity"]
+    SAFE34["Policy, validation + approval gates"]
+    OBS34["Tracing, metrics + evaluation"]
+    class ID34,SAFE34,OBS34 control
+    ID34 -. authentication .-> A34_1
+    SAFE34 -. enforcement .-> A34_1
+    OBS34 -. telemetry .-> A34_1
+```
+
 ### Core components
 Multimodal intake, symptom question flow, repair knowledge base, hazard and risk classifier, cause ranker, step-by-step guide generator, parts and tools list builder, and a referral connector.
 
@@ -59,6 +182,45 @@ Helps buyers find homes matching budget, location, and lifestyle. The user descr
 
 ### Reference architecture
 `Chat UI -> Requirement parser -> Listing search (MLS/portal) -> Neighborhood enrichment -> Ranker -> Alerts -> Viewing scheduler`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A35_0["Chat UI"]
+    class A35_0 frontend
+    A35_1["Requirement parser"]
+    class A35_1 frontend
+    A35_2["Listing search (MLS/portal)"]
+    class A35_2 frontend
+    A35_3["Neighborhood enrichment"]
+    class A35_3 tool
+    A35_4["Ranker"]
+    class A35_4 agent
+    A35_5["Alerts"]
+    class A35_5 tool
+    A35_6["Viewing scheduler"]
+    class A35_6 backend
+    A35_0 --> A35_1
+    A35_1 --> A35_2
+    A35_2 --> A35_3
+    A35_3 --> A35_4
+    A35_4 --> A35_5
+    A35_5 --> A35_6
+    ID35["Entra ID + managed identity"]
+    SAFE35["Policy, validation + approval gates"]
+    OBS35["Tracing, metrics + evaluation"]
+    class ID35,SAFE35,OBS35 control
+    ID35 -. authentication .-> A35_1
+    SAFE35 -. enforcement .-> A35_1
+    OBS35 -. telemetry .-> A35_1
+```
 
 ### Core components
 Needs parser, listing search and deduplication, commute and amenity calculator, neighborhood data enricher, affordability estimator, ranker, saved-search alerts, and viewing scheduler.
@@ -86,6 +248,42 @@ Helps renters find apartments and manage the rental process. The user sets budge
 ### Reference architecture
 `Chat UI -> Rental listing search -> Scam/cost analyzer -> Tour scheduler -> Application assistant -> Lease explainer`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A36_0["Chat UI"]
+    class A36_0 frontend
+    A36_1["Rental listing search"]
+    class A36_1 tool
+    A36_2["Scam/cost analyzer"]
+    class A36_2 tool
+    A36_3["Tour scheduler"]
+    class A36_3 tool
+    A36_4["Application assistant"]
+    class A36_4 frontend
+    A36_5["Lease explainer"]
+    class A36_5 backend
+    A36_0 --> A36_1
+    A36_1 --> A36_2
+    A36_2 --> A36_3
+    A36_3 --> A36_4
+    A36_4 --> A36_5
+    ID36["Entra ID + managed identity"]
+    SAFE36["Policy, validation + approval gates"]
+    OBS36["Tracing, metrics + evaluation"]
+    class ID36,SAFE36,OBS36 control
+    ID36 -. authentication .-> A36_1
+    SAFE36 -. enforcement .-> A36_1
+    OBS36 -. telemetry .-> A36_1
+```
+
 ### Core components
 Listing aggregator, true-cost calculator for fees and utilities, scam and anomaly detector, commute scorer, tour scheduler, application checklist, document vault, and lease clause explainer.
 
@@ -111,6 +309,42 @@ Organizes a move from decision to settling in. The user enters origin, destinati
 
 ### Reference architecture
 `Move brief -> Planner agent -> Mover quotes/inventory tools -> Task timeline -> Address-change workflows -> Destination setup guide`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A37_0["Move brief"]
+    class A37_0 frontend
+    A37_1["Planner agent"]
+    class A37_1 agent
+    A37_2["Mover quotes/inventory tools"]
+    class A37_2 tool
+    A37_3["Task timeline"]
+    class A37_3 tool
+    A37_4["Address-change workflows"]
+    class A37_4 agent
+    A37_5["Destination setup guide"]
+    class A37_5 frontend
+    A37_0 --> A37_1
+    A37_1 --> A37_2
+    A37_2 --> A37_3
+    A37_3 --> A37_4
+    A37_4 --> A37_5
+    ID37["Entra ID + managed identity"]
+    SAFE37["Policy, validation + approval gates"]
+    OBS37["Tracing, metrics + evaluation"]
+    class ID37,SAFE37,OBS37 control
+    ID37 -. authentication .-> A37_1
+    SAFE37 -. enforcement .-> A37_1
+    OBS37 -. telemetry .-> A37_1
+```
 
 ### Core components
 Move brief intake, inventory estimator, mover quote requester, backward-planned task timeline, address-change tracker, utilities setup checklist, budget tracker, and reminders.
@@ -138,6 +372,45 @@ Helps users plan and visualize room designs. The user uploads room photos and di
 ### Reference architecture
 `Room photos/dims -> Vision analyzer -> Design agent -> Layout checker -> Product catalog search -> Render/mood board -> Shopping list`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A38_0["Room photos/dims"]
+    class A38_0 frontend
+    A38_1["Vision analyzer"]
+    class A38_1 tool
+    A38_2["Design agent"]
+    class A38_2 agent
+    A38_3["Layout checker"]
+    class A38_3 tool
+    A38_4["Product catalog search"]
+    class A38_4 tool
+    A38_5["Render/mood board"]
+    class A38_5 tool
+    A38_6["Shopping list"]
+    class A38_6 backend
+    A38_0 --> A38_1
+    A38_1 --> A38_2
+    A38_2 --> A38_3
+    A38_3 --> A38_4
+    A38_4 --> A38_5
+    A38_5 --> A38_6
+    ID38["Entra ID + managed identity"]
+    SAFE38["Policy, validation + approval gates"]
+    OBS38["Tracing, metrics + evaluation"]
+    class ID38,SAFE38,OBS38 control
+    ID38 -. authentication .-> A38_1
+    SAFE38 -. enforcement .-> A38_1
+    OBS38 -. telemetry .-> A38_1
+```
+
 ### Core components
 Room and object detection, dimension and layout validator, style profile, palette generator, furniture and decor catalog search, image generation or compositing, budget tracker, and shopping list.
 
@@ -163,6 +436,42 @@ Helps users set up, troubleshoot, and automate smart-home devices. The user repo
 
 ### Reference architecture
 `Chat UI -> Support agent -> Device inventory/status tools -> Diagnostic knowledge base -> Fix executor -> Automation builder`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A39_0["Chat UI"]
+    class A39_0 frontend
+    A39_1["Support agent"]
+    class A39_1 agent
+    A39_2["Device inventory/status tools"]
+    class A39_2 tool
+    A39_3["Diagnostic knowledge base"]
+    class A39_3 tool
+    A39_4["Fix executor"]
+    class A39_4 tool
+    A39_5["Automation builder"]
+    class A39_5 frontend
+    A39_0 --> A39_1
+    A39_1 --> A39_2
+    A39_2 --> A39_3
+    A39_3 --> A39_4
+    A39_4 --> A39_5
+    ID39["Entra ID + managed identity"]
+    SAFE39["Policy, validation + approval gates"]
+    OBS39["Tracing, metrics + evaluation"]
+    class ID39,SAFE39,OBS39 control
+    ID39 -. authentication .-> A39_1
+    SAFE39 -. enforcement .-> A39_1
+    OBS39 -. telemetry .-> A39_1
+```
 
 ### Core components
 Device inventory and topology map, status and log reader, diagnostic knowledge base, guided troubleshooting flows, automation rule builder, firmware and compatibility checker, and escalation to vendor support.

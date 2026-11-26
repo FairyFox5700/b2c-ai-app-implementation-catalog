@@ -1,5 +1,53 @@
 # Creative, social, safety and public services architecture overviews
 
+<!-- category-architecture:auto -->
+## Category deployment architecture
+
+This Azure-oriented deployment separates deterministic business operations from probabilistic model reasoning. The application owns authorization, validation, workflow state and approval; the model proposes actions only through allowlisted tools.
+
+```mermaid
+flowchart LR
+    classDef edge fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef compute fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef ai fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef integration fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+
+    USER["Web, mobile, voice or partner channel"] --> EDGE["Azure Front Door + WAF"]
+    EDGE --> API["API Management"]
+    API --> APP["App Service / Container Apps"]
+    APP --> ORCH["Microsoft Agent Framework orchestrator"]
+    ORCH --> MODEL["Microsoft Foundry model endpoint"]
+    ORCH --> TOOLS["Controlled tool gateway"]
+    TOOLS --> DOMAIN["Creative, social, safety and public services tools and partner APIs"]
+    ORCH --> SEARCH["Azure AI Search / retrieval"]
+    ORCH --> STATE["Cosmos DB / SQL workflow state"]
+    ORCH --> BUS["Service Bus / durable background work"]
+
+    ID["Entra ID + managed identity"] -. authentication .-> API
+    VAULT["Key Vault + configuration"] -. secrets .-> APP
+    SAFE["Content safety, policy + human approval"] -. enforcement .-> ORCH
+    OBS["Application Insights, traces + evals"] -. telemetry .-> APP
+
+    class USER,EDGE,API edge
+    class APP,ORCH compute
+    class MODEL ai
+    class SEARCH,STATE data
+    class TOOLS,DOMAIN,BUS integration
+    class ID,VAULT,SAFE,OBS control
+```
+
+**Responsibility split**
+
+- **Edge and API layer:** authentication, quotas, request validation and tenant routing.
+- **Application/orchestration layer:** deterministic workflow, retries, approvals, state and tool authorization.
+- **Model layer:** language understanding, planning and explanation; it never becomes the system of record.
+- **Tool layer:** narrow typed operations with idempotency, schema validation and audit events.
+- **Data layer:** retrieval indexes are separate from transactional state and sensitive records.
+- **Control plane:** identity, secrets, policy, privacy, observability and evaluations apply across every request.
+
+
 *Proposed reference architectures for new systems, not descriptions of existing repositories. Safety, legal and privacy controls need expert review before launch.*
 
 ## 94. Photography coach
@@ -7,6 +55,42 @@
 **Purpose and user journey:** Helps hobbyist photographers improve through photo critique, shoot planning and practice drills. The user states a goal such as portraits or night skies, uploads images with optional EXIF, receives a structured critique of composition, exposure, focus and editing, gets one short assignment for the next outing, and later sees progress against earlier shots.
 
 **Reference architecture:** `Web/mobile app -> upload service -> EXIF + vision analysis -> critique agent -> lesson planner -> progress store`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A94_0["Web/mobile app"]
+    class A94_0 frontend
+    A94_1["upload service"]
+    class A94_1 tool
+    A94_2["EXIF + vision analysis"]
+    class A94_2 tool
+    A94_3["critique agent"]
+    class A94_3 agent
+    A94_4["lesson planner"]
+    class A94_4 agent
+    A94_5["progress store"]
+    class A94_5 data
+    A94_0 --> A94_1
+    A94_1 --> A94_2
+    A94_2 --> A94_3
+    A94_3 --> A94_4
+    A94_4 --> A94_5
+    ID94["Entra ID + managed identity"]
+    SAFE94["Policy, validation + approval gates"]
+    OBS94["Tracing, metrics + evaluation"]
+    class ID94,SAFE94,OBS94 control
+    ID94 -. authentication .-> A94_1
+    SAFE94 -. enforcement .-> A94_1
+    OBS94 -. telemetry .-> A94_1
+```
 
 **Core components:** Upload and EXIF parser; vision-language model for critique; rubric library (composition, light, focus, colour, edit); skills graph linking weaknesses to lessons; licensed exemplar-gallery retriever; progress timeline; gear profile.
 
@@ -26,6 +110,42 @@
 
 **Reference architecture:** `Editor UI -> project service -> context builder (story bible) -> writing agent -> critique/style tools -> versioned manuscript store`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A95_0["Editor UI"]
+    class A95_0 frontend
+    A95_1["project service"]
+    class A95_1 tool
+    A95_2["context builder (story bible)"]
+    class A95_2 frontend
+    A95_3["writing agent"]
+    class A95_3 agent
+    A95_4["critique/style tools"]
+    class A95_4 tool
+    A95_5["versioned manuscript store"]
+    class A95_5 data
+    A95_0 --> A95_1
+    A95_1 --> A95_2
+    A95_2 --> A95_3
+    A95_3 --> A95_4
+    A95_4 --> A95_5
+    ID95["Entra ID + managed identity"]
+    SAFE95["Policy, validation + approval gates"]
+    OBS95["Tracing, metrics + evaluation"]
+    class ID95,SAFE95,OBS95 control
+    ID95 -. authentication .-> A95_1
+    SAFE95 -. enforcement .-> A95_1
+    OBS95 -. telemetry .-> A95_1
+```
+
 **Core components:** Manuscript editor with versioning; story bible (characters, timeline, world rules); retrieval over the user's own drafts; feedback modes (brainstorm, developmental, line edit, continuity); style-profile extractor; export to DOCX/Markdown.
 
 **Agent/workflow design:** A mode-aware agent. Generation of prose is opt-in and clearly labelled, defaulting to suggestions and questions. Long manuscripts are chunked, with summaries of earlier chapters to preserve context. Research claims in nonfiction require cited sources or are marked unverified.
@@ -43,6 +163,39 @@
 **Purpose and user journey:** Helps listeners find new music that matches mood, activity, taste and curiosity, and explains why. The user connects a streaming account or describes preferences, asks for things like "post-rock for focus, nothing with vocals", receives a short explained playlist, gives feedback, and saves results back to their service.
 
 **Reference architecture:** `Chat/voice UI -> taste-profile service -> candidate retrieval -> ranking and explainer agent -> playlist writer`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A96_0["Chat/voice UI"]
+    class A96_0 frontend
+    A96_1["taste-profile service"]
+    class A96_1 data
+    A96_2["candidate retrieval"]
+    class A96_2 tool
+    A96_3["ranking and explainer agent"]
+    class A96_3 agent
+    A96_4["playlist writer"]
+    class A96_4 backend
+    A96_0 --> A96_1
+    A96_1 --> A96_2
+    A96_2 --> A96_3
+    A96_3 --> A96_4
+    ID96["Entra ID + managed identity"]
+    SAFE96["Policy, validation + approval gates"]
+    OBS96["Tracing, metrics + evaluation"]
+    class ID96,SAFE96,OBS96 control
+    ID96 -. authentication .-> A96_1
+    SAFE96 -. enforcement .-> A96_1
+    OBS96 -. telemetry .-> A96_1
+```
 
 **Core components:** Taste profile built from listening history and explicit likes; music metadata graph (artists, genres, credits, audio features); embedding-based candidate retriever; diversity and novelty ranker; explanation generator; playlist export connector.
 
@@ -62,6 +215,42 @@
 
 **Reference architecture:** `Chat UI -> reader-profile store -> hybrid retrieval (metadata + reviews) -> recommender agent -> availability checker -> reading list`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A97_0["Chat UI"]
+    class A97_0 frontend
+    A97_1["reader-profile store"]
+    class A97_1 data
+    A97_2["hybrid retrieval (metadata + reviews)"]
+    class A97_2 tool
+    A97_3["recommender agent"]
+    class A97_3 agent
+    A97_4["availability checker"]
+    class A97_4 tool
+    A97_5["reading list"]
+    class A97_5 backend
+    A97_0 --> A97_1
+    A97_1 --> A97_2
+    A97_2 --> A97_3
+    A97_3 --> A97_4
+    A97_4 --> A97_5
+    ID97["Entra ID + managed identity"]
+    SAFE97["Policy, validation + approval gates"]
+    OBS97["Tracing, metrics + evaluation"]
+    class ID97,SAFE97,OBS97 control
+    ID97 -. authentication .-> A97_1
+    SAFE97 -. enforcement .-> A97_1
+    OBS97 -. telemetry .-> A97_1
+```
+
 **Core components:** Book metadata index (ISBN, genres, themes, length, content notes); review and synopsis summariser; reader profile from Goodreads-style imports; library and retailer availability checker; reading-list and progress tracker; spoiler guard.
 
 **Agent/workflow design:** The agent extracts constraints and mood, retrieves candidates with semantic search over descriptions and reviews, filters by length, language, accessibility format and content-warning preferences, then explains each pick in two sentences with citations to publisher blurbs, award lists or reviews. A spoiler-safe mode forbids plot reveals. ISBN validation guards against hallucinated books.
@@ -79,6 +268,42 @@
 **Purpose and user journey:** Helps individuals or groups decide what to watch tonight and where to stream it. A user (or household) states mood, time available, ages present and subscriptions owned, gets a ranked shortlist with runtime, ratings, content advisories and where it is available, and can vote or save titles to a watchlist.
 
 **Reference architecture:** `Chat UI -> household profile -> catalogue and availability index -> recommender agent -> group-consensus tool -> watchlist/alerts`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A98_0["Chat UI"]
+    class A98_0 frontend
+    A98_1["household profile"]
+    class A98_1 data
+    A98_2["catalogue and availability index"]
+    class A98_2 data
+    A98_3["recommender agent"]
+    class A98_3 agent
+    A98_4["group-consensus tool"]
+    class A98_4 tool
+    A98_5["watchlist/alerts"]
+    class A98_5 backend
+    A98_0 --> A98_1
+    A98_1 --> A98_2
+    A98_2 --> A98_3
+    A98_3 --> A98_4
+    A98_4 --> A98_5
+    ID98["Entra ID + managed identity"]
+    SAFE98["Policy, validation + approval gates"]
+    OBS98["Tracing, metrics + evaluation"]
+    class ID98,SAFE98,OBS98 control
+    ID98 -. authentication .-> A98_1
+    SAFE98 -. enforcement .-> A98_1
+    OBS98 -. telemetry .-> A98_1
+```
 
 **Core components:** Title catalogue with cast, genre, runtime and certification; regional streaming-availability index; household and individual profiles; parental-guidance and content-advisory service; group-voting module; watchlist with leaving-soon alerts.
 
@@ -98,6 +323,42 @@
 
 **Reference architecture:** `Chat/overlay -> game-context resolver -> retrieval over wikis/patch notes -> guide agent -> hint-level controller -> backlog tracker`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A99_0["Chat/overlay"]
+    class A99_0 frontend
+    A99_1["game-context resolver"]
+    class A99_1 agent
+    A99_2["retrieval over wikis/patch notes"]
+    class A99_2 tool
+    A99_3["guide agent"]
+    class A99_3 frontend
+    A99_4["hint-level controller"]
+    class A99_4 tool
+    A99_5["backlog tracker"]
+    class A99_5 backend
+    A99_0 --> A99_1
+    A99_1 --> A99_2
+    A99_2 --> A99_3
+    A99_3 --> A99_4
+    A99_4 --> A99_5
+    ID99["Entra ID + managed identity"]
+    SAFE99["Policy, validation + approval gates"]
+    OBS99["Tracing, metrics + evaluation"]
+    class ID99,SAFE99,OBS99 control
+    ID99 -. authentication .-> A99_1
+    SAFE99 -. enforcement .-> A99_1
+    OBS99 -. telemetry .-> A99_1
+```
+
 **Core components:** Game and version resolver; retrieval index over official docs, patch notes and community wikis; graduated-hint controller; build and loadout calculator; backlog and playtime tracker; platform account connector.
 
 **Agent/workflow design:** The agent resolves game, version and platform first, because advice becomes wrong after patches. It retrieves current sources, answers at the lowest spoiler level the user chose, and offers escalation. Build advice calls deterministic calculators for stats. Every claim is cited with the patch version, and conflicting community sources are surfaced. For competitive games, it covers learning and strategy but not cheating tools.
@@ -115,6 +376,42 @@
 **Purpose and user journey:** Helps people organise and attend gatherings such as meetups, birthdays and community events. A host describes the occasion, guest count, budget and constraints; the assistant proposes dates, venues and an agenda, drafts invitations, collects RSVPs and dietary needs, and sends reminders. Attendees can also ask it to find events nearby.
 
 **Reference architecture:** `Chat UI -> event planner agent -> scheduling/venue tools -> invitation and RSVP service -> reminders -> post-event feedback`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A100_0["Chat UI"]
+    class A100_0 frontend
+    A100_1["event planner agent"]
+    class A100_1 agent
+    A100_2["scheduling/venue tools"]
+    class A100_2 tool
+    A100_3["invitation and RSVP service"]
+    class A100_3 tool
+    A100_4["reminders"]
+    class A100_4 tool
+    A100_5["post-event feedback"]
+    class A100_5 backend
+    A100_0 --> A100_1
+    A100_1 --> A100_2
+    A100_2 --> A100_3
+    A100_3 --> A100_4
+    A100_4 --> A100_5
+    ID100["Entra ID + managed identity"]
+    SAFE100["Policy, validation + approval gates"]
+    OBS100["Tracing, metrics + evaluation"]
+    class ID100,SAFE100,OBS100 control
+    ID100 -. authentication .-> A100_1
+    SAFE100 -. enforcement .-> A100_1
+    OBS100 -. telemetry .-> A100_1
+```
 
 **Core components:** Event model (date, venue, capacity, budget, roles); availability polling; venue and event search; invitation generator; RSVP and dietary tracker; reminder scheduler; budget and task checklist; accessibility checker.
 
@@ -134,6 +431,42 @@
 
 **Reference architecture:** `Chat UI -> preference profile -> ideas and venue retrieval -> planner agent -> logistics tools -> safety-check module`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A101_0["Chat UI"]
+    class A101_0 frontend
+    A101_1["preference profile"]
+    class A101_1 data
+    A101_2["ideas and venue retrieval"]
+    class A101_2 tool
+    A101_3["planner agent"]
+    class A101_3 agent
+    A101_4["logistics tools"]
+    class A101_4 tool
+    A101_5["safety-check module"]
+    class A101_5 backend
+    A101_0 --> A101_1
+    A101_1 --> A101_2
+    A101_2 --> A101_3
+    A101_3 --> A101_4
+    A101_4 --> A101_5
+    ID101["Entra ID + managed identity"]
+    SAFE101["Policy, validation + approval gates"]
+    OBS101["Tracing, metrics + evaluation"]
+    class ID101,SAFE101,OBS101 control
+    ID101 -. authentication .-> A101_1
+    SAFE101 -. enforcement .-> A101_1
+    OBS101 -. telemetry .-> A101_1
+```
+
 **Core components:** Preference and boundaries profile; venue and activity retriever; itinerary builder with transport and timing; message-coaching tool; first-date safety planner; feedback capture after the date.
 
 **Agent/workflow design:** The agent proposes two or three options matched to interests and constraints, builds an itinerary with fallback plans, and confirms bookings only after user approval. Message help focuses on clarity and respect and refuses deceptive, coercive or mass-automated outreach. It cites venue hours and reviews, and asks before using personal details.
@@ -151,6 +484,42 @@
 **Purpose and user journey:** Coordinates the many moving parts of a wedding for couples and planners. The couple enters date range, budget, guest estimate, culture and priorities; the assistant builds a timeline and checklist, shortlists venues and vendors, tracks budget and contracts, manages guest lists and RSVPs, and keeps both partners and helpers aligned.
 
 **Reference architecture:** `Web/mobile app -> wedding workspace -> planner agent -> vendor/venue search -> budget and contract tracker -> guest/RSVP service`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A102_0["Web/mobile app"]
+    class A102_0 frontend
+    A102_1["wedding workspace"]
+    class A102_1 tool
+    A102_2["planner agent"]
+    class A102_2 agent
+    A102_3["vendor/venue search"]
+    class A102_3 external
+    A102_4["budget and contract tracker"]
+    class A102_4 tool
+    A102_5["guest/RSVP service"]
+    class A102_5 backend
+    A102_0 --> A102_1
+    A102_1 --> A102_2
+    A102_2 --> A102_3
+    A102_3 --> A102_4
+    A102_4 --> A102_5
+    ID102["Entra ID + managed identity"]
+    SAFE102["Policy, validation + approval gates"]
+    OBS102["Tracing, metrics + evaluation"]
+    class ID102,SAFE102,OBS102 control
+    ID102 -. authentication .-> A102_1
+    SAFE102 -. enforcement .-> A102_1
+    OBS102 -. telemetry .-> A102_1
+```
 
 **Core components:** Shared workspace with roles; timeline and task engine; budget ledger; vendor directory with quotes; contract document store with clause extraction; guest list, seating and RSVP module; day-of run sheet generator.
 
@@ -170,6 +539,42 @@
 
 **Reference architecture:** `Mobile app -> safety-session service -> risk and route tools -> check-in monitor -> escalation engine -> contacts and emergency handoff`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A103_0["Mobile app"]
+    class A103_0 frontend
+    A103_1["safety-session service"]
+    class A103_1 tool
+    A103_2["risk and route tools"]
+    class A103_2 tool
+    A103_3["check-in monitor"]
+    class A103_3 tool
+    A103_4["escalation engine"]
+    class A103_4 agent
+    A103_5["contacts and emergency handoff"]
+    class A103_5 backend
+    A103_0 --> A103_1
+    A103_1 --> A103_2
+    A103_2 --> A103_3
+    A103_3 --> A103_4
+    A103_4 --> A103_5
+    ID103["Entra ID + managed identity"]
+    SAFE103["Policy, validation + approval gates"]
+    OBS103["Tracing, metrics + evaluation"]
+    class ID103,SAFE103,OBS103 control
+    ID103 -. authentication .-> A103_1
+    SAFE103 -. enforcement .-> A103_1
+    OBS103 -. telemetry .-> A103_1
+```
+
 **Core components:** Trusted-contact manager; journey and check-in timers; location sharing with consent; route and area-information service; discreet panic trigger; escalation policy engine; incident log; resource directory by country.
 
 **Agent/workflow design:** A deterministic state machine owns safety-critical actions, while the language model supplies calm guidance, planning and drafting. A missed check-in triggers a notification ladder: prompt the user, alert contacts, offer to call emergency services. Statements of immediate danger skip conversation and show "call your local emergency number" with one-tap dialing. The model never promises protection. Advice cites reputable sources such as police or domestic-abuse organisations and avoids victim-blaming.
@@ -187,6 +592,42 @@
 **Purpose and user journey:** Helps households prepare for disasters such as floods, wildfires, storms, outages and earthquakes. A user enters location, household members, pets, medical needs and mobility constraints; the assistant produces a tailored plan with supply lists, evacuation routes, contact trees and drills, and sends reminders and official alerts. During an event it relays authoritative instructions.
 
 **Reference architecture:** `App -> household profile -> hazard-risk service -> plan generator agent -> reminder engine -> official-alert relay`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A104_0["App"]
+    class A104_0 frontend
+    A104_1["household profile"]
+    class A104_1 data
+    A104_2["hazard-risk service"]
+    class A104_2 tool
+    A104_3["plan generator agent"]
+    class A104_3 agent
+    A104_4["reminder engine"]
+    class A104_4 agent
+    A104_5["official-alert relay"]
+    class A104_5 backend
+    A104_0 --> A104_1
+    A104_1 --> A104_2
+    A104_2 --> A104_3
+    A104_3 --> A104_4
+    A104_4 --> A104_5
+    ID104["Entra ID + managed identity"]
+    SAFE104["Policy, validation + approval gates"]
+    OBS104["Tracing, metrics + evaluation"]
+    class ID104,SAFE104,OBS104 control
+    ID104 -. authentication .-> A104_1
+    SAFE104 -. enforcement .-> A104_1
+    OBS104 -. telemetry .-> A104_1
+```
 
 **Core components:** Household profile; local hazard and risk lookup; supply checklist generator with expiry tracking; evacuation-route and shelter finder; family communication plan; drill scheduler; official-alert ingestion; offline plan pack.
 
@@ -206,6 +647,42 @@
 
 **Reference architecture:** `Chat/voice -> intent and jurisdiction router -> service-knowledge retrieval -> guidance agent -> checklist/appointment tools -> human handoff`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A105_0["Chat/voice"]
+    class A105_0 frontend
+    A105_1["intent and jurisdiction router"]
+    class A105_1 agent
+    A105_2["service-knowledge retrieval"]
+    class A105_2 tool
+    A105_3["guidance agent"]
+    class A105_3 frontend
+    A105_4["checklist/appointment tools"]
+    class A105_4 frontend
+    A105_5["human handoff"]
+    class A105_5 backend
+    A105_0 --> A105_1
+    A105_1 --> A105_2
+    A105_2 --> A105_3
+    A105_3 --> A105_4
+    A105_4 --> A105_5
+    ID105["Entra ID + managed identity"]
+    SAFE105["Policy, validation + approval gates"]
+    OBS105["Tracing, metrics + evaluation"]
+    class ID105,SAFE105,OBS105 control
+    ID105 -. authentication .-> A105_1
+    SAFE105 -. enforcement .-> A105_1
+    OBS105 -. telemetry .-> A105_1
+```
+
 **Core components:** Service catalogue mapped to life events; jurisdiction resolver; retrieval index over official pages with versioning; eligibility rule engine; document checklist builder; multilingual and accessibility layer; appointment and form-link tools; case-handoff queue.
 
 **Agent/workflow design:** The agent answers only from retrieved official sources, quotes the relevant rule, and gives the page link and last-verified date. Eligibility is computed by deterministic rules where available. When sources conflict or confidence is low, it says so and routes to staff. It does not guess fees or deadlines.
@@ -224,6 +701,42 @@
 
 **Reference architecture:** `Secure upload vault -> OCR/classification -> field extraction -> requirements checklist engine -> consistency checker -> export for applicant/lawyer`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A106_0["Secure upload vault"]
+    class A106_0 frontend
+    A106_1["OCR/classification"]
+    class A106_1 tool
+    A106_2["field extraction"]
+    class A106_2 tool
+    A106_3["requirements checklist engine"]
+    class A106_3 frontend
+    A106_4["consistency checker"]
+    class A106_4 tool
+    A106_5["export for applicant/lawyer"]
+    class A106_5 frontend
+    A106_0 --> A106_1
+    A106_1 --> A106_2
+    A106_2 --> A106_3
+    A106_3 --> A106_4
+    A106_4 --> A106_5
+    ID106["Entra ID + managed identity"]
+    SAFE106["Policy, validation + approval gates"]
+    OBS106["Tracing, metrics + evaluation"]
+    class ID106,SAFE106,OBS106 control
+    ID106 -. authentication .-> A106_1
+    SAFE106 -. enforcement .-> A106_1
+    OBS106 -. telemetry .-> A106_1
+```
+
 **Core components:** Encrypted document vault; OCR and document classifier; field extractor for names, dates, document numbers; official-requirements knowledge base; discrepancy checker; deadline calendar; translation and certification tracker; sharing with expiry.
 
 **Agent/workflow design:** The agent maps each document to the checklist item it satisfies, flags missing, expired or inconsistent items such as name spelling differences or date mismatches, and cites the official requirement page and version. It never advises on eligibility strategy and recommends a licensed adviser for complex cases.
@@ -241,6 +754,42 @@
 **Purpose and user journey:** Helps consumers resolve problems with purchases, services, subscriptions or fees. The user describes the issue and uploads receipts; the assistant identifies rights, builds an evidence timeline, drafts a complaint, picks the channel (merchant, chargeback, regulator, ombudsman) and tracks deadlines.
 
 **Reference architecture:** `Chat UI -> case builder -> evidence extractor -> rights retrieval (statutes/regulator guidance) -> letter drafter -> channel router/tracker`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A107_0["Chat UI"]
+    class A107_0 frontend
+    A107_1["case builder"]
+    class A107_1 frontend
+    A107_2["evidence extractor"]
+    class A107_2 tool
+    A107_3["rights retrieval (statutes/regulator guidance)"]
+    class A107_3 frontend
+    A107_4["letter drafter"]
+    class A107_4 tool
+    A107_5["channel router/tracker"]
+    class A107_5 agent
+    A107_0 --> A107_1
+    A107_1 --> A107_2
+    A107_2 --> A107_3
+    A107_3 --> A107_4
+    A107_4 --> A107_5
+    ID107["Entra ID + managed identity"]
+    SAFE107["Policy, validation + approval gates"]
+    OBS107["Tracing, metrics + evaluation"]
+    class ID107,SAFE107,OBS107 control
+    ID107 -. authentication .-> A107_1
+    SAFE107 -. enforcement .-> A107_1
+    OBS107 -. telemetry .-> A107_1
+```
 
 **Core components:** Case file with timeline; receipt extractor; jurisdiction-aware consumer-rights knowledge base; deadline calculator; letter generator; escalation router; outcome tracker.
 

@@ -2,10 +2,15 @@
 
 This directory contains proposed, implementation-oriented reference architectures for all **107 B2C AI applications** in the catalog. They are design guides—not claims about the linked example repositories.
 
+Each volume includes two rendered Mermaid diagram levels:
+
+- a **category deployment diagram** showing Azure edge, API, compute, model, tools, data, messaging, identity, security and observability boundaries;
+- a distinct **application request-flow diagram** showing the app's channels, orchestration, tools, integrations, data path, policy gates and telemetry.
+
 Every application overview covers:
 
 1. purpose and user journey;
-2. reference architecture flow;
+2. a renderable reference architecture diagram and flow;
 3. core components;
 4. agent and workflow design;
 5. data and integrations;

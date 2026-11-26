@@ -1,10 +1,102 @@
 # Finance, insurance, legal and automotive architecture overviews
 
+<!-- category-architecture:auto -->
+## Category deployment architecture
+
+This Azure-oriented deployment separates deterministic business operations from probabilistic model reasoning. The application owns authorization, validation, workflow state and approval; the model proposes actions only through allowlisted tools.
+
+```mermaid
+flowchart LR
+    classDef edge fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef compute fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef ai fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef integration fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+
+    USER["Web, mobile, voice or partner channel"] --> EDGE["Azure Front Door + WAF"]
+    EDGE --> API["API Management"]
+    API --> APP["App Service / Container Apps"]
+    APP --> ORCH["Microsoft Agent Framework orchestrator"]
+    ORCH --> MODEL["Microsoft Foundry model endpoint"]
+    ORCH --> TOOLS["Controlled tool gateway"]
+    TOOLS --> DOMAIN["Finance, insurance, legal and automotive tools and partner APIs"]
+    ORCH --> SEARCH["Azure AI Search / retrieval"]
+    ORCH --> STATE["Cosmos DB / SQL workflow state"]
+    ORCH --> BUS["Service Bus / durable background work"]
+
+    ID["Entra ID + managed identity"] -. authentication .-> API
+    VAULT["Key Vault + configuration"] -. secrets .-> APP
+    SAFE["Content safety, policy + human approval"] -. enforcement .-> ORCH
+    OBS["Application Insights, traces + evals"] -. telemetry .-> APP
+
+    class USER,EDGE,API edge
+    class APP,ORCH compute
+    class MODEL ai
+    class SEARCH,STATE data
+    class TOOLS,DOMAIN,BUS integration
+    class ID,VAULT,SAFE,OBS control
+```
+
+**Responsibility split**
+
+- **Edge and API layer:** authentication, quotas, request validation and tenant routing.
+- **Application/orchestration layer:** deterministic workflow, retries, approvals, state and tool authorization.
+- **Model layer:** language understanding, planning and explanation; it never becomes the system of record.
+- **Tool layer:** narrow typed operations with idempotency, schema validation and audit events.
+- **Data layer:** retrieval indexes are separate from transactional state and sensitive records.
+- **Control plane:** identity, secrets, policy, privacy, observability and evaluations apply across every request.
+
+
 ## 40. Personal finance coach
 
 **Purpose and user journey.** A proposed assistant that gives a household one coherent view of its finances and a prioritized plan. The user connects or enters balances, income, debts and goals, receives a ranked action list (emergency fund, high-interest debt, employer retirement match), then returns for monthly check-ins that track progress and adjust the plan.
 
 **Reference architecture.** `Web/mobile chat -> API gateway -> orchestrator agent -> [finance calc engine | data aggregator | knowledge base] -> encrypted store -> audit log`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A40_0["Web/mobile chat"]
+    class A40_0 frontend
+    A40_1["API gateway"]
+    class A40_1 external
+    A40_2["orchestrator agent"]
+    class A40_2 agent
+    A40_3["finance calc engine"]
+    class A40_3 agent
+    A40_4["data aggregator"]
+    class A40_4 tool
+    A40_5["knowledge base"]
+    class A40_5 tool
+    A40_6["encrypted store"]
+    class A40_6 data
+    A40_7["audit log"]
+    class A40_7 backend
+    A40_0 --> A40_1
+    A40_1 --> A40_2
+    A40_2 --> A40_3
+    A40_2 --> A40_4
+    A40_2 --> A40_5
+    A40_3 --> A40_6
+    A40_4 --> A40_6
+    A40_5 --> A40_6
+    A40_6 --> A40_7
+    ID40["Entra ID + managed identity"]
+    SAFE40["Policy, validation + approval gates"]
+    OBS40["Tracing, metrics + evaluation"]
+    class ID40,SAFE40,OBS40 control
+    ID40 -. authentication .-> A40_1
+    SAFE40 -. enforcement .-> A40_1
+    OBS40 -. telemetry .-> A40_1
+```
 
 **Core components.** Conversation UI; profile and goal service; deterministic calculation engine (net worth, debt payoff, savings runway); account-aggregation connector; curated education knowledge base; plan store with versioning; notification scheduler; consent and audit service.
 
@@ -24,6 +116,47 @@
 
 **Reference architecture.** `Chat UI -> budget agent -> [category model | budget engine | forecast module] -> ledger store -> alerts service`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A41_0["Chat UI"]
+    class A41_0 frontend
+    A41_1["budget agent"]
+    class A41_1 agent
+    A41_2["category model"]
+    class A41_2 tool
+    A41_3["budget engine"]
+    class A41_3 agent
+    A41_4["forecast module"]
+    class A41_4 tool
+    A41_5["ledger store"]
+    class A41_5 data
+    A41_6["alerts service"]
+    class A41_6 backend
+    A41_0 --> A41_1
+    A41_1 --> A41_2
+    A41_1 --> A41_3
+    A41_1 --> A41_4
+    A41_2 --> A41_5
+    A41_3 --> A41_5
+    A41_4 --> A41_5
+    A41_5 --> A41_6
+    ID41["Entra ID + managed identity"]
+    SAFE41["Policy, validation + approval gates"]
+    OBS41["Tracing, metrics + evaluation"]
+    class ID41,SAFE41,OBS41 control
+    ID41 -. authentication .-> A41_1
+    SAFE41 -. enforcement .-> A41_1
+    OBS41 -. telemetry .-> A41_1
+```
+
 **Core components.** Budget engine with category hierarchy and period rollover; income and irregular-expense forecaster; scenario simulator ("what if rent rises 8%?"); conversational editor translating requests into structured diffs; template library; alerting service; export module.
 
 **Agent/workflow design.** A planner agent proposes a draft, a validator checks that totals balance and nothing is negative, and the user approves before commit. Every change is a structured patch applied by the engine, so the model never edits numbers directly.
@@ -41,6 +174,42 @@
 **Purpose and user journey.** A proposed assistant that turns raw transactions into understandable insight. The user uploads or links transactions, sees categorized spending, trends, recurring charges and anomalies, asks natural-language questions ("why was March higher?"), and receives suggestions for review rather than orders.
 
 **Reference architecture.** `Transaction feed -> normalizer -> categorizer -> analytics store (SQL) -> query agent -> insights UI`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A42_0["Transaction feed"]
+    class A42_0 frontend
+    A42_1["normalizer"]
+    class A42_1 tool
+    A42_2["categorizer"]
+    class A42_2 tool
+    A42_3["analytics store (SQL)"]
+    class A42_3 data
+    A42_4["query agent"]
+    class A42_4 agent
+    A42_5["insights UI"]
+    class A42_5 frontend
+    A42_0 --> A42_1
+    A42_1 --> A42_2
+    A42_2 --> A42_3
+    A42_3 --> A42_4
+    A42_4 --> A42_5
+    ID42["Entra ID + managed identity"]
+    SAFE42["Policy, validation + approval gates"]
+    OBS42["Tracing, metrics + evaluation"]
+    class ID42,SAFE42,OBS42 control
+    ID42 -. authentication .-> A42_1
+    SAFE42 -. enforcement .-> A42_1
+    OBS42 -. telemetry .-> A42_1
+```
 
 **Core components.** Ingestion and deduplication pipeline; merchant normalizer; hybrid categorizer (rules, then model, then user correction); subscription and recurring-charge detector; anomaly detector; text-to-SQL query layer over a read-only analytics schema; chart and report generator.
 
@@ -60,6 +229,42 @@
 
 **Reference architecture.** `Goal intake -> feasibility engine -> schedule planner -> progress tracker -> nudge agent -> notifications`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A43_0["Goal intake"]
+    class A43_0 frontend
+    A43_1["feasibility engine"]
+    class A43_1 agent
+    A43_2["schedule planner"]
+    class A43_2 agent
+    A43_3["progress tracker"]
+    class A43_3 tool
+    A43_4["nudge agent"]
+    class A43_4 agent
+    A43_5["notifications"]
+    class A43_5 backend
+    A43_0 --> A43_1
+    A43_1 --> A43_2
+    A43_2 --> A43_3
+    A43_3 --> A43_4
+    A43_4 --> A43_5
+    ID43["Entra ID + managed identity"]
+    SAFE43["Policy, validation + approval gates"]
+    OBS43["Tracing, metrics + evaluation"]
+    class ID43,SAFE43,OBS43 control
+    ID43 -. authentication .-> A43_1
+    SAFE43 -. enforcement .-> A43_1
+    OBS43 -. telemetry .-> A43_1
+```
+
 **Core components.** Goal model (amount, date, priority, flexibility); feasibility and contribution calculator including inflation and interest assumptions; surplus estimator from budget data; progress tracker; milestone and nudge generator; goal-conflict resolver; optional automation hooks for transfers.
 
 **Agent/workflow design.** A coach agent runs a loop: clarify goal, check affordability using the engine, propose two or three options (longer timeline, higher contribution, smaller target), and obtain the user's choice. Weekly check-ins compare actual versus planned; if behind, the agent suggests adjustments instead of guilt-based messaging. Behavioral nudges follow a reviewed library, with frequency caps.
@@ -77,6 +282,42 @@
 **Purpose and user journey.** A proposed assistant that explains an existing insurance policy and helps users compare coverage with their needs. The user uploads a policy or schedule, asks what is covered, excluded, or required, sees citations to the exact clauses, and receives a list of questions to put to the insurer or broker.
 
 **Reference architecture.** `Policy PDF -> OCR/parse -> clause index -> RAG agent with citations -> answer + gap checklist -> human-handoff`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A44_0["Policy PDF"]
+    class A44_0 frontend
+    A44_1["OCR/parse"]
+    class A44_1 tool
+    A44_2["clause index"]
+    class A44_2 data
+    A44_3["RAG agent with citations"]
+    class A44_3 agent
+    A44_4["answer + gap checklist"]
+    class A44_4 tool
+    A44_5["human-handoff"]
+    class A44_5 backend
+    A44_0 --> A44_1
+    A44_1 --> A44_2
+    A44_2 --> A44_3
+    A44_3 --> A44_4
+    A44_4 --> A44_5
+    ID44["Entra ID + managed identity"]
+    SAFE44["Policy, validation + approval gates"]
+    OBS44["Tracing, metrics + evaluation"]
+    class ID44,SAFE44,OBS44 control
+    ID44 -. authentication .-> A44_1
+    SAFE44 -. enforcement .-> A44_1
+    OBS44 -. telemetry .-> A44_1
+```
 
 **Core components.** Document ingestion with OCR; layout-aware clause segmenter; metadata extractor (limits, excess, dates, endorsements); vector and keyword index; retrieval-augmented answer agent; glossary service; coverage-gap checklist generator; renewal reminder scheduler.
 
@@ -96,6 +337,42 @@
 
 **Reference architecture.** `Incident intake -> claim workflow engine -> evidence manager -> drafting agent -> user approval -> insurer submission/tracker`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A45_0["Incident intake"]
+    class A45_0 frontend
+    A45_1["claim workflow engine"]
+    class A45_1 agent
+    A45_2["evidence manager"]
+    class A45_2 tool
+    A45_3["drafting agent"]
+    class A45_3 agent
+    A45_4["user approval"]
+    class A45_4 frontend
+    A45_5["insurer submission/tracker"]
+    class A45_5 backend
+    A45_0 --> A45_1
+    A45_1 --> A45_2
+    A45_2 --> A45_3
+    A45_3 --> A45_4
+    A45_4 --> A45_5
+    ID45["Entra ID + managed identity"]
+    SAFE45["Policy, validation + approval gates"]
+    OBS45["Tracing, metrics + evaluation"]
+    class ID45,SAFE45,OBS45 control
+    ID45 -. authentication .-> A45_1
+    SAFE45 -. enforcement .-> A45_1
+    OBS45 -. telemetry .-> A45_1
+```
+
 **Core components.** Guided intake; policy-linked claim workflow state machine; evidence vault with metadata; document and image analyzer; deadline tracker; narrative drafting module; correspondence log; escalation pathways (complaints, ombudsman information).
 
 **Agent/workflow design.** A workflow engine defines claim stages and required artifacts; the agent fills structured fields, asks only for missing items, and drafts factual statements the user must review. It does not decide coverage, estimate payouts as promises, or advise concealing facts. Image analysis is advisory; a human adjuster decides.
@@ -113,6 +390,42 @@
 **Purpose and user journey.** A proposed assistant that translates consumer contracts (subscriptions, leases, phone plans, gym memberships) into plain language. The user uploads or pastes a contract, receives a summary of key obligations, costs, renewal and cancellation terms, flagged unusual clauses with citations, and suggested questions before signing.
 
 **Reference architecture.** `Contract upload -> parser -> clause classifier -> risk-flag rules + LLM explainer -> cited summary -> optional lawyer referral`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A46_0["Contract upload"]
+    class A46_0 frontend
+    A46_1["parser"]
+    class A46_1 tool
+    A46_2["clause classifier"]
+    class A46_2 tool
+    A46_3["risk-flag rules + LLM explainer"]
+    class A46_3 tool
+    A46_4["cited summary"]
+    class A46_4 tool
+    A46_5["optional lawyer referral"]
+    class A46_5 backend
+    A46_0 --> A46_1
+    A46_1 --> A46_2
+    A46_2 --> A46_3
+    A46_3 --> A46_4
+    A46_4 --> A46_5
+    ID46["Entra ID + managed identity"]
+    SAFE46["Policy, validation + approval gates"]
+    OBS46["Tracing, metrics + evaluation"]
+    class ID46,SAFE46,OBS46 control
+    ID46 -. authentication .-> A46_1
+    SAFE46 -. enforcement .-> A46_1
+    OBS46 -. telemetry .-> A46_1
+```
 
 **Core components.** Document parser with OCR; clause segmentation and classification (term, auto-renewal, fees, liability, arbitration, data use); jurisdiction-aware flag library; plain-language explainer; comparison view against a reference baseline; export and checklist generator.
 
@@ -132,6 +445,42 @@
 
 **Reference architecture.** `Upload/email inbox -> OCR -> document classifier -> field extractor -> checklist engine -> reviewed export pack`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A47_0["Upload/email inbox"]
+    class A47_0 frontend
+    A47_1["OCR"]
+    class A47_1 tool
+    A47_2["document classifier"]
+    class A47_2 tool
+    A47_3["field extractor"]
+    class A47_3 tool
+    A47_4["checklist engine"]
+    class A47_4 agent
+    A47_5["reviewed export pack"]
+    class A47_5 backend
+    A47_0 --> A47_1
+    A47_1 --> A47_2
+    A47_2 --> A47_3
+    A47_3 --> A47_4
+    A47_4 --> A47_5
+    ID47["Entra ID + managed identity"]
+    SAFE47["Policy, validation + approval gates"]
+    OBS47["Tracing, metrics + evaluation"]
+    class ID47,SAFE47,OBS47 control
+    ID47 -. authentication .-> A47_1
+    SAFE47 -. enforcement .-> A47_1
+    OBS47 -. telemetry .-> A47_1
+```
+
 **Core components.** Multi-channel intake; OCR and layout extraction; document-type classifier; field extractor (issuer, amount, date, tax year); duplicate detector; jurisdiction-specific checklist engine; review queue; export builder with index and audit trail.
 
 **Agent/workflow design.** Extraction agent produces structured fields with confidence scores; low-confidence items go to user confirmation. The checklist engine, driven by versioned rules, compares expected against received documents. The agent explains what a document is and why it may be needed but does not calculate liability or choose deductions. Workflow: ingest, classify, extract, confirm, reconcile, export, year-end rollover.
@@ -149,6 +498,42 @@
 **Purpose and user journey.** A proposed assistant that guides a buyer from need definition to purchase decision, for new or used vehicles. The user states budget, usage and preferences, receives a shortlist with total-cost estimates, a listing-evaluation checklist, negotiation preparation, and a financing and paperwork guide.
 
 **Reference architecture.** `Needs intake -> candidate search -> cost model + listing checker -> agent shortlist -> negotiation brief -> decision log`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A48_0["Needs intake"]
+    class A48_0 frontend
+    A48_1["candidate search"]
+    class A48_1 tool
+    A48_2["cost model + listing checker"]
+    class A48_2 tool
+    A48_3["agent shortlist"]
+    class A48_3 agent
+    A48_4["negotiation brief"]
+    class A48_4 tool
+    A48_5["decision log"]
+    class A48_5 backend
+    A48_0 --> A48_1
+    A48_1 --> A48_2
+    A48_2 --> A48_3
+    A48_3 --> A48_4
+    A48_4 --> A48_5
+    ID48["Entra ID + managed identity"]
+    SAFE48["Policy, validation + approval gates"]
+    OBS48["Tracing, metrics + evaluation"]
+    class ID48,SAFE48,OBS48 control
+    ID48 -. authentication .-> A48_1
+    SAFE48 -. enforcement .-> A48_1
+    OBS48 -. telemetry .-> A48_1
+```
 
 **Core components.** Preference and budget profile; listing aggregator connectors; vehicle-history lookup integration; total-cost-of-ownership calculator (depreciation, fuel, insurance, tax, finance); price-benchmark service; listing analyzer for red flags; negotiation brief generator; document checklist.
 
@@ -168,6 +553,39 @@
 
 **Reference architecture.** `Vehicle selection -> spec normalizer -> multi-criteria scorer -> comparison agent -> table/charts with sources`
 
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A49_0["Vehicle selection"]
+    class A49_0 frontend
+    A49_1["spec normalizer"]
+    class A49_1 tool
+    A49_2["multi-criteria scorer"]
+    class A49_2 tool
+    A49_3["comparison agent"]
+    class A49_3 agent
+    A49_4["table/charts with sources"]
+    class A49_4 backend
+    A49_0 --> A49_1
+    A49_1 --> A49_2
+    A49_2 --> A49_3
+    A49_3 --> A49_4
+    ID49["Entra ID + managed identity"]
+    SAFE49["Policy, validation + approval gates"]
+    OBS49["Tracing, metrics + evaluation"]
+    class ID49,SAFE49,OBS49 control
+    ID49 -. authentication .-> A49_1
+    SAFE49 -. enforcement .-> A49_1
+    OBS49 -. telemetry .-> A49_1
+```
+
 **Core components.** Vehicle knowledge graph (make, model, trim, powertrain); specification normalizer with unit handling; weighted multi-criteria scoring engine; cost modeler; safety and recall data connectors; review-sentiment summarizer; comparison table and visual generator; saved-comparison store.
 
 **Agent/workflow design.** The agent resolves ambiguous trims first, retrieves structured data, then calls the scoring engine with user weights. The language model writes the narrative only from retrieved facts and shows which figures are manufacturer claims versus independent test results. Sensitivity analysis shows how rankings change when weights shift. Workflow: disambiguate, retrieve, normalize, score, explain, adjust.
@@ -185,6 +603,39 @@
 **Purpose and user journey.** A proposed assistant that helps owners keep a vehicle serviced and safe. The user adds a vehicle (VIN or registration), receives a manufacturer-based service schedule, logs work and mileage, gets reminders, and can describe symptoms to receive possible causes, urgency guidance and questions to ask a garage.
 
 **Reference architecture.** `Vehicle profile -> schedule engine + service log -> symptom agent (RAG on manuals) -> reminders -> garage handoff`
+
+<!-- architecture-diagram:auto -->
+```mermaid
+flowchart LR
+    classDef frontend fill:#083344,stroke:#22d3ee,color:#ecfeff
+    classDef agent fill:#064e3b,stroke:#34d399,color:#ecfdf5
+    classDef tool fill:#78350f,stroke:#fbbf24,color:#fffbeb
+    classDef data fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+    classDef backend fill:#1e3a8a,stroke:#60a5fa,color:#eff6ff
+    classDef external fill:#1e293b,stroke:#94a3b8,color:#f8fafc
+    classDef control fill:#881337,stroke:#fb7185,color:#fff1f2
+    A50_0["Vehicle profile"]
+    class A50_0 frontend
+    A50_1["schedule engine + service log"]
+    class A50_1 agent
+    A50_2["symptom agent (RAG on manuals)"]
+    class A50_2 agent
+    A50_3["reminders"]
+    class A50_3 tool
+    A50_4["garage handoff"]
+    class A50_4 backend
+    A50_0 --> A50_1
+    A50_1 --> A50_2
+    A50_2 --> A50_3
+    A50_3 --> A50_4
+    ID50["Entra ID + managed identity"]
+    SAFE50["Policy, validation + approval gates"]
+    OBS50["Tracing, metrics + evaluation"]
+    class ID50,SAFE50,OBS50 control
+    ID50 -. authentication .-> A50_1
+    SAFE50 -. enforcement .-> A50_1
+    OBS50 -. telemetry .-> A50_1
+```
 
 **Core components.** VIN decoder; maintenance schedule engine driven by mileage, time and usage; service-history log with receipts; manual and technical-bulletin retrieval index; recall checker; symptom triage module; reminder service; optional OBD-II or telematics ingestion.
 
