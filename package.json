@@ -5,6 +5,8 @@
     "@mermaid-js/mermaid-cli": "12.2.0"
   },
   "scripts": {
+    "catalog:links": "python scripts/sync_architecture_links.py",
+    "catalog:links:check": "python scripts/sync_architecture_links.py --check",
     "diagrams:render": "python scripts/render_mermaid_diagrams.py",
     "diagrams:check": "python scripts/render_mermaid_diagrams.py --check"
   }

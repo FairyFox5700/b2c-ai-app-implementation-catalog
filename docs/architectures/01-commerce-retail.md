@@ -52,6 +52,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/01-commerce-retail/source/00
 **Purpose and user journey**
 A conversational assistant that turns a vague need ("running shoes under 120 EUR for flat feet") into a ranked shortlist. The user states a need, answers one or two clarifying questions, reviews product cards with reasons, then saves items or sends them to the cart.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Personal shopping assistant
+
+- **Azure / Microsoft (Exact match):** [Fashion Assistant with Foundry agents](https://github.com/Azure-Samples/app-service-aspire-eshop-agents) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #1 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture**
 Chat UI -> API gateway -> orchestrator agent -> [catalog search | profile memory | price/stock tools] -> ranker -> product cards -> cart handoff
 
@@ -104,6 +112,14 @@ Weeks 1-2: ingest the feed and build the hybrid index. Weeks 3-4: single-agent c
 **Purpose and user journey**
 Suggests complete outfits for an occasion, body preference and budget. The user describes an event or uploads a reference photo, gets three outfit options with swap-able items, and buys the full look or single pieces.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Fashion and styling assistant
+
+- **Azure / Microsoft (Exact match):** [Fashion Assistant with Foundry agents](https://github.com/Azure-Samples/app-service-aspire-eshop-agents) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [Vercel semantic image search](https://github.com/vercel-labs/semantic-image-search).
+- **Catalog mapping:** [App #2 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture**
 Chat/photo UI -> style agent -> [attribute extractor | outfit composer | catalog + inventory search] -> compatibility scorer -> outfit cards -> cart
 
@@ -154,6 +170,14 @@ Start with one gender-neutral category set and a rules-based composer. Add photo
 
 **Purpose and user journey**
 Helps users catalog clothes they already own, plan outfits from them, and spot gaps worth buying. The user photographs items, confirms detected attributes, gets daily outfit suggestions, and sees targeted purchase suggestions.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Personal wardrobe assistant
+
+- **Azure / Microsoft (Exact match):** [Fashion Assistant with Foundry agents](https://github.com/Azure-Samples/app-service-aspire-eshop-agents) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [Vercel semantic image search](https://github.com/vercel-labs/semantic-image-search).
+- **Catalog mapping:** [App #3 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture**
 Photo capture -> image pipeline (segment, tag, embed) -> wardrobe store -> outfit agent -> daily plan / gap analysis -> optional shop links
@@ -206,6 +230,14 @@ Build upload-and-tag with manual correction first. Then add weather-based daily 
 **Purpose and user journey**
 Helps shoppers who do not know what to search for. They browse by need, mood or use case, refine through facets and conversation, and discover products they would not have found by keyword.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Product discovery assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopLite reference apps](https://github.com/Azure-Samples/eShopLite) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel semantic image search](https://github.com/vercel-labs/semantic-image-search).
+- **Catalog mapping:** [App #4 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture**
 Query/browse UI -> intent and facet agent -> hybrid retrieval (keyword + vector + graph) -> diversified reranker -> explained results -> refinement loop
 
@@ -256,6 +288,14 @@ Step 1: hybrid index and query rewriting. Step 2: dynamic facets. Step 3: knowle
 
 **Purpose and user journey**
 Compares two to five products on the criteria the user cares about. The user picks items or describes a decision, receives a normalized comparison table with a plain-language verdict, and can adjust priorities.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Product comparison assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopLite reference apps](https://github.com/Azure-Samples/eShopLite) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel semantic image search](https://github.com/vercel-labs/semantic-image-search).
+- **Catalog mapping:** [App #5 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture**
 Selected SKUs -> spec normalizer -> criteria weighting -> evidence retriever (specs, reviews) -> comparison generator -> table + verdict + citations
@@ -308,6 +348,14 @@ Pick one spec-heavy category such as laptops. Build normalization and the table 
 **Purpose and user journey**
 Finds suitable gifts for a recipient, occasion and budget. The buyer answers a short guided interview, gets diverse ideas with rationale, and can order with gift wrap, a message and a delivery date.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Gift recommendation assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopLite reference apps](https://github.com/Azure-Samples/eShopLite) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel semantic image search](https://github.com/vercel-labs/semantic-image-search).
+- **Catalog mapping:** [App #6 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture**
 Gift brief form/chat -> recipient profile builder -> idea generator -> catalog matcher + delivery-date filter -> curated shortlist -> gift checkout options
 
@@ -358,6 +406,14 @@ Launch with five occasions and a curated catalog subset. Add delivery-date filte
 
 **Purpose and user journey**
 Lets users search with a photo, screenshot or sketch to find the same or similar products. The user takes a photo, crops the region of interest, receives exact and similar matches, and refines with text such as "in blue".
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Visual product-search app
+
+- **Azure / Microsoft (Adjacent match):** [eShopLite reference apps](https://github.com/Azure-Samples/eShopLite) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel semantic image search](https://github.com/vercel-labs/semantic-image-search).
+- **Catalog mapping:** [App #7 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture**
 Image upload -> preprocessing/detection -> embedding model -> vector index -> exact-match verifier + similar-item ranker -> results -> text refinement
@@ -410,6 +466,14 @@ Build a catalog embedding job, then single-object search with a pre-trained mode
 **Purpose and user journey**
 Helps users complete and optimize a cart. While shopping, it flags compatibility problems, suggests missing accessories, finds cheaper alternatives or bundles, and reminds users about abandoned items.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Shopping-cart assistant
+
+- **Azure / Microsoft (Adjacent match):** [Garden Shop AI Chat](https://github.com/dotnet/maui-labs/tree/main/samples/AIExtensions.Sample.Garden) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph auth + payments app (archived reference)](https://github.com/langchain-ai/agent-auth-payments).
+- **Catalog mapping:** [App #8 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture**
 Cart events -> cart-state service -> assistant agent -> [compatibility rules | pricing/promo engine | inventory | recommendations] -> inline suggestions -> user-approved cart change
 
@@ -460,6 +524,14 @@ Start with rule-based checks (stock, shipping threshold, duplicates), then compa
 
 **Purpose and user journey**
 Reduces friction and errors during checkout. It helps with address correction, shipping choice, payment-method questions, tax and fee explanations, and failed-payment recovery, while keeping payment handling out of the model.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Checkout assistant
+
+- **Azure / Microsoft (Adjacent match):** [Garden Shop AI Chat](https://github.com/dotnet/maui-labs/tree/main/samples/AIExtensions.Sample.Garden) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph auth + payments app (archived reference)](https://github.com/langchain-ai/agent-auth-payments).
+- **Catalog mapping:** [App #9 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture**
 Checkout UI -> checkout orchestrator -> [address validation | shipping options | tax/fees | payment provider hosted fields] -> assistant explanations -> order confirmation
@@ -512,6 +584,14 @@ Ship address validation and a delivery/fee FAQ panel first. Add shipping recomme
 **Purpose and user journey**
 Answers "where is my order?" across channels. The user asks via chat, SMS or email, is verified, and receives a plain status with an estimated delivery window, proactive updates, and options such as rerouting or notifications.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Order-tracking assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopSupport](https://github.com/dotnet/eShopSupport) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph customer-support workflow](https://github.com/langchain-ai/langgraph/tree/main/examples/customer-support).
+- **Catalog mapping:** [App #10 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture**
 Channel (web/SMS/WhatsApp) -> identity check -> tracking agent -> [order API | carrier tracking aggregator | event store] -> status explanation -> proactive notifier
 
@@ -562,6 +642,14 @@ Build order lookup and a single carrier integration first. Add status normalizat
 
 **Purpose and user journey**
 Detects and resolves delivery problems such as delays, failed attempts, damage, lost parcels and address issues. The customer is notified before they ask, picks a resolution (reschedule, pickup point, reship, refund), and the case is closed or escalated.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Delivery-exception assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopSupport](https://github.com/dotnet/eShopSupport) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph customer-support workflow](https://github.com/langchain-ai/langgraph/tree/main/examples/customer-support).
+- **Catalog mapping:** [App #11 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture**
 Carrier events -> exception detector -> case manager -> resolution agent -> [carrier actions | reship/refund engine | customer messaging] -> outcome tracking
@@ -614,6 +702,14 @@ Start with rule-based detection of stalled and failed-attempt shipments plus pro
 **Purpose and user journey**
 Guides customers through eligibility, reason capture, return method, label creation and refund or exchange, then keeps them informed until the money is returned. It also helps merchants cut avoidable returns.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Returns and refunds assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopSupport](https://github.com/dotnet/eShopSupport) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph customer-support workflow](https://github.com/langchain-ai/langgraph/tree/main/examples/customer-support).
+- **Catalog mapping:** [App #12 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture**
 Return request -> eligibility engine -> returns agent -> [label/carrier | exchange suggester | refund service] -> warehouse receipt -> refund status updates
 
@@ -664,6 +760,14 @@ Build the policy engine and label generation first. Add reason capture, then exc
 
 **Purpose and user journey**
 A general support agent that resolves common customer requests across orders, products, policies and accounts, and hands complex cases to humans. The customer asks in chat or email, gets an answer or action, and can escalate with context preserved.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for E-commerce customer-support agent
+
+- **Azure / Microsoft (Adjacent match):** [eShopSupport](https://github.com/dotnet/eShopSupport) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph customer-support workflow](https://github.com/langchain-ai/langgraph/tree/main/examples/customer-support).
+- **Catalog mapping:** [App #13 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture**
 Channel -> router/intent classifier -> support agent -> [knowledge RAG | order tools | account tools | specialist sub-agents] -> response or human handoff -> QA loop
@@ -716,6 +820,14 @@ Begin with RAG answers for FAQs and read-only order lookup. Add handoff with sum
 **Purpose and user journey**
 Lets customers manage recurring orders: skip, delay, swap products, change frequency, update payment or cancel. It also helps merchants retain customers with fair offers and prevents surprise charges.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Subscription-management assistant
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangGraph auth + payments app (archived reference)](https://github.com/langchain-ai/agent-auth-payments).
+- **Catalog mapping:** [App #14 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture**
 User request -> authentication -> subscription agent -> [subscription API | billing/dunning | catalog swaps | retention offers] -> confirmation -> scheduled-event updates
 
@@ -767,6 +879,14 @@ Implement skip, pause and frequency change first. Add product swaps and pre-rene
 **Purpose and user journey**
 Helps members understand and use loyalty programs. They ask about points, tier progress and expiry, get suggestions for redeeming rewards, and receive nudges to earn more in ways that fit their shopping habits.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Loyalty and rewards assistant
+
+- **Azure / Microsoft (Adjacent match):** [Garden Shop AI Chat](https://github.com/dotnet/maui-labs/tree/main/samples/AIExtensions.Sample.Garden) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph auth + payments app (archived reference)](https://github.com/langchain-ai/agent-auth-payments).
+- **Catalog mapping:** [App #15 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture**
 Member query/event -> identity -> loyalty agent -> [points ledger | tier engine | rewards catalog | offers] -> explanation or redemption -> ledger update
 
@@ -817,6 +937,14 @@ Start with balance, history and tier-progress Q&A. Add expiry reminders, then gu
 
 **Purpose and user journey**
 Delivers relevant offers to the right customer at the right time within margin and fairness limits. A shopper sees tailored coupons or bundles in the app, email or on-site, and merchants control budgets and measure true incremental lift.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Personalized promotion assistant
+
+- **Azure / Microsoft (Adjacent match):** [Garden Shop AI Chat](https://github.com/dotnet/maui-labs/tree/main/samples/AIExtensions.Sample.Garden) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph auth + payments app (archived reference)](https://github.com/langchain-ai/agent-auth-payments).
+- **Catalog mapping:** [App #16 in Commerce and retail](../../README.md#commerce-and-retail).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture**
 Customer events -> feature store -> eligibility and propensity models -> offer optimizer (budget/margin rules) -> message generator -> channel delivery -> holdout measurement

@@ -51,6 +51,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source
 
 **Purpose and user journey:** Gives learners conversational practice, corrections and spaced review in a target language. A learner sets a goal and level, chats or speaks through a scenario, receives gentle feedback, then reviews personalized flashcards and weekly progress summaries.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Language-learning tutor
+
+- **Azure / Microsoft (Adjacent match):** [Student–Teacher agent workflow](https://github.com/microsoft/agent-framework/tree/main/python/samples/03-workflows/declarative/student_teacher) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel real-time voice fact checker](https://github.com/vercel-labs/ai-facts).
+- **Catalog mapping:** [App #66 in Education and learning](../../README.md#education-and-learning).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Learner app (text/voice) -> Session API -> Tutor agent -> LLM + CEFR curriculum -> Feedback + SRS scheduler -> Progress DB`
 
 <!-- architecture-diagram:auto -->
@@ -88,6 +96,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source
 ## 67. Study assistant
 
 **Purpose and user journey:** Helps students turn their own notes, slides and readings into a study plan, summaries, flashcards and practice questions. A student uploads materials, picks a deadline, follows a daily plan and asks questions grounded in the sources.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Study assistant
+
+- **Azure / Microsoft (Adjacent match):** [Student–Teacher agent workflow](https://github.com/microsoft/agent-framework/tree/main/python/samples/03-workflows/declarative/student_teacher) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #67 in Education and learning](../../README.md#education-and-learning).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Upload portal -> Parser/chunker -> Vector index -> Study agent (RAG + planner) -> Cards/summaries/plan -> Progress tracker`
 
@@ -127,6 +143,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source
 
 **Purpose and user journey:** Guides students through homework by asking questions, giving hints and checking reasoning rather than handing over answers. A student photographs or types a problem, chooses a hint level, works step by step and receives a reflection summary.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Homework tutor
+
+- **Azure / Microsoft (Adjacent match):** [Student–Teacher agent workflow](https://github.com/microsoft/agent-framework/tree/main/python/samples/03-workflows/declarative/student_teacher) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #68 in Education and learning](../../README.md#education-and-learning).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Student UI -> Safety filter -> Tutor agent (hint ladder) -> Solver/verifier tools -> Step checker -> Guardian/teacher report`
 
 <!-- architecture-diagram:auto -->
@@ -164,6 +188,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source
 ## 69. Exam-preparation coach
 
 **Purpose and user journey:** Prepares learners for a specific exam through a diagnostic test, a personalized plan, timed practice and review. The user selects an exam and date, receives a readiness estimate, practices weak topics and sits mock exams.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Exam-preparation coach
+
+- **Azure / Microsoft (Adjacent match):** [Student–Teacher agent workflow](https://github.com/microsoft/agent-framework/tree/main/python/samples/03-workflows/declarative/student_teacher) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #69 in Education and learning](../../README.md#education-and-learning).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Exam profile -> Diagnostic engine -> Coach agent -> Question bank + generator -> Timed mock runner -> Readiness model -> Plan updater`
 
@@ -203,6 +235,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source
 
 **Purpose and user journey:** Supports comprehension of texts for learners, including struggling readers and multilingual students. A reader opens a passage, gets leveled explanations, vocabulary help, read-aloud and comprehension questions, then reflects on understanding.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Reading assistant
+
+- **Azure / Microsoft (Adjacent match):** [Student–Teacher agent workflow](https://github.com/microsoft/agent-framework/tree/main/python/samples/03-workflows/declarative/student_teacher) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel real-time voice fact checker](https://github.com/vercel-labs/ai-facts).
+- **Catalog mapping:** [App #70 in Education and learning](../../README.md#education-and-learning).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Reader UI -> Text processor -> Reading agent -> Readability + glossary tools -> TTS/translation -> Comprehension checks -> Progress log`
 
 <!-- architecture-diagram:auto -->
@@ -240,6 +280,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/07-education-learning/source
 ## 71. Educational quiz generator
 
 **Purpose and user journey:** Lets teachers and learners create quizzes from lesson materials with chosen difficulty, standards and question types. A creator uploads content, reviews generated items, publishes a quiz and analyzes results.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Educational quiz generator
+
+- **Azure / Microsoft (Adjacent match):** [Student–Teacher agent workflow](https://github.com/microsoft/agent-framework/tree/main/python/samples/03-workflows/declarative/student_teacher) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #71 in Education and learning](../../README.md#education-and-learning).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Content input -> Standards mapper -> Quiz agent -> Item generator -> Validator/reviewer -> Quiz builder -> Delivery + analytics`
 

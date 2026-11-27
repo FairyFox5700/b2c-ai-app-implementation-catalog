@@ -11,7 +11,7 @@ Use this catalog for solution discovery, prototypes, Forward Deployed Engineer p
 
 ## Comprehensive architecture overviews
 
-The repository now includes implementation-oriented architecture guides for every catalog entry. Each guide covers the user journey, Azure icon views, pre-rendered SVG request flows, main execution logic, components, agent design, data, integrations, security, reliability, evaluation, and an MVP build path. Every SVG links to editable Mermaid source, and the architecture index includes a detailed guide to the system-context, runtime, control-plane and application-flow views.
+The repository now includes implementation-oriented architecture guides for every catalog entry. Each guide covers the user journey, direct links to the closest Azure and alternative implementations, Azure icon views, pre-rendered SVG request flows, main execution logic, components, agent design, data, integrations, security, reliability, evaluation, and an MVP build path. Every SVG links to editable Mermaid source, and the architecture index includes a detailed guide to the system-context, runtime, control-plane and application-flow views.
 
 **[Browse all 107 architecture overviews](docs/architectures/README.md)**
 

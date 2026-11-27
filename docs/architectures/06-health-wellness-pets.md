@@ -53,6 +53,14 @@ These are proposed reference architectures, not descriptions of existing reposit
 
 **Purpose and user journey:** A proposed conversational coach that turns goals, equipment, and schedule into daily training guidance. Journey: consent and goal intake, readiness screening, plan, guided session with live adjustments, weekly review. It does not diagnose or replace doctors or qualified trainers.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Fitness coach
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #51 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Mobile app -> API gateway -> Coach agent -> Planner/Safety rules -> Profile + Activity store <- Wearable connectors`
 
 <!-- architecture-diagram:auto -->
@@ -90,6 +98,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 ## 52. Workout-planning assistant
 
 **Purpose and user journey:** A proposed planner that builds and revises multi-week training programs from goals, available days, equipment, and constraints. Journey: consent, constraint intake, draft plan, user edits, calendar export, adjustment. It is not medical advice and does not replace professional trainers or clinicians.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Workout-planning assistant
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #52 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Web/mobile UI -> Planner API -> Constraint solver + LLM drafter -> Exercise DB -> Calendar sync -> Feedback loop`
 
@@ -129,6 +145,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 
 **Purpose and user journey:** A proposed whole-person coach helping users set small goals across movement, nutrition awareness, stress, and social connection. Journey: consent, values and goal discussion, weekly focus, check-ins, reflection. It does not diagnose or treat conditions and does not replace clinicians, therapists, or dietitians.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Wellness coach
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #53 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Chat UI -> Coach orchestrator -> Goal/Check-in services -> Guardrail classifier -> Memory store -> Integrations`
 
 <!-- architecture-diagram:auto -->
@@ -166,6 +190,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 ## 54. Sleep coach
 
 **Purpose and user journey:** A proposed coach that helps users understand sleep habits and improve routines using diaries and optional wearable data. Journey: consent, baseline diary, routine experiments, weekly review. It does not diagnose sleep disorders and does not replace physicians or sleep specialists.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Sleep coach
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #54 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `App -> Sleep coach agent -> Diary + Wearable ingest -> Pattern analyzer -> CBT-I style content -> Notifications`
 
@@ -205,6 +237,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 
 **Purpose and user journey:** A proposed assistant that helps users define tiny habits, anchor them to routines, and recover from lapses. Journey: consent, choose a habit, set cue and reward, daily prompts, weekly reflection. It is a wellness tool, not therapy or medical care, and does not replace professionals.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Habit-building assistant
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #55 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Mobile app -> Habit agent -> Habit engine (cues, streaks) -> Scheduler -> Push/SMS -> Insights store`
 
 <!-- architecture-diagram:auto -->
@@ -242,6 +282,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 ## 56. Skincare advisor
 
 **Purpose and user journey:** A proposed advisor that builds simple routines from skin type, preferences, allergies, and climate. Journey: consent, profile quiz, optional photo upload, routine suggestion, patch-test guidance, review. It does not diagnose skin conditions and does not replace dermatologists or other clinicians.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Skincare advisor
+
+- **Azure / Microsoft (Exact match):** [Fashion Assistant with Foundry agents](https://github.com/Azure-Samples/app-service-aspire-eshop-agents) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #56 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `App -> Advisor agent -> Ingredient KB + Rules -> Product catalog -> Photo processing (optional) -> Profile store`
 
@@ -281,6 +329,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 
 **Purpose and user journey:** A proposed shopping assistant that helps users compare makeup, haircare, and personal-care products by preference, shade, budget, and ingredient sensitivities. Journey: consent, preferences, shortlist, comparison, purchase handoff. It gives cosmetic guidance only, not medical diagnosis or treatment.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Beauty-product assistant
+
+- **Azure / Microsoft (Exact match):** [Fashion Assistant with Foundry agents](https://github.com/Azure-Samples/app-service-aspire-eshop-agents) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [Vercel semantic image search](https://github.com/vercel-labs/semantic-image-search).
+- **Catalog mapping:** [App #57 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Chat UI -> Recommender agent -> Catalog search + Reviews index -> Ingredient filter -> Affiliate/checkout links -> Feedback`
 
 <!-- architecture-diagram:auto -->
@@ -318,6 +374,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 ## 58. Medication reminder
 
 **Purpose and user journey:** A proposed reminder service that helps users and caregivers remember prescribed medicines. Journey: consent, enter or scan regimen, confirm schedule, receive reminders, log doses, share summaries. It does not diagnose, prescribe, or change doses, and does not replace physicians or pharmacists.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Medication reminder
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #58 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `App/SMS -> Reminder API -> Regimen store -> Scheduler -> Notification service -> Adherence log -> Caregiver alerts`
 
@@ -357,6 +421,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 
 **Purpose and user journey:** A proposed assistant that helps users understand care options, insurance terms, referrals, and next administrative steps. Journey: consent, describe need, identify care setting, prepare questions and documents, follow up. It does not diagnose or provide treatment advice and does not replace clinicians or insurers.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Healthcare navigation assistant
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #59 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Chat/voice -> Navigation agent -> Triage-safe router -> Provider directory + Insurance rules -> Document checklist -> Handoff`
 
 <!-- architecture-diagram:auto -->
@@ -394,6 +466,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 ## 60. Appointment-booking assistant
 
 **Purpose and user journey:** A proposed assistant that finds, books, reschedules, and reminds users about healthcare appointments. Journey: consent, choose provider and reason category, select slot, confirm, receive reminders, update. It does not diagnose or decide medical urgency and does not replace clinical staff.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Appointment-booking assistant
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangChain deployment cookbook](https://github.com/langchain-ai/deployment-cookbook).
+- **Catalog mapping:** [App #60 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Chat/voice -> Booking agent -> Availability service -> EHR/scheduling APIs -> Confirmation + Reminders -> Audit log`
 
@@ -433,6 +513,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 
 **Purpose and user journey:** A proposed intake assistant that collects structured symptom history before a clinician visit. Journey: consent, red-flag screening, guided questions, review and edit summary, submit to clinic. It does not diagnose, recommend treatments, or replace professional triage or clinical judgment.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Symptom-intake assistant
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #61 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Patient UI -> Red-flag screener -> Intake agent -> Structured summary -> Clinician review queue -> EHR/FHIR`
 
 <!-- architecture-diagram:auto -->
@@ -470,6 +558,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 ## 62. Mental-wellness journaling assistant
 
 **Purpose and user journey:** A proposed private journaling companion offering reflective prompts, mood tracking, and gentle pattern summaries. Journey: consent, choose privacy settings, journal, receive optional reflections, review trends. It does not diagnose, provide therapy, or replace mental-health professionals.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Mental-wellness journaling assistant
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #62 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `App -> Local encrypted journal -> Reflection agent -> Crisis classifier -> Insight service -> Optional clinician export`
 
@@ -509,6 +605,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 
 **Purpose and user journey:** A proposed assistant helping owners manage routines for feeding, exercise, grooming, vaccines, and general care. Journey: consent, pet profile, schedule setup, daily reminders, Q&A, record storage. It does not diagnose animals or replace veterinarians.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Pet-care assistant
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #63 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `App -> Pet-care agent -> Pet profile + Care calendar -> Knowledge base -> Urgency rules -> Vet handoff`
 
 <!-- architecture-diagram:auto -->
@@ -547,6 +651,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 
 **Purpose and user journey:** A proposed assistant that helps owners find, book, prepare for, and follow up on veterinary appointments. Journey: consent, select pet and reason, check urgency, choose clinic and slot, receive prep reminders, share notes. It does not diagnose animals or replace veterinary triage or care.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Veterinary appointment assistant
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #64 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Chat/app -> Vet booking agent -> Urgency screener -> Clinic availability APIs -> Booking service -> Reminders + Pet records`
 
 <!-- architecture-diagram:auto -->
@@ -584,6 +696,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/06-health-wellness-pets/sour
 ## 65. Pet-product recommendation assistant
 
 **Purpose and user journey:** A proposed shopping assistant recommending food, toys, grooming items, and supplies matched to species, size, age, preferences, and budget. Journey: consent, pet profile, needs discussion, shortlist, comparison, purchase handoff. It does not diagnose animals or prescribe diets, and veterinarians remain the authority for medical needs.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Pet-product recommendation assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopLite reference apps](https://github.com/Azure-Samples/eShopLite) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel semantic image search](https://github.com/vercel-labs/semantic-image-search).
+- **Catalog mapping:** [App #65 in Health, wellness and pets](../../README.md#health-wellness-and-pets).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Chat UI -> Recommendation agent -> Pet profile -> Product catalog/search -> Safety filters -> Retailer links -> Feedback loop`
 

@@ -52,6 +52,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/04-home-property/source/000-
 ### Purpose and user journey
 Finds, vets, and books home-service providers such as plumbers, cleaners, and electricians. The user describes the job, receives quotes and availability from vetted providers, compares them, books a slot, and follows up after the visit.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Home-services booking assistant
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangChain deployment cookbook](https://github.com/langchain-ai/deployment-cookbook).
+- **Catalog mapping:** [App #33 in Home and property](../../README.md#home-and-property).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Chat/photos -> Job intake agent -> Provider search -> Quote/availability connectors -> Comparison -> Approval -> Booking/follow-up`
 
@@ -97,6 +105,14 @@ Begin with one service category and a local provider directory, producing a job 
 
 ### Purpose and user journey
 Helps homeowners diagnose problems and decide between DIY and a professional. The user describes symptoms or uploads photos, answers targeted questions, receives likely causes with safety guidance, and gets a repair plan or a provider handoff.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Home-repair diagnostic assistant
+
+- **Azure / Microsoft (Base match):** [C# vision chat application](https://github.com/Azure-Samples/ai-chat-vision-quickstart-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #34 in Home and property](../../README.md#home-and-property).
+<!-- implementation-links:auto:end -->
 
 ### Reference architecture
 `Symptoms/photos -> Triage agent -> Diagnostic knowledge retrieval -> Risk classifier -> Repair guide or pro referral -> Parts/tool list`
@@ -144,6 +160,14 @@ Launch with a few common issues such as leaky faucets and tripped breakers, usin
 ### Purpose and user journey
 Helps buyers find homes matching budget, location, and lifestyle. The user describes needs, reviews ranked listings with neighborhood insights, saves favorites, gets alerts on new matches, and arranges viewings.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Property-search assistant
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #35 in Home and property](../../README.md#home-and-property).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Chat UI -> Requirement parser -> Listing search (MLS/portal) -> Neighborhood enrichment -> Ranker -> Alerts -> Viewing scheduler`
 
@@ -189,6 +213,14 @@ Build structured plus natural-language search on one data feed with map results.
 
 ### Purpose and user journey
 Helps renters find apartments and manage the rental process. The user sets budget and needs, sees vetted listings with true monthly cost, receives scam warnings, schedules tours, and gets help with applications and lease questions.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Rental assistant
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #36 in Home and property](../../README.md#home-and-property).
+<!-- implementation-links:auto:end -->
 
 ### Reference architecture
 `Chat UI -> Rental listing search -> Scam/cost analyzer -> Tour scheduler -> Application assistant -> Lease explainer`
@@ -236,6 +268,14 @@ Start with listing search, true-cost calculation, and scam flags. Add inquiry dr
 ### Purpose and user journey
 Organizes a move from decision to settling in. The user enters origin, destination, and date; the assistant builds a timeline, compares movers, tracks tasks, handles address changes, and supplies a destination setup checklist.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Moving and relocation assistant
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #37 in Home and property](../../README.md#home-and-property).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Move brief -> Planner agent -> Mover quotes/inventory tools -> Task timeline -> Address-change workflows -> Destination setup guide`
 
@@ -282,6 +322,14 @@ Begin with a personalized timeline and checklist generator. Add inventory estima
 ### Purpose and user journey
 Helps users plan and visualize room designs. The user uploads room photos and dimensions, states style and budget, receives layout and palette concepts with shoppable items, and refines them iteratively.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Interior-design assistant
+
+- **Azure / Microsoft (Base match):** [C# vision chat application](https://github.com/Azure-Samples/ai-chat-vision-quickstart-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK image generator](https://github.com/vercel-labs/ai-sdk-image-generator).
+- **Catalog mapping:** [App #38 in Home and property](../../README.md#home-and-property).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Room photos/dims -> Vision analyzer -> Design agent -> Layout checker -> Product catalog search -> Render/mood board -> Shopping list`
 
@@ -327,6 +375,14 @@ Start with a style questionnaire, one room's dimensions, and palette plus produc
 
 ### Purpose and user journey
 Helps users set up, troubleshoot, and automate smart-home devices. The user reports a problem or goal, the assistant inspects device status, walks through diagnostics, fixes issues, and proposes automations in plain language.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Smart-home support assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopSupport](https://github.com/dotnet/eShopSupport) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #39 in Home and property](../../README.md#home-and-property).
+<!-- implementation-links:auto:end -->
 
 ### Reference architecture
 `Chat UI -> Support agent -> Device inventory/status tools -> Diagnostic knowledge base -> Fix executor -> Automation builder`

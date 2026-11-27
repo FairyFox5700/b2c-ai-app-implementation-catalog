@@ -51,6 +51,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/09-technology-sustainability
 
 **Purpose and user journey:** Resolves common product problems through chat or voice, from identification to resolution or handoff. A customer describes an issue, confirms product and warranty, follows guided checks, and receives a fix, replacement or human escalation.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Consumer technical-support agent
+
+- **Azure / Microsoft (Adjacent match):** [eShopSupport](https://github.com/dotnet/eShopSupport) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph customer-support workflow](https://github.com/langchain-ai/langgraph/tree/main/examples/customer-support).
+- **Catalog mapping:** [App #85 in Technology, utilities and sustainability](../../README.md#technology-utilities-and-sustainability).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Customer channel -> Identity/product lookup -> Support agent -> KB retrieval + diagnostic tools -> Policy engine -> Ticket system/human handoff`
 
 <!-- architecture-diagram:auto -->
@@ -88,6 +96,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/09-technology-sustainability
 ## 86. Device-setup assistant
 
 **Purpose and user journey:** Guides users through setting up phones, routers, smart-home devices and peripherals. The user scans a model or QR code, receives a personalized checklist, completes steps with confirmations and finishes with a verification test.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Device-setup assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopSupport](https://github.com/dotnet/eShopSupport) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph customer-support workflow](https://github.com/langchain-ai/langgraph/tree/main/examples/customer-support).
+- **Catalog mapping:** [App #86 in Technology, utilities and sustainability](../../README.md#technology-utilities-and-sustainability).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Model scan -> Device catalog -> Setup agent -> Step-by-step guide + environment check -> Verification tests -> Completion record`
 
@@ -127,6 +143,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/09-technology-sustainability
 
 **Purpose and user journey:** Diagnoses faults in appliances, software and connected devices by asking targeted questions and proposing safe tests. A user reports symptoms, answers prompts, applies low-risk fixes and is told when to stop and contact a professional.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Troubleshooting assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopSupport](https://github.com/dotnet/eShopSupport) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph customer-support workflow](https://github.com/langchain-ai/langgraph/tree/main/examples/customer-support).
+- **Catalog mapping:** [App #87 in Technology, utilities and sustainability](../../README.md#technology-utilities-and-sustainability).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Symptom intake -> Triage agent -> Fault-tree/KB retrieval -> Test planner -> Risk gate -> Fix guidance or professional referral`
 
 <!-- architecture-diagram:auto -->
@@ -164,6 +188,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/09-technology-sustainability
 ## 88. Telecom-plan assistant
 
 **Purpose and user journey:** Helps customers choose or change mobile, broadband and bundle plans. A user provides usage, location and preferences, compares eligible plans with total cost and contract terms, and receives a switching checklist.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Telecom-plan assistant
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #88 in Technology, utilities and sustainability](../../README.md#technology-utilities-and-sustainability).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Usage input -> Customer profile -> Plan agent -> Offer/coverage APIs -> Cost simulator -> Ranked comparison -> Switch checklist`
 
@@ -203,6 +235,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/09-technology-sustainability
 
 **Purpose and user journey:** Helps households compare electricity and gas tariffs using consumption, time-of-use patterns and priorities such as price, renewable share or stability. The user uploads usage, reviews ranked options and receives switching guidance.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Energy-plan comparison assistant
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #89 in Technology, utilities and sustainability](../../README.md#technology-utilities-and-sustainability).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Bills/smart-meter data -> Usage model -> Energy agent -> Tariff API -> Cost + risk simulator -> Ranked plans -> Switch guide`
 
 <!-- architecture-diagram:auto -->
@@ -240,6 +280,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/09-technology-sustainability
 ## 90. Sustainability coach
 
 **Purpose and user journey:** Helps people adopt realistic low-impact habits across home, travel, food and shopping. A user sets goals, receives prioritized actions, tracks progress and gets monthly feedback about effort, cost and likely environmental benefit.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Sustainability coach
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #90 in Technology, utilities and sustainability](../../README.md#technology-utilities-and-sustainability).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Goal profile -> Habit planner -> Coach agent -> Impact library + local data -> Action recommender -> Progress tracker -> Check-ins`
 
@@ -279,6 +327,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/09-technology-sustainability
 
 **Purpose and user journey:** Estimates personal or household emissions and shows how changes would alter them. A user enters or imports travel, energy, diet and purchases, receives a transparent footprint breakdown, compares scenarios and tracks reductions.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Carbon-footprint assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #91 in Technology, utilities and sustainability](../../README.md#technology-utilities-and-sustainability).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Activity data -> Normalizer -> Footprint agent -> Emission-factor engine -> Scenario simulator -> Report + uncertainty ranges -> History store`
 
 <!-- architecture-diagram:auto -->
@@ -317,6 +373,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/09-technology-sustainability
 
 **Purpose and user journey:** Helps home gardeners plan, plant and maintain gardens. A user enters location, space, sun, soil and goals, receives a seasonal plan, plant suggestions, watering and pest-prevention reminders, and logs progress with photos.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Gardening assistant
+
+- **Azure / Microsoft (Adjacent match):** [Garden Shop AI Chat](https://github.com/dotnet/maui-labs/tree/main/samples/AIExtensions.Sample.Garden) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #92 in Technology, utilities and sustainability](../../README.md#technology-utilities-and-sustainability).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Garden profile -> Climate/soil lookup -> Garden agent -> Plant database + calendar planner -> Reminders -> Journal/photo log`
 
 <!-- architecture-diagram:auto -->
@@ -354,6 +418,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/09-technology-sustainability
 ## 93. Plant-diagnosis assistant
 
 **Purpose and user journey:** Identifies likely causes of plant problems from photos and descriptions, then suggests confirmation tests and treatments. A user uploads leaf, stem and whole-plant images, answers care questions, and receives ranked possibilities with confidence and next steps.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Plant-diagnosis assistant
+
+- **Azure / Microsoft (Base match):** [C# vision chat application](https://github.com/Azure-Samples/ai-chat-vision-quickstart-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK image generator](https://github.com/vercel-labs/ai-sdk-image-generator).
+- **Catalog mapping:** [App #93 in Technology, utilities and sustainability](../../README.md#technology-utilities-and-sustainability).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Photo/care intake -> Image quality check -> Vision + symptom models -> Diagnosis agent -> Differential list -> Treatment guide -> Follow-up tracker`
 
