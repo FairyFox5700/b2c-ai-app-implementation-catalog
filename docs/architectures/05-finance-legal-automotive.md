@@ -51,6 +51,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 
 **Purpose and user journey.** A proposed assistant that gives a household one coherent view of its finances and a prioritized plan. The user connects or enters balances, income, debts and goals, receives a ranked action list (emergency fund, high-interest debt, employer retirement match), then returns for monthly check-ins that track progress and adjust the plan.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Personal finance coach
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #40 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture.** `Web/mobile chat -> API gateway -> orchestrator agent -> [finance calc engine | data aggregator | knowledge base] -> encrypted store -> audit log`
 
 <!-- architecture-diagram:auto -->
@@ -88,6 +96,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 ## 41. Budget-planning assistant
 
 **Purpose and user journey.** A proposed tool that helps a user build a realistic monthly or annual budget from income, fixed obligations and priorities. Journey: describe income and commitments (or import history), receive a draft budget using a chosen method (zero-based, 50/30/20, envelope), adjust categories conversationally, then get alerts when plans drift.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Budget-planning assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #41 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture.** `Chat UI -> budget agent -> [category model | budget engine | forecast module] -> ledger store -> alerts service`
 
@@ -127,6 +143,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 
 **Purpose and user journey.** A proposed assistant that turns raw transactions into understandable insight. The user uploads or links transactions, sees categorized spending, trends, recurring charges and anomalies, asks natural-language questions ("why was March higher?"), and receives suggestions for review rather than orders.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Spending-analysis assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #42 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture.** `Transaction feed -> normalizer -> categorizer -> analytics store (SQL) -> query agent -> insights UI`
 
 <!-- architecture-diagram:auto -->
@@ -164,6 +188,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 ## 43. Savings-goal coach
 
 **Purpose and user journey.** A proposed coach that helps users define, size and keep savings goals such as an emergency fund, deposit or holiday. The user states a target and deadline, receives a feasible contribution schedule, sees progress, and gets encouragement and re-planning when life changes.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Savings-goal coach
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #43 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture.** `Goal intake -> feasibility engine -> schedule planner -> progress tracker -> nudge agent -> notifications`
 
@@ -203,6 +235,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 
 **Purpose and user journey.** A proposed assistant that explains an existing insurance policy and helps users compare coverage with their needs. The user uploads a policy or schedule, asks what is covered, excluded, or required, sees citations to the exact clauses, and receives a list of questions to put to the insurer or broker.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Insurance-policy assistant
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #44 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture.** `Policy PDF -> OCR/parse -> clause index -> RAG agent with citations -> answer + gap checklist -> human-handoff`
 
 <!-- architecture-diagram:auto -->
@@ -240,6 +280,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 ## 45. Insurance-claim assistant
 
 **Purpose and user journey.** A proposed assistant that guides a policyholder through preparing and tracking a claim. The user describes the incident, receives a checklist of evidence and deadlines, uploads photos and receipts, gets a drafted claim narrative to review, and tracks insurer correspondence through to settlement or dispute.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Insurance-claim assistant
+
+- **Azure / Microsoft (Base match):** [Multi-Agent Orchestration Workshop](https://github.com/Azure-Samples/multi-agent-orchestration-workshop) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangChain deployment cookbook](https://github.com/langchain-ai/deployment-cookbook).
+- **Catalog mapping:** [App #45 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture.** `Incident intake -> claim workflow engine -> evidence manager -> drafting agent -> user approval -> insurer submission/tracker`
 
@@ -279,6 +327,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 
 **Purpose and user journey.** A proposed assistant that translates consumer contracts (subscriptions, leases, phone plans, gym memberships) into plain language. The user uploads or pastes a contract, receives a summary of key obligations, costs, renewal and cancellation terms, flagged unusual clauses with citations, and suggested questions before signing.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Consumer contract explainer
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #46 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture.** `Contract upload -> parser -> clause classifier -> risk-flag rules + LLM explainer -> cited summary -> optional lawyer referral`
 
 <!-- architecture-diagram:auto -->
@@ -316,6 +372,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 ## 47. Tax-document organizer
 
 **Purpose and user journey.** A proposed assistant that collects, classifies and checks tax paperwork for a tax year. The user uploads receipts, payslips, bank and broker statements, receives an organized folder with a checklist of expected documents, missing-item alerts, and an export package for themselves or their accountant.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Tax-document organizer
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #47 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture.** `Upload/email inbox -> OCR -> document classifier -> field extractor -> checklist engine -> reviewed export pack`
 
@@ -355,6 +419,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 
 **Purpose and user journey.** A proposed assistant that guides a buyer from need definition to purchase decision, for new or used vehicles. The user states budget, usage and preferences, receives a shortlist with total-cost estimates, a listing-evaluation checklist, negotiation preparation, and a financing and paperwork guide.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Car-buying assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopLite reference apps](https://github.com/Azure-Samples/eShopLite) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel semantic image search](https://github.com/vercel-labs/semantic-image-search).
+- **Catalog mapping:** [App #48 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture.** `Needs intake -> candidate search -> cost model + listing checker -> agent shortlist -> negotiation brief -> decision log`
 
 <!-- architecture-diagram:auto -->
@@ -393,6 +465,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 
 **Purpose and user journey.** A proposed assistant focused on side-by-side comparison of specific vehicles or variants. The user selects two to five candidates, states weighted priorities, and receives a normalized comparison of specifications, running costs, safety ratings, reliability signals and practical fit, with a transparent explanation of the ranking.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Vehicle comparison assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopLite reference apps](https://github.com/Azure-Samples/eShopLite) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel semantic image search](https://github.com/vercel-labs/semantic-image-search).
+- **Catalog mapping:** [App #49 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture.** `Vehicle selection -> spec normalizer -> multi-criteria scorer -> comparison agent -> table/charts with sources`
 
 <!-- architecture-diagram:auto -->
@@ -430,6 +510,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/05-finance-legal-automotive/
 ## 50. Vehicle-maintenance assistant
 
 **Purpose and user journey.** A proposed assistant that helps owners keep a vehicle serviced and safe. The user adds a vehicle (VIN or registration), receives a manufacturer-based service schedule, logs work and mileage, gets reminders, and can describe symptoms to receive possible causes, urgency guidance and questions to ask a garage.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Vehicle-maintenance assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopSupport](https://github.com/dotnet/eShopSupport) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph customer-support workflow](https://github.com/langchain-ai/langgraph/tree/main/examples/customer-support).
+- **Catalog mapping:** [App #50 in Finance, insurance, legal and automotive](../../README.md#finance-insurance-legal-and-automotive).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture.** `Vehicle profile -> schedule engine + service log -> symptom agent (RAG on manuals) -> reminders -> garage handoff`
 

@@ -53,6 +53,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 
 **Purpose and user journey:** Helps hobbyist photographers improve through photo critique, shoot planning and practice drills. The user states a goal such as portraits or night skies, uploads images with optional EXIF, receives a structured critique of composition, exposure, focus and editing, gets one short assignment for the next outing, and later sees progress against earlier shots.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Photography coach
+
+- **Azure / Microsoft (Base match):** [C# vision chat application](https://github.com/Azure-Samples/ai-chat-vision-quickstart-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK image generator](https://github.com/vercel-labs/ai-sdk-image-generator).
+- **Catalog mapping:** [App #94 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Web/mobile app -> upload service -> EXIF + vision analysis -> critique agent -> lesson planner -> progress store`
 
 <!-- architecture-diagram:auto -->
@@ -90,6 +98,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 ## 95. Creative-writing assistant
 
 **Purpose and user journey:** Supports fiction and nonfiction writers with brainstorming, outlining, feedback and revision while keeping the author's voice and ownership. A writer opens a project, sets genre, audience and goals, discusses ideas, receives developmental or line-level feedback on pasted chapters, and tracks revision tasks across sessions.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Creative-writing assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK image generator](https://github.com/vercel-labs/ai-sdk-image-generator).
+- **Catalog mapping:** [App #95 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Editor UI -> project service -> context builder (story bible) -> writing agent -> critique/style tools -> versioned manuscript store`
 
@@ -129,6 +145,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 
 **Purpose and user journey:** Helps listeners find new music that matches mood, activity, taste and curiosity, and explains why. The user connects a streaming account or describes preferences, asks for things like "post-rock for focus, nothing with vocals", receives a short explained playlist, gives feedback, and saves results back to their service.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Music-discovery assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #96 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Chat/voice UI -> taste-profile service -> candidate retrieval -> ranking and explainer agent -> playlist writer`
 
 <!-- architecture-diagram:auto -->
@@ -166,6 +190,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 ## 97. Book-recommendation assistant
 
 **Purpose and user journey:** Helps readers choose their next book and manage a reading list. The user imports ratings, describes what they want ("hopeful sci-fi, short chapters, no cliffhangers"), receives a handful of explained picks with content notes and availability, and the assistant tracks what they read and reacts to.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Book-recommendation assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #97 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Chat UI -> reader-profile store -> hybrid retrieval (metadata + reviews) -> recommender agent -> availability checker -> reading list`
 
@@ -205,6 +237,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 
 **Purpose and user journey:** Helps individuals or groups decide what to watch tonight and where to stream it. A user (or household) states mood, time available, ages present and subscriptions owned, gets a ranked shortlist with runtime, ratings, content advisories and where it is available, and can vote or save titles to a watchlist.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Movie and streaming assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #98 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Chat UI -> household profile -> catalogue and availability index -> recommender agent -> group-consensus tool -> watchlist/alerts`
 
 <!-- architecture-diagram:auto -->
@@ -242,6 +282,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 ## 99. Gaming assistant
 
 **Purpose and user journey:** Helps players pick games, get unstuck, optimise builds and plan play sessions without spoiling the experience. A player names a game, platform and spoiler tolerance, asks for a hint or a build, receives graduated guidance (nudge, hint, full answer), and can track backlog and play time.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Gaming assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #99 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Chat/overlay -> game-context resolver -> retrieval over wikis/patch notes -> guide agent -> hint-level controller -> backlog tracker`
 
@@ -281,6 +329,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 
 **Purpose and user journey:** Helps people organise and attend gatherings such as meetups, birthdays and community events. A host describes the occasion, guest count, budget and constraints; the assistant proposes dates, venues and an agenda, drafts invitations, collects RSVPs and dietary needs, and sends reminders. Attendees can also ask it to find events nearby.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Social-event assistant
+
+- **Azure / Microsoft (Base match):** [Multi-Agent Orchestration Workshop](https://github.com/Azure-Samples/multi-agent-orchestration-workshop) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangChain deployment cookbook](https://github.com/langchain-ai/deployment-cookbook).
+- **Catalog mapping:** [App #100 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Chat UI -> event planner agent -> scheduling/venue tools -> invitation and RSVP service -> reminders -> post-event feedback`
 
 <!-- architecture-diagram:auto -->
@@ -318,6 +374,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 ## 101. Dating-planning assistant
 
 **Purpose and user journey:** Helps users plan respectful, enjoyable dates and prepare for meetings, not impersonate them or manipulate partners. A user shares preferences, budget, location, accessibility needs and comfort level, receives date ideas with logistics, message-drafting help in their own voice, and an optional safety plan for first meetings.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Dating-planning assistant
+
+- **Azure / Microsoft (Base match):** [Multi-Agent Orchestration Workshop](https://github.com/Azure-Samples/multi-agent-orchestration-workshop) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangChain deployment cookbook](https://github.com/langchain-ai/deployment-cookbook).
+- **Catalog mapping:** [App #101 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Chat UI -> preference profile -> ideas and venue retrieval -> planner agent -> logistics tools -> safety-check module`
 
@@ -357,6 +421,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 
 **Purpose and user journey:** Coordinates the many moving parts of a wedding for couples and planners. The couple enters date range, budget, guest estimate, culture and priorities; the assistant builds a timeline and checklist, shortlists venues and vendors, tracks budget and contracts, manages guest lists and RSVPs, and keeps both partners and helpers aligned.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Wedding-planning assistant
+
+- **Azure / Microsoft (Base match):** [Multi-Agent Orchestration Workshop](https://github.com/Azure-Samples/multi-agent-orchestration-workshop) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangChain deployment cookbook](https://github.com/langchain-ai/deployment-cookbook).
+- **Catalog mapping:** [App #102 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Web/mobile app -> wedding workspace -> planner agent -> vendor/venue search -> budget and contract tracker -> guest/RSVP service`
 
 <!-- architecture-diagram:auto -->
@@ -394,6 +466,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 ## 103. Personal safety assistant
 
 **Purpose and user journey:** Helps individuals reduce risk in daily life and respond when they feel unsafe, such as when walking home late or meeting someone new. Users set trusted contacts and check-in rules, start a monitored journey, receive route and situational guidance, and can trigger an escalation that alerts contacts and points to emergency services.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Personal safety assistant
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel real-time voice fact checker](https://github.com/vercel-labs/ai-facts).
+- **Catalog mapping:** [App #103 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Mobile app -> safety-session service -> risk and route tools -> check-in monitor -> escalation engine -> contacts and emergency handoff`
 
@@ -433,6 +513,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 
 **Purpose and user journey:** Helps households prepare for disasters such as floods, wildfires, storms, outages and earthquakes. A user enters location, household members, pets, medical needs and mobility constraints; the assistant produces a tailored plan with supply lists, evacuation routes, contact trees and drills, and sends reminders and official alerts. During an event it relays authoritative instructions.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Emergency-preparedness assistant
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel real-time voice fact checker](https://github.com/vercel-labs/ai-facts).
+- **Catalog mapping:** [App #104 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `App -> household profile -> hazard-risk service -> plan generator agent -> reminder engine -> official-alert relay`
 
 <!-- architecture-diagram:auto -->
@@ -470,6 +558,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 ## 105. Citizen-services navigator
 
 **Purpose and user journey:** Helps residents find and complete government services such as renewing a passport, registering a business, claiming benefits or paying a fine. A user describes the need in plain language, the assistant identifies the correct service, jurisdiction, eligibility, documents, fees and deadlines, walks them through steps, and hands off to the official portal or a human office.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Citizen-services navigator
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #105 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Chat/voice -> intent and jurisdiction router -> service-knowledge retrieval -> guidance agent -> checklist/appointment tools -> human handoff`
 
@@ -509,6 +605,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 
 **Purpose and user journey:** Helps applicants organise paperwork for visa, residence or citizenship processes, not provide legal advice or submit filings on their behalf. The user picks a route and uploads documents; the assistant classifies them, extracts dates, tracks expiry, builds an official-requirements checklist and prepares a reviewable package.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Immigration-document organizer
+
+- **Azure / Microsoft (Base match):** [Azure Search + OpenAI C# RAG app](https://github.com/Azure-Samples/azure-search-openai-demo-csharp) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #106 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Secure upload vault -> OCR/classification -> field extraction -> requirements checklist engine -> consistency checker -> export for applicant/lawyer`
 
 <!-- architecture-diagram:auto -->
@@ -546,6 +650,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/10-creative-social-public/so
 ## 107. Consumer complaint assistant
 
 **Purpose and user journey:** Helps consumers resolve problems with purchases, services, subscriptions or fees. The user describes the issue and uploads receipts; the assistant identifies rights, builds an evidence timeline, drafts a complaint, picks the channel (merchant, chargeback, regulator, ombudsman) and tracks deadlines.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Consumer complaint assistant
+
+- **Azure / Microsoft (Adjacent match):** [eShopSupport](https://github.com/dotnet/eShopSupport) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph customer-support workflow](https://github.com/langchain-ai/langgraph/tree/main/examples/customer-support).
+- **Catalog mapping:** [App #107 in Creative, social, safety and public services](../../README.md#creative-social-safety-and-public-services).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Chat UI -> case builder -> evidence extractor -> rights retrieval (statutes/regulator guidance) -> letter drafter -> channel router/tracker`
 

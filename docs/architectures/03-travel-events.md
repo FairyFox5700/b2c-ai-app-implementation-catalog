@@ -52,6 +52,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/03-travel-events/source/000-
 ### Purpose and user journey
 Turns vague travel ideas into a workable trip plan covering destination, dates, budget, and logistics. The user describes goals, compares shortlisted options, refines through conversation, and exports a plan ready for booking.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Travel-planning assistant
+
+- **Azure / Microsoft (Exact match):** [Multi-agent Travel Planner](https://github.com/Azure-Samples/app-service-maf-openai-travel-agent-dotnet) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [LangGraph generative-UI agents (archived reference)](https://github.com/langchain-ai/langgraphjs-gen-ui-examples).
+- **Catalog mapping:** [App #24 in Travel and events](../../README.md#travel-and-events).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Chat UI -> Trip planner agent -> Destination/price/weather tools -> Constraint scorer -> Plan builder -> Shareable trip workspace`
 
@@ -97,6 +105,14 @@ Launch with destination suggestions and budget estimates from one data source. A
 
 ### Purpose and user journey
 Finds and compares flights using natural-language preferences. The user states route, dates, flexibility, and priorities; the assistant returns ranked itineraries with tradeoffs, explains fare rules, and can set price alerts.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Flight-search assistant
+
+- **Azure / Microsoft (Exact match):** [Multi-agent Travel Planner](https://github.com/Azure-Samples/app-service-maf-openai-travel-agent-dotnet) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [LangGraph generative-UI agents (archived reference)](https://github.com/langchain-ai/langgraphjs-gen-ui-examples).
+- **Catalog mapping:** [App #25 in Travel and events](../../README.md#travel-and-events).
+<!-- implementation-links:auto:end -->
 
 ### Reference architecture
 `Chat UI -> Query normalizer -> Flight search APIs -> Itinerary ranker -> Fare-rule explainer -> Price alert service`
@@ -144,6 +160,14 @@ Start with one aggregator, round-trip search, and ranking with explanations. Add
 ### Purpose and user journey
 Recommends hotels and stays that match traveler needs such as location, budget, amenities, and trip purpose. The user describes the trip, reviews a ranked shortlist with neighborhood context, compares options, and proceeds to booking.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Hotel recommendation assistant
+
+- **Azure / Microsoft (Exact match):** [Multi-agent Travel Planner](https://github.com/Azure-Samples/app-service-maf-openai-travel-agent-dotnet) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [LangGraph generative-UI agents (archived reference)](https://github.com/langchain-ai/langgraphjs-gen-ui-examples).
+- **Catalog mapping:** [App #26 in Travel and events](../../README.md#travel-and-events).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Chat UI -> Requirement extractor -> Hotel inventory APIs -> Review/location analyzer -> Ranker -> Comparison view -> Booking handoff`
 
@@ -189,6 +213,14 @@ Build city-level search with filters and ranked results. Add review summaries an
 
 ### Purpose and user journey
 Executes bookings for flights, hotels, and extras from an approved plan. The user reviews a consolidated itinerary and price, confirms traveler details and payment, and receives confirmations, receipts, and changes in one place.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Trip-booking assistant
+
+- **Azure / Microsoft (Exact match):** [Multi-agent Travel Planner](https://github.com/Azure-Samples/app-service-maf-openai-travel-agent-dotnet) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [LangGraph generative-UI agents (archived reference)](https://github.com/langchain-ai/langgraphjs-gen-ui-examples).
+- **Catalog mapping:** [App #27 in Travel and events](../../README.md#travel-and-events).
+<!-- implementation-links:auto:end -->
 
 ### Reference architecture
 `Approved plan -> Booking orchestrator -> Provider booking APIs -> Payment service -> Confirmation vault -> Itinerary sync/notifications`
@@ -236,6 +268,14 @@ Begin with hotel-only booking in a provider sandbox with approval and confirmati
 ### Purpose and user journey
 Produces day-by-day itineraries balancing interests, pace, logistics, and opening hours. The user gives destination, dates, and interests, receives a map-aware schedule, and edits by chat or drag and drop.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Itinerary generator
+
+- **Azure / Microsoft (Exact match):** [Multi-agent Travel Planner](https://github.com/Azure-Samples/app-service-maf-openai-travel-agent-dotnet) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [LangGraph generative-UI agents (archived reference)](https://github.com/langchain-ai/langgraphjs-gen-ui-examples).
+- **Catalog mapping:** [App #28 in Travel and events](../../README.md#travel-and-events).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Preferences -> Candidate POI retrieval -> Route/time optimizer -> Itinerary composer -> Editable map/calendar view -> Export`
 
@@ -281,6 +321,14 @@ Generate a one-city multi-day plan from curated POIs with travel-time checks. Ad
 
 ### Purpose and user journey
 Monitors trips for delays, cancellations, and other disruptions and helps recover quickly. The user's itinerary is tracked; on a disruption, the assistant explains impact, proposes rebooking options, and assists with claims.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Travel-disruption assistant
+
+- **Azure / Microsoft (Exact match):** [Multi-agent Travel Planner](https://github.com/Azure-Samples/app-service-maf-openai-travel-agent-dotnet) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [LangGraph generative-UI agents (archived reference)](https://github.com/langchain-ai/langgraphjs-gen-ui-examples).
+- **Catalog mapping:** [App #29 in Travel and events](../../README.md#travel-and-events).
+<!-- implementation-links:auto:end -->
 
 ### Reference architecture
 `Itinerary store -> Flight/status monitors -> Disruption detector -> Recovery agent -> Rebooking options -> Approval -> Notifications/claims`
@@ -328,6 +376,14 @@ Start with flight-status monitoring and timely alerts for imported itineraries. 
 ### Purpose and user journey
 Suggests things to do nearby right now or later, matched to mood, group, weather, and budget. The user asks for ideas, gets a few time-aware options with logistics, and can save, share, or book.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Local activity concierge
+
+- **Azure / Microsoft (Exact match):** [Multi-agent Travel Planner](https://github.com/Azure-Samples/app-service-maf-openai-travel-agent-dotnet) — implements the same scenario and is the closest starting point.
+- **LangChain / Vercel alternative:** [LangGraph generative-UI agents (archived reference)](https://github.com/langchain-ai/langgraphjs-gen-ui-examples).
+- **Catalog mapping:** [App #30 in Travel and events](../../README.md#travel-and-events).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Context (location/time/weather) -> Concierge agent -> Places/events retrieval -> Context ranker -> Suggestions -> Save/share/book`
 
@@ -374,6 +430,14 @@ Build a single-city suggester using places data, weather, and distance. Add even
 ### Purpose and user journey
 Guides organizers through planning parties, meetings, and gatherings. The user states event type, size, budget, and date; the assistant builds a plan, shortlists venues and vendors, tracks tasks and RSVPs, and manages the timeline.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Event-planning assistant
+
+- **Azure / Microsoft (Base match):** [Multi-Agent Orchestration Workshop](https://github.com/Azure-Samples/multi-agent-orchestration-workshop) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangChain deployment cookbook](https://github.com/langchain-ai/deployment-cookbook).
+- **Catalog mapping:** [App #31 in Travel and events](../../README.md#travel-and-events).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Brief -> Planner agent -> Venue/vendor search -> Budget/task engine -> Guest/RSVP service -> Timeline dashboard -> Vendor messaging`
 
@@ -419,6 +483,14 @@ Start with a brief-to-checklist and budget planner for one event type. Add guest
 
 ### Purpose and user journey
 Helps users find tickets to concerts, sports, and shows at fair prices. The user names artists or interests, sees upcoming events and seat or price options, sets alerts, and buys through trusted sellers.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Ticket-discovery assistant
+
+- **Azure / Microsoft (Base match):** [Multi-Agent Orchestration Workshop](https://github.com/Azure-Samples/multi-agent-orchestration-workshop) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangChain deployment cookbook](https://github.com/langchain-ai/deployment-cookbook).
+- **Catalog mapping:** [App #32 in Travel and events](../../README.md#travel-and-events).
+<!-- implementation-links:auto:end -->
 
 ### Reference architecture
 `Chat UI -> Event search -> Ticket marketplace APIs -> Price/seat ranker -> Alert service -> Verified seller handoff`

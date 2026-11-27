@@ -51,6 +51,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 
 **Purpose and user journey:** A proposed assistant that helps professionals explore roles, identify skill gaps and build a 6–24 month career plan. Journey: onboarding questionnaire and optional résumé import, goal exploration, role and skill-gap map, milestone plan, then monthly check-ins that revise the plan.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Career-planning assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #72 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Web/mobile chat -> API gateway -> planner agent -> skills-taxonomy + labor-market tools -> profile store -> plan and reminder service`
 
 <!-- architecture-diagram:auto -->
@@ -88,6 +96,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 ## 73. CV and résumé assistant
 
 **Purpose and user journey:** A proposed assistant that turns a user's experience into targeted, honest CVs and résumés. Journey: upload or enter history, choose a target role or job description, review suggested rewrites and gaps, select a template, then export ATS-friendly PDF or DOCX versions.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for CV and résumé assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #73 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Upload/editor UI -> parser -> structured profile -> tailoring agent -> truthfulness checker -> template renderer -> PDF/DOCX export`
 
@@ -127,6 +143,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 
 **Purpose and user journey:** A proposed coach that lets candidates rehearse interviews and receive structured feedback. Journey: pick role and interview type, optionally paste a job description, answer questions by text or voice, receive scored feedback with improved sample structures, then track progress across sessions.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Interview-practice coach
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel real-time voice fact checker](https://github.com/vercel-labs/ai-facts).
+- **Catalog mapping:** [App #74 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Voice/text client -> session orchestrator -> interviewer agent -> speech-to-text -> evaluator agent -> feedback store -> progress dashboard`
 
 <!-- architecture-diagram:auto -->
@@ -164,6 +188,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 ## 75. Job-search assistant
 
 **Purpose and user journey:** A proposed assistant that organizes and accelerates a job search. Journey: set preferences and constraints, receive ranked postings from permitted sources, review fit explanations, track applications in a pipeline, draft follow-ups, and get weekly summaries with next actions.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Job-search assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #75 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Preferences UI -> scheduler -> source connectors -> dedupe and ranking agent -> application tracker -> notifier and draft generator`
 
@@ -203,6 +235,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 
 **Purpose and user journey:** A proposed assistant that helps individuals capture tasks, set priorities and sustain good work habits. Journey: connect task sources, capture commitments by chat or voice, receive a prioritized view, run focus sessions, and complete a brief weekly review with suggested adjustments.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Personal productivity assistant
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #76 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Chat/voice capture -> inbox normalizer -> priority agent -> task store -> calendar and notification connectors -> weekly review generator`
 
 <!-- architecture-diagram:auto -->
@@ -240,6 +280,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 ## 77. Daily-planning assistant
 
 **Purpose and user journey:** A proposed assistant that builds a realistic plan for each day. Journey: each morning it gathers calendar events, tasks and energy preferences, proposes a time-blocked schedule, adapts to interruptions during the day, and closes with a short evening reflection that feeds tomorrow's plan.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Daily-planning assistant
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangChain deployment cookbook](https://github.com/langchain-ai/deployment-cookbook).
+- **Catalog mapping:** [App #77 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Calendar + task connectors -> context aggregator -> scheduling agent -> constraint solver -> proposed day plan -> notifier -> replan loop`
 
@@ -279,6 +327,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 
 **Purpose and user journey:** A proposed assistant that helps users draft, rewrite and reply to email with the right tone. Journey: select a thread or start a new message, state intent, receive draft options with tone controls, edit, and send manually or via an approved action.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Email-writing assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #78 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Mail client plugin -> thread reader -> context retriever -> drafting agent -> tone and safety checker -> user review -> send`
 
 <!-- architecture-diagram:auto -->
@@ -316,6 +372,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 ## 79. Personal knowledge assistant
 
 **Purpose and user journey:** A proposed assistant that lets users capture notes, documents and web clips and query them in natural language with source citations. Journey: connect sources, ingest and index, ask questions, receive cited answers, and review automatically suggested links and summaries.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Personal knowledge assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel real-time voice fact checker](https://github.com/vercel-labs/ai-facts).
+- **Catalog mapping:** [App #79 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Source connectors -> ingestion pipeline -> chunker and embeddings -> vector and keyword index + knowledge graph -> retrieval agent -> cited answer UI`
 
@@ -355,6 +419,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 
 **Purpose and user journey:** A proposed assistant that coordinates shared family calendars, school events, activities and chores. Journey: adult members create a household, link calendars and school feeds, review detected conflicts, accept suggested solutions, and get role-based reminders and a weekly family overview.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Family schedule assistant
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [LangChain deployment cookbook](https://github.com/langchain-ai/deployment-cookbook).
+- **Catalog mapping:** [App #80 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Member calendars + school feeds -> ingest -> conflict detector -> coordination agent -> household calendar -> role-based notifications`
 
 <!-- architecture-diagram:auto -->
@@ -392,6 +464,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 ## 81. Parenting assistant
 
 **Purpose and user journey:** A proposed assistant offering evidence-based parenting guidance, routines and activity ideas. Journey: a parent creates a profile for the child's age band, asks questions about sleep, behavior or development, receives sourced, age-appropriate suggestions and can save routines or reminders.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Parenting assistant
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #81 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Parent chat -> safety triage -> retrieval over vetted sources -> guidance agent -> age-aware response with citations -> routine and reminder service`
 
@@ -431,6 +511,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 
 **Purpose and user journey:** A proposed tracker for logging feeds, sleep, diapers, growth and milestones, with shared access for caregivers. Journey: parents add a baby profile, log events with one tap or voice, view patterns and summaries, share with co-parents, and export reports for pediatric visits.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Baby-care tracker
+
+- **Azure / Microsoft (Base match):** [Agentic App Service CRUD and tool-calling app](https://github.com/Azure-Samples/app-service-agentic-semantic-kernel-ai-foundry-agent) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #82 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Mobile app/voice -> event API -> baby event store -> pattern analyzer -> summaries and alerts -> caregiver sharing and export`
 
 <!-- architecture-diagram:auto -->
@@ -469,6 +557,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 
 **Purpose and user journey:** A proposed assistant that helps family and professional caregivers coordinate care for an older adult. Journey: the elder or authorized representative sets up a care circle, records medications, appointments and tasks, caregivers share updates, and the assistant sends reminders and summarizes changes.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Elder-care coordination assistant
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #83 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
+
 **Reference architecture:** `Care-circle app -> consent and role service -> task and medication store -> coordination agent -> reminders and summaries -> escalation contacts`
 
 <!-- architecture-diagram:auto -->
@@ -506,6 +602,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/08-career-productivity-famil
 ## 84. Accessible-living assistant
 
 **Purpose and user journey:** A proposed assistant that supports people with disabilities and age-related limitations in daily life, such as describing surroundings, reading documents, finding accessible routes and controlling the home. Journey: users set accessibility preferences, then use voice, text or camera input and receive output in their preferred form.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Accessible-living assistant
+
+- **Azure / Microsoft (Adjacent match):** [Healthcare Agent Orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #84 in Career, productivity and family](../../README.md#career-productivity-and-family).
+<!-- implementation-links:auto:end -->
 
 **Reference architecture:** `Multimodal input (voice/camera/switch) -> preference-aware orchestrator -> vision, speech and maps tools -> adaptive output (audio/large text/haptic) -> user confirmation`
 

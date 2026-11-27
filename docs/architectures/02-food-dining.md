@@ -52,6 +52,14 @@ _[Open editable Mermaid source](../diagrams/mermaid/02-food-dining/source/000-ca
 ### Purpose and user journey
 Helps households build a weekly grocery list, compare stores, and check out with minimal effort. The user states needs or approves a meal plan, reviews a substituted, priced basket, adjusts quantities, and confirms delivery or pickup.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Grocery-shopping assistant
+
+- **Azure / Microsoft (Adjacent match):** [Garden Shop AI Chat](https://github.com/dotnet/maui-labs/tree/main/samples/AIExtensions.Sample.Garden) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [Vercel AI Chatbot](https://github.com/vercel/chatbot).
+- **Catalog mapping:** [App #17 in Food and dining](../../README.md#food-and-dining).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Chat UI -> Orchestrator agent -> Catalog/price tools -> Basket optimizer -> Retailer cart API -> Approval gate -> Order tracker`
 
@@ -97,6 +105,14 @@ Start with one retailer, text list to matched basket, and manual checkout handof
 
 ### Purpose and user journey
 Creates weekly meal plans fitted to goals, time, budget, and tastes, then adapts as life changes. The user completes onboarding, receives a plan, swaps meals, gets a shopping list, and logs feedback that improves later weeks.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Meal-planning coach
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #18 in Food and dining](../../README.md#food-and-dining).
+<!-- implementation-links:auto:end -->
 
 ### Reference architecture
 `Onboarding UI -> Planner agent -> Constraint solver -> Recipe retrieval -> Nutrition calculator -> Plan calendar -> Grocery list export`
@@ -144,6 +160,14 @@ Ship a seven-day dinner planner with diet and allergen filters over a curated re
 ### Purpose and user journey
 Finds, adapts, and guides cooking of recipes. The user describes ingredients, cuisine, or constraints, picks a result, scales or substitutes ingredients, and receives hands-free step-by-step guidance with timers and troubleshooting.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Recipe assistant
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #19 in Food and dining](../../README.md#food-and-dining).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Text/voice UI -> Intent router -> Recipe search (hybrid) -> Adaptation engine -> Cooking-mode session -> Timer/voice output`
 
@@ -189,6 +213,14 @@ Build ingredient-based search over a licensed set and a clean recipe view. Add s
 
 ### Purpose and user journey
 Helps users understand and improve eating habits through logging, insights, and goal-based guidance. The user logs meals by text or photo, sees nutrient trends against goals, and receives small weekly adjustments.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Nutrition coach
+
+- **Azure / Microsoft (Base match):** [Getting Started with Foundry Agents and RAG](https://github.com/Azure-Samples/get-started-with-ai-agents) — provides reusable technical building blocks rather than a finished domain app.
+- **LangChain / Vercel alternative:** [Vercel AI SDK RAG starter](https://github.com/vercel/ai-sdk-rag-starter).
+- **Catalog mapping:** [App #20 in Food and dining](../../README.md#food-and-dining).
+<!-- implementation-links:auto:end -->
 
 ### Reference architecture
 `Log UI (text/photo) -> Food parser -> Nutrient DB lookup -> Trend analyzer -> Coaching agent -> Safety filter -> Weekly report`
@@ -236,6 +268,14 @@ Begin with text logging, database matching, and daily macro summaries. Add barco
 ### Purpose and user journey
 Recommends restaurants that fit a group's tastes, budget, location, and occasion. The user describes the situation, sees a short ranked list with reasons, refines by chatting, and moves on to booking or directions.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Restaurant recommendation assistant
+
+- **Azure / Microsoft (Adjacent match):** [Pizza Ordering Agent with Foundry and MCP](https://github.com/microsoft/ignite25-LAB571-build-a-pizza-ordering-agent-with-microsoft-foundry-and-mcp) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph generative-UI agents (archived reference)](https://github.com/langchain-ai/langgraphjs-gen-ui-examples).
+- **Catalog mapping:** [App #21 in Food and dining](../../README.md#food-and-dining).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Chat UI -> Preference parser -> Places search APIs -> Review/fit ranker -> Explanation generator -> Map/booking handoff`
 
@@ -282,6 +322,14 @@ Start with one city, a places API, and filters plus LLM ranking with explanation
 ### Purpose and user journey
 Books, modifies, and cancels restaurant tables on the user's behalf. The user gives party size, time window, and preferences; the assistant checks availability, proposes options, confirms details, books, and adds the reservation to the calendar.
 
+<!-- implementation-links:auto:start -->
+### Implementation references for Restaurant reservation assistant
+
+- **Azure / Microsoft (Adjacent match):** [Pizza Ordering Agent with Foundry and MCP](https://github.com/microsoft/ignite25-LAB571-build-a-pizza-ordering-agent-with-microsoft-foundry-and-mcp) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph generative-UI agents (archived reference)](https://github.com/langchain-ai/langgraphjs-gen-ui-examples).
+- **Catalog mapping:** [App #22 in Food and dining](../../README.md#food-and-dining).
+<!-- implementation-links:auto:end -->
+
 ### Reference architecture
 `Chat UI -> Reservation agent -> Availability connectors -> Booking executor -> Confirmation store -> Calendar/reminders`
 
@@ -327,6 +375,14 @@ Build availability lookup and a booking link handoff first. Then add API booking
 
 ### Purpose and user journey
 Orders delivery or pickup meals from natural-language requests. The user asks for a dish or reorder, the agent finds matching menus, builds the cart with customizations, displays the total, and places the order after approval, then tracks it.
+
+<!-- implementation-links:auto:start -->
+### Implementation references for Food-ordering agent
+
+- **Azure / Microsoft (Adjacent match):** [Pizza Ordering Agent with Foundry and MCP](https://github.com/microsoft/ignite25-LAB571-build-a-pizza-ordering-agent-with-microsoft-foundry-and-mcp) — implements a closely related domain or workflow that needs adaptation.
+- **LangChain / Vercel alternative:** [LangGraph generative-UI agents (archived reference)](https://github.com/langchain-ai/langgraphjs-gen-ui-examples).
+- **Catalog mapping:** [App #23 in Food and dining](../../README.md#food-and-dining).
+<!-- implementation-links:auto:end -->
 
 ### Reference architecture
 `Chat UI -> Ordering agent -> Menu search -> Cart builder -> Price/ETA check -> Approval -> Payment/order API -> Tracker`

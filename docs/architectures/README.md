@@ -12,6 +12,18 @@ All Mermaid diagrams are committed as **pre-rendered SVG files** so large GitHub
 
 Every app also documents its eight-step **main execution logic** and links to a [runnable C# workflow sample](../../samples/agent-workflow-csharp/README.md) implementing policy checks, approval gates, idempotent tool execution and audit events.
 
+## Implementation references inside every app
+
+Each application guide now links directly to:
+
+- the closest **Azure / Microsoft implementation** and its match level;
+- a **LangChain or Vercel alternative** where available;
+- the corresponding numbered entry in the root catalog.
+
+The match level explains how much adaptation is required: **Exact** implements the same scenario, **Adjacent** demonstrates a related domain or workflow, and **Base** provides reusable infrastructure rather than a finished app. These repositories are starting points for the proposed architecture—not evidence that every production control shown in the guide already exists in the sample.
+
+The links are generated from the root catalog so the two views cannot silently drift. After changing a catalog mapping, run `npm run catalog:links`; CI runs `npm run catalog:links:check`.
+
 ## How to read the architecture views
 
 ### View 1: system context — who participates

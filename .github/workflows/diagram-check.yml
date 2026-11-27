@@ -1,4 +1,4 @@
-name: Architecture diagram validation
+name: Architecture catalog validation
 
 on:
   workflow_dispatch:
@@ -8,6 +8,7 @@ on:
       - "docs/architectures/**"
       - "docs/diagrams/mermaid/**"
       - "scripts/render_mermaid_diagrams.py"
+      - "scripts/sync_architecture_links.py"
       - "scripts/puppeteer-config.json"
       - "package.json"
       - "package-lock.json"
@@ -19,6 +20,7 @@ on:
       - "docs/architectures/**"
       - "docs/diagrams/mermaid/**"
       - "scripts/render_mermaid_diagrams.py"
+      - "scripts/sync_architecture_links.py"
       - "scripts/puppeteer-config.json"
       - "package.json"
       - "package-lock.json"
@@ -41,5 +43,7 @@ jobs:
           python-version: "3.13"
       - name: Install pinned Mermaid CLI
         run: npm ci
+      - name: Verify app implementation links
+        run: python scripts/sync_architecture_links.py --check
       - name: Render and verify all architecture diagrams
         run: python scripts/render_mermaid_diagrams.py --check
